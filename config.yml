@@ -1,0 +1,27 @@
+tasks:
+ - name: billing
+   default_region: us-east-1
+   metrics:
+    - aws_namespace: "AWS/Billing"
+      aws_dimensions: [Currency]
+      aws_dimensions_select:
+        Currency: [USD]
+      aws_metric_name: EstimatedCharges
+      aws_statistics: [Maximum]
+      range_seconds: 86400
+
+ - name: ec2_cloudwatch
+   metrics:
+    - aws_namespace: "AWS/EC2"
+      aws_dimensions: [InstanceId]
+      aws_dimensions_select:
+        InstanceId: [$_target]
+      aws_metric_name: CPUUtilization
+      aws_statistics: [Average]
+
+    - aws_namespace: "AWS/EC2"
+      aws_dimensions: [InstanceId]
+      aws_dimensions_select:
+        InstanceId: [$_target]
+      aws_metric_name: NetworkOut
+      aws_statistics: [Average]
