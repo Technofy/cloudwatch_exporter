@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/prometheus/client_golang/prometheus"
-	"cloudwatch_exporter/config"
 	"errors"
+	"github.com/prometheus/client_golang/prometheus"
+	"github.com/technofy/cloudwatch_exporter/config"
 	"time"
 )
 
@@ -12,25 +12,25 @@ var (
 )
 
 type cwMetric struct {
-	Desc *prometheus.Desc
+	Desc    *prometheus.Desc
 	ValType prometheus.ValueType
 
-	ConfMetric *config.Metric
-	LabelNames []string
+	ConfMetric  *config.Metric
+	LabelNames  []string
 	LabelValues []string
 }
 
 type cwCollectorTemplate struct {
 	Metrics []cwMetric
-	Task *config.Task
+	Task    *config.Task
 }
 
 type cwCollector struct {
-	Region string
-	Target string
-	ScrapeTime prometheus.Gauge
+	Region            string
+	Target            string
+	ScrapeTime        prometheus.Gauge
 	ErroneousRequests prometheus.Counter
-	Template *cwCollectorTemplate
+	Template          *cwCollectorTemplate
 }
 
 // generateTemplates creates pre-generated metrics descriptions so that only the metrics are created from them during a scrape.

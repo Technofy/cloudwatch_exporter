@@ -4,8 +4,8 @@ import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/cloudwatch"
-	"time"
 	"github.com/prometheus/client_golang/prometheus"
+	"time"
 )
 
 func getLatestDatapoint(datapoints []*cloudwatch.Datapoint) *cloudwatch.Datapoint {
@@ -36,15 +36,15 @@ func scrape(collector *cwCollector, ch chan<- prometheus.Metric) {
 		end := now.Add(time.Duration(-metric.ConfMetric.DelaySeconds) * time.Second)
 
 		params := &cloudwatch.GetMetricStatisticsInput{
-			EndTime: aws.Time(end),
-			StartTime:  aws.Time(end.Add(time.Duration(-metric.ConfMetric.RangeSeconds) * time.Second)),
+			EndTime:   aws.Time(end),
+			StartTime: aws.Time(end.Add(time.Duration(-metric.ConfMetric.RangeSeconds) * time.Second)),
 
-			Period: aws.Int64(int64(metric.ConfMetric.PeriodSeconds)),
+			Period:     aws.Int64(int64(metric.ConfMetric.PeriodSeconds)),
 			MetricName: aws.String(metric.ConfMetric.Name),
 			Namespace:  aws.String(metric.ConfMetric.Namespace),
 			Dimensions: []*cloudwatch.Dimension{},
 			Statistics: []*string{},
-			Unit: nil,
+			Unit:       nil,
 		}
 
 		for _, stat := range metric.ConfMetric.Statistics {
@@ -64,7 +64,7 @@ func scrape(collector *cwCollector, ch chan<- prometheus.Metric) {
 				}
 
 				params.Dimensions = append(params.Dimensions, &cloudwatch.Dimension{
-					Name: aws.String(dim),
+					Name:  aws.String(dim),
 					Value: aws.String(dimValue),
 				})
 

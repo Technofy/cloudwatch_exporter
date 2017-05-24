@@ -100,7 +100,7 @@ The Billing example is there to demonstrate the multi-region capability of this 
 
 ## Why this remake?
 
-We felt left out when we wanted to monitor hundreds of machines on AWS thanks to CloudWatch when using the original exporter. We wanted to be able to use of the service EC2 discovery functionnality provided by Prometheus to dynamically monitor our fleet.
+We felt left out when we wanted to monitor hundreds of machines on AWS thanks to CloudWatch when using the original exporter. We wanted to be able to use the service EC2 discovery functionnality provided by Prometheus to dynamically monitor our fleet.
 
 Regarding our requirements, installing Java runtime was also a bit of an issue, so we decided to make it *"compliant"* with the rest of the Prometheus project by using Golang.
 

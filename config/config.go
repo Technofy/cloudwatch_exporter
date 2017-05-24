@@ -1,37 +1,37 @@
 package config
 
 import (
-	"io/ioutil"
-	"gopkg.in/yaml.v2"
-	"strings"
 	"errors"
 	"fmt"
+	"gopkg.in/yaml.v2"
+	"io/ioutil"
+	"strings"
 )
 
 type Metric struct {
 	Namespace string `yaml:"aws_namespace"`
-	Name string `yaml:"aws_metric_name"`
+	Name      string `yaml:"aws_metric_name"`
 
-	Statistics []string `yaml:"aws_statistics"`
-	Dimensions []string `yaml:"aws_dimensions,omitempty"`
-	DimensionsSelect map[string][]string `yaml:"aws_dimensions_select,omitempty"`
+	Statistics            []string            `yaml:"aws_statistics"`
+	Dimensions            []string            `yaml:"aws_dimensions,omitempty"`
+	DimensionsSelect      map[string][]string `yaml:"aws_dimensions_select,omitempty"`
 	DimensionsSelectParam map[string][]string `yaml:"aws_dimensions_select_param,omitempty"`
 
-	RangeSeconds int  `yaml:"range_seconds,omitempty"`
-	PeriodSeconds int  `yaml:"period_seconds,omitempty"`
-	DelaySeconds int  `yaml:"delay_seconds,omitempty"`
+	RangeSeconds  int `yaml:"range_seconds,omitempty"`
+	PeriodSeconds int `yaml:"period_seconds,omitempty"`
+	DelaySeconds  int `yaml:"delay_seconds,omitempty"`
 }
 
 type Task struct {
-	Name string `yaml:"name"`
-	DefaultRegion string  `yaml:"default_region,omitempty"`
-	Metrics []Metric `yaml:"metrics"`
+	Name          string   `yaml:"name"`
+	DefaultRegion string   `yaml:"default_region,omitempty"`
+	Metrics       []Metric `yaml:"metrics"`
 }
 
 type Settings struct {
-	AutoReload bool  `yaml:"auto_reload,omitempty"`
-	ReloadDelay int  `yaml:"auto_reload_delay,omitempty"`
-	Tasks []Task  `yaml:"tasks"`
+	AutoReload  bool   `yaml:"auto_reload,omitempty"`
+	ReloadDelay int    `yaml:"auto_reload_delay,omitempty"`
+	Tasks       []Task `yaml:"tasks"`
 }
 
 func (s *Settings) GetTask(name string) (*Task, error) {
@@ -64,8 +64,8 @@ func (m *Metric) UnmarshalYAML(unmarshal func(interface{}) error) error {
 	// These are the default values for a basic metric config
 	rawMetric := plain{
 		PeriodSeconds: 60,
-		RangeSeconds: 600,
-		DelaySeconds: 600,
+		RangeSeconds:  600,
+		DelaySeconds:  600,
 	}
 	if err := unmarshal(&rawMetric); err != nil {
 		return err

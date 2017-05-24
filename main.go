@@ -8,19 +8,21 @@ import (
 
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
-	"cloudwatch_exporter/config"
+	"github.com/technofy/cloudwatch_exporter/config"
 	"os"
 	"sync"
 )
 
 var (
-	listenAddress   = flag.String("listen-address", ":9042", "The address to listen on for HTTP requests.")
-	configFile	= flag.String("config-file", "config.yml", "The configuration file path")
+	listenAddress     = flag.String("web.listen-address", ":9042", "Address on which to expose metrics and web interface.")
+	metricsPath       = flag.String("web.telemetry-path", "/metrics", "Path under which to expose exporter's metrics.")
+	scrapePath       = flag.String("web.telemetry-scrape-path", "/scrape", "Path under which to expose CloudWatch metrics.")
+	configFile    = flag.String("config.file", "config.yml", "Path to configuration file.")
 
-	globalRegistry  *prometheus.Registry
-	settings	*config.Settings
-	totalRequests	prometheus.Counter
-	configMutex 	= &sync.Mutex{}
+	globalRegistry *prometheus.Registry
+	settings       *config.Settings
+	totalRequests  prometheus.Counter
+	configMutex    = &sync.Mutex{}
 )
 
 func loadConfigFile() error {
@@ -42,7 +44,6 @@ func loadConfigFile() error {
 	return nil
 }
 
-
 // handleReload handles a full reload of the configuration file and regenerates the collector templates.
 func handleReload(w http.ResponseWriter, req *http.Request) {
 	err := loadConfigFile()
@@ -53,7 +54,6 @@ func handleReload(w http.ResponseWriter, req *http.Request) {
 	}
 	fmt.Fprintln(w, "Reload complete")
 }
-
 
 // handleTarget handles scrape requests which make use of CloudWatch service
 func handleTarget(w http.ResponseWriter, req *http.Request) {
@@ -114,10 +114,10 @@ func main() {
 	fmt.Println("CloudWatch exporter started...")
 
 	// Expose the exporter's own metrics on /metrics
-	http.Handle("/metrics", promhttp.Handler())
+	http.Handle(*metricsPath, promhttp.Handler())
 
 	// Expose CloudWatch through this endpoint
-	http.HandleFunc("/scrape", handleTarget)
+	http.HandleFunc(*scrapePath, handleTarget)
 
 	// Allows manual reload of the configuration
 	http.HandleFunc("/reload", handleReload)
