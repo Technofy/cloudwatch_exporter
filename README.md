@@ -57,7 +57,7 @@ Let's say you can't afford to kill the process and restart it for any reason and
 
 ## How to configure Prometheus
 
-```
+```yaml
   - job_name: 'aws_billing'
     metrics_path: '/scrape'
     params:
