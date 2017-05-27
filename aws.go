@@ -6,6 +6,7 @@ import (
 	"github.com/aws/aws-sdk-go/service/cloudwatch"
 	"github.com/prometheus/client_golang/prometheus"
 	"time"
+	"fmt"
 )
 
 func getLatestDatapoint(datapoints []*cloudwatch.Datapoint) *cloudwatch.Datapoint {
@@ -80,6 +81,7 @@ func scrape(collector *cwCollector, ch chan<- prometheus.Metric) {
 
 		if err != nil {
 			collector.ErroneousRequests.Inc()
+			fmt.Println(err)
 			continue
 		}
 
