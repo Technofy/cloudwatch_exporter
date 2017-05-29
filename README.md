@@ -35,6 +35,16 @@ tasks:
         InstanceId: [$_target]
       aws_metric_name: NetworkOut
       aws_statistics: [Average]
+
+  - name: vpn_mon
+    metrics:
+     - aws_namespace: "AWS/VPN"
+       aws_dimensions: [VpnId]
+       aws_dimensions_select:
+         VpnId: [$_target]
+       aws_metric_name: TunnelState
+       aws_statistics: [Average]
+       range_seconds: 3600
 ```
 
 
@@ -78,6 +88,18 @@ Let's say you can't afford to kill the process and restart it for any reason and
       - source_labels: [job]
         target_label: __param_task
       - source_labels: [__meta_ec2_instance_id]
+        target_label: __param_target
+      - target_label: __address__
+        replacement: 'localhost:9042'
+
+  - job_name: 'vpn_mon'
+    metrics_path: '/scrape'
+    params:
+      task: [vpn_mon]
+    static_configs:
+      - targets: ['vpn-aabbccdd']
+    relabel_configs:
+      - source_labels: [__address__]
         target_label: __param_target
       - target_label: __address__
         replacement: 'localhost:9042'
