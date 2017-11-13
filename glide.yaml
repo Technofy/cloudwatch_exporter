@@ -1,4 +1,4 @@
-package: github.com/Percona-Lab/rds_exporter
+package: github.com/percona/rds_exporter
 import:
 - package: github.com/aws/aws-sdk-go
   subpackages:

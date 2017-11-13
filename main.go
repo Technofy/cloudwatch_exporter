@@ -8,9 +8,10 @@ import (
 	"os"
 	"sync"
 
-	"github.com/Percona-Lab/rds_exporter/config"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
+
+	"github.com/percona/rds_exporter/config"
 )
 
 var (
