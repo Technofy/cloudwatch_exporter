@@ -3,7 +3,7 @@ package main
 import (
 	"testing"
 
-	"github.com/Percona-Lab/rds_exporter/config"
+	"github.com/percona/rds_exporter/config"
 )
 
 func TestNew(t *testing.T) {
