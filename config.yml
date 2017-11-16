@@ -1,53 +1,7 @@
-tasks:
- - name: billing
-   default_region: us-east-1
-   metrics:
-    - aws_namespace: "AWS/Billing"
-      aws_dimensions: [Currency]
-      aws_dimensions_select:
-        Currency: [USD]
-      aws_metric_name: EstimatedCharges
-      aws_statistics: [Average]
-      range_seconds: 86400
-
- - name: ec2_cloudwatch
-   metrics:
-    - aws_namespace: "AWS/EC2"
-      aws_dimensions: [InstanceId]
-      aws_dimensions_select:
-        InstanceId: [$_target]
-      aws_metric_name: CPUUtilization
-      aws_statistics: [Average]
-
-    - aws_namespace: "AWS/EC2"
-      aws_dimensions: [InstanceId]
-      aws_dimensions_select:
-        InstanceId: [$_target]
-      aws_metric_name: NetworkOut
-      aws_statistics: [Average]
-
- - name: vpn_mon
-   metrics:
-    - aws_namespace: "AWS/VPN"
-      aws_dimensions: [VpnId]
-      aws_dimensions_select:
-        VpnId: [$_target]
-      aws_metric_name: TunnelState
-      aws_statistics: [Average]
-      range_seconds: 3600
-
-    - aws_namespace: "AWS/VPN"
-      aws_dimensions: [VpnId]
-      aws_dimensions_select:
-        VpnId: [$_target]
-      aws_metric_name: TunnelDataIn
-      aws_statistics: [Average]
-      range_seconds: 3600
-
-    - aws_namespace: "AWS/VPN"
-      aws_dimensions: [VpnId]
-      aws_dimensions_select:
-        VpnId: [$_target]
-      aws_metric_name: TunnelDataOut
-      aws_statistics: [Average]
-      range_seconds: 3600
+instances:
+- instance: mysql56
+  region: us-east-1
+- instance: mysql57
+  region: eu-west-1
+- instance: aurora1
+  region: us-east-1
