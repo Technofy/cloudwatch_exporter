@@ -1,14 +1,16 @@
 package main
 
-import "testing"
+import (
+	"testing"
 
-func TestNewCwCollectorWithoutSettings(t *testing.T) {
-	c, err := NewCwCollector("a", "b", "c")
-	if err == nil {
-		t.Fatalf("err shouldn't be nil, got: %s", err)
-	}
+	"github.com/Percona-Lab/rds_exporter/config"
+)
 
-	if c != nil {
-		t.Fatal("collector should be nil")
+func TestNew(t *testing.T) {
+	settings := &config.Settings{}
+	c := New(settings)
+
+	if c == nil {
+		t.Fatal("collector should not be nil")
 	}
 }
