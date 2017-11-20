@@ -6,15 +6,17 @@ import (
 	"time"
 
 	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/cloudwatch"
+	"github.com/percona/rds_exporter/config"
 	"github.com/prometheus/client_golang/prometheus"
 )
 
 var (
-	PeriodSeconds = 60
-	DelaySeconds  = 600
-	RangeSeconds  = 600
+	Period = 60 * time.Second
+	Delay  = 600 * time.Second
+	Range  = 600 * time.Second
 )
 
 func getLatestDatapoint(datapoints []*cloudwatch.Datapoint) *cloudwatch.Datapoint {
@@ -31,15 +33,25 @@ func getLatestDatapoint(datapoints []*cloudwatch.Datapoint) *cloudwatch.Datapoin
 
 // scrape makes the required calls to AWS CloudWatch by using the parameters in the Collector
 // Once converted into Prometheus format, the metrics are pushed on the ch channel.
-func scrape(instance, region string, collector *Collector, ch chan<- prometheus.Metric) {
-	session := session.Must(session.NewSession(&aws.Config{
-		Region: aws.String(region),
-	}))
+func scrape(instance config.Instance, collector *Collector, ch chan<- prometheus.Metric) {
+	awsConfig := &aws.Config{
+		Region: aws.String(instance.Region),
+	}
+
+	if instance.AwsAccessKey != "" || instance.AwsSecretKey != "" {
+		awsConfig.Credentials = credentials.NewStaticCredentials(
+			instance.AwsAccessKey,
+			instance.AwsSecretKey,
+			"",
+		)
+	}
+
+	session := session.Must(session.NewSession(awsConfig))
 
 	svc := cloudwatch.New(session)
 
 	labels := []string{}
-	labels = append(labels, instance, region)
+	labels = append(labels, instance.Instance, instance.Region)
 
 	wg := &sync.WaitGroup{}
 	wg.Add(len(collector.Metrics))
@@ -55,15 +67,15 @@ func scrape(instance, region string, collector *Collector, ch chan<- prometheus.
 	wg.Wait()
 }
 
-func scrapeMetric(svc *cloudwatch.CloudWatch, metric Metric, instance string, collector *Collector, ch chan<- prometheus.Metric, labels []string) error {
+func scrapeMetric(svc *cloudwatch.CloudWatch, metric Metric, instance config.Instance, collector *Collector, ch chan<- prometheus.Metric, labels []string) error {
 	now := time.Now()
-	end := now.Add(time.Duration(-DelaySeconds) * time.Second)
+	end := now.Add(-Delay)
 
 	params := &cloudwatch.GetMetricStatisticsInput{
 		EndTime:   aws.Time(end),
-		StartTime: aws.Time(end.Add(time.Duration(-RangeSeconds) * time.Second)),
+		StartTime: aws.Time(end.Add(-Range)),
 
-		Period:     aws.Int64(int64(PeriodSeconds)),
+		Period:     aws.Int64(int64(Period.Seconds())),
 		MetricName: aws.String(metric.Name),
 		Namespace:  aws.String("AWS/RDS"),
 		Dimensions: []*cloudwatch.Dimension{},
@@ -73,7 +85,7 @@ func scrapeMetric(svc *cloudwatch.CloudWatch, metric Metric, instance string, co
 
 	params.Dimensions = append(params.Dimensions, &cloudwatch.Dimension{
 		Name:  aws.String("DBInstanceIdentifier"),
-		Value: aws.String(instance),
+		Value: aws.String(instance.Instance),
 	})
 
 	// Call CloudWatch to gather the datapoints

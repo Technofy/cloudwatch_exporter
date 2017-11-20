@@ -8,8 +8,10 @@ import (
 )
 
 type Instance struct {
-	Instance string `yaml:"instance"`
-	Region   string `yaml:"region"`
+	Instance     string `yaml:"instance"`
+	Region       string `yaml:"region"`
+	AwsAccessKey string `yaml:"aws_access_key"`
+	AwsSecretKey string `yaml:"aws_secret_key"`
 }
 
 type Config struct {

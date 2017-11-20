@@ -4,64 +4,11 @@ import (
 	"sync"
 	"time"
 
-	"github.com/prometheus/client_golang/prometheus"
-
 	"github.com/percona/rds_exporter/config"
+	"github.com/prometheus/client_golang/prometheus"
 )
 
-var (
-	metrics = []string{
-		"ActiveTransactions",
-		"AuroraBinlogReplicaLag",
-		"AuroraReplicaLag",
-		"AuroraReplicaLagMaximum",
-		"AuroraReplicaLagMinimum",
-		"BinLogDiskUsage",
-		"BlockedTransactions",
-		"BufferCacheHitRatio",
-		"BurstBalance",
-		"CommitLatency",
-		"CommitThroughput",
-		"CPUCreditBalance",
-		"CPUCreditUsage",
-		"CPUUtilization",
-		"DatabaseConnections",
-		"DDLLatency",
-		"DDLThroughput",
-		"Deadlocks",
-		"DeleteLatency",
-		"DeleteThroughput",
-		"DiskQueueDepth",
-		"DMLLatency",
-		"DMLThroughput",
-		"EngineUptime",
-		"FreeableMemory",
-		"FreeLocalStorage",
-		"FreeStorageSpace",
-		"InsertLatency",
-		"InsertThroughput",
-		"LoginFailures",
-		"NetworkReceiveThroughput",
-		"NetworkThroughput",
-		"NetworkTransmitThroughput",
-		"Queries",
-		"ReadIOPS",
-		"ReadLatency",
-		"ReadThroughput",
-		"ResultSetCacheHitRatio",
-		"SelectLatency",
-		"SelectThroughput",
-		"SwapUsage",
-		"UpdateLatency",
-		"UpdateThroughput",
-		"VolumeBytesUsed",
-		"VolumeReadIOPs",
-		"VolumeWriteIOPs",
-		"WriteIOPS",
-		"WriteLatency",
-		"WriteThroughput",
-	}
-)
+//go:generate go run generate/main.go generate/utils.go
 
 type Metric struct {
 	Name string
@@ -81,7 +28,7 @@ type Collector struct {
 func New(settings *config.Settings) *Collector {
 	return &Collector{
 		Settings: settings,
-		Metrics:  generateMetrics(),
+		Metrics:  Metrics,
 		ScrapeTime: prometheus.NewGauge(prometheus.GaugeOpts{
 			Name: "rds_exporter_scrape_duration_seconds",
 			Help: "Time this RDS scrape took, in seconds.",
@@ -97,33 +44,15 @@ func New(settings *config.Settings) *Collector {
 	}
 }
 
-func generateMetrics() []Metric {
-	ms := make([]Metric, len(metrics))
-	for i, name := range metrics {
-		ms[i].Name = name
-		ms[i].Desc = prometheus.NewDesc(
-			safeName("AWS/RDS_"+toSnakeCase(name)+"_average"),
-			name,
-			[]string{
-				"instance",
-				"region",
-			},
-			nil,
-		)
-	}
-
-	return ms
-}
-
 func (c *Collector) Collect(ch chan<- prometheus.Metric) {
 	now := time.Now()
 	wg := &sync.WaitGroup{}
 	for _, instance := range c.Settings.Config().Instances {
 		wg.Add(1)
-		go func(instance, region string) {
-			scrape(instance, region, c, ch)
+		go func(instance config.Instance) {
+			scrape(instance, c, ch)
 			wg.Done()
-		}(instance.Instance, instance.Region)
+		}(instance)
 	}
 	wg.Wait()
 	c.ScrapeTime.Set(time.Since(now).Seconds())
