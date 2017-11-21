@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/percona/rds_exporter/config"
+	"github.com/percona/rds_exporter/sessions"
 	"github.com/prometheus/client_golang/prometheus"
 )
 
@@ -17,6 +18,7 @@ type Metric struct {
 
 type Collector struct {
 	Settings *config.Settings
+	Sessions *sessions.Sessions
 	Metrics  []Metric
 
 	ScrapeTime        prometheus.Gauge
@@ -25,9 +27,10 @@ type Collector struct {
 }
 
 // New creates a new instance of a Collector.
-func New(settings *config.Settings) *Collector {
+func New(settings *config.Settings, sessions *sessions.Sessions) *Collector {
 	return &Collector{
 		Settings: settings,
+		Sessions: sessions,
 		Metrics:  Metrics,
 		ScrapeTime: prometheus.NewGauge(prometheus.GaugeOpts{
 			Name: "rds_exporter_scrape_duration_seconds",

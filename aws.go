@@ -6,8 +6,6 @@ import (
 	"time"
 
 	"github.com/aws/aws-sdk-go/aws"
-	"github.com/aws/aws-sdk-go/aws/credentials"
-	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/cloudwatch"
 	"github.com/percona/rds_exporter/config"
 	"github.com/prometheus/client_golang/prometheus"
@@ -34,21 +32,8 @@ func getLatestDatapoint(datapoints []*cloudwatch.Datapoint) *cloudwatch.Datapoin
 // scrape makes the required calls to AWS CloudWatch by using the parameters in the Collector
 // Once converted into Prometheus format, the metrics are pushed on the ch channel.
 func scrape(instance config.Instance, collector *Collector, ch chan<- prometheus.Metric) {
-	awsConfig := &aws.Config{
-		Region: aws.String(instance.Region),
-	}
-
-	if instance.AwsAccessKey != "" || instance.AwsSecretKey != "" {
-		awsConfig.Credentials = credentials.NewStaticCredentials(
-			instance.AwsAccessKey,
-			instance.AwsSecretKey,
-			"",
-		)
-	}
-
-	session := session.Must(session.NewSession(awsConfig))
-
-	svc := cloudwatch.New(session)
+	sess := collector.Sessions.Get(instance)
+	svc := cloudwatch.New(sess)
 
 	labels := []string{}
 	labels = append(labels, instance.Instance, instance.Region)
