@@ -50,10 +50,11 @@ func New(settings *config.Settings, sessions *sessions.Sessions) *Collector {
 func (c *Collector) Collect(ch chan<- prometheus.Metric) {
 	now := time.Now()
 	wg := &sync.WaitGroup{}
-	for _, instance := range c.Settings.Config().Instances {
-		wg.Add(1)
+	instances := c.Settings.Config().Instances
+	wg.Add(len(instances))
+	for _, instance := range instances {
 		go func(instance config.Instance) {
-			scrape(instance, c, ch)
+			NewScrape(instance, c, ch).Scrape()
 			wg.Done()
 		}(instance)
 	}

@@ -12,10 +12,51 @@ import (
 )
 
 var (
-	Period = 60 * time.Second
-	Delay  = 600 * time.Second
-	Range  = 600 * time.Second
+	Period      = 60 * time.Second
+	Delay       = 600 * time.Second
+	Range       = 600 * time.Second
+
+	latencyDesc = prometheus.NewDesc(
+		"rds_latency",
+		"The difference between the current time and timestamp in the metric itself",
+		[]string{"instance", "region"},
+		map[string]string(nil),
+	)
 )
+
+type Scrape struct {
+	// params
+	instance  config.Instance
+	collector *Collector
+	ch        chan<- prometheus.Metric
+
+	// internal
+	svc     *cloudwatch.CloudWatch
+	labels  []string
+	latency *Latency
+}
+
+func NewScrape(instance config.Instance, collector *Collector, ch chan<- prometheus.Metric) *Scrape {
+	// Create CloudWatch client
+	sess := collector.Sessions.Get(instance)
+	svc := cloudwatch.New(sess)
+
+	// Create labels for all metrics
+	labels := []string{}
+	labels = append(labels, instance.Instance, instance.Region)
+
+	return &Scrape{
+		// params
+		instance:  instance,
+		collector: collector,
+		ch:        ch,
+
+		// internal
+		svc:     svc,
+		labels:  labels,
+		latency: &Latency{},
+	}
+}
 
 func getLatestDatapoint(datapoints []*cloudwatch.Datapoint) *cloudwatch.Datapoint {
 	var latest *cloudwatch.Datapoint = nil
@@ -29,30 +70,31 @@ func getLatestDatapoint(datapoints []*cloudwatch.Datapoint) *cloudwatch.Datapoin
 	return latest
 }
 
-// scrape makes the required calls to AWS CloudWatch by using the parameters in the Collector
+// Scrape makes the required calls to AWS CloudWatch by using the parameters in the Collector.
 // Once converted into Prometheus format, the metrics are pushed on the ch channel.
-func scrape(instance config.Instance, collector *Collector, ch chan<- prometheus.Metric) {
-	sess := collector.Sessions.Get(instance)
-	svc := cloudwatch.New(sess)
-
-	labels := []string{}
-	labels = append(labels, instance.Instance, instance.Region)
-
+func (s *Scrape) Scrape() {
 	wg := &sync.WaitGroup{}
-	wg.Add(len(collector.Metrics))
-	for _, metric := range collector.Metrics {
+	wg.Add(len(s.collector.Metrics))
+	for _, metric := range s.collector.Metrics {
 		go func(metric Metric) {
-			err := scrapeMetric(svc, metric, instance, collector, ch, labels)
+			err := s.scrapeMetric(metric)
 			if err != nil {
 				fmt.Println(err)
 			}
+
 			wg.Done()
 		}(metric)
 	}
 	wg.Wait()
+
+	// Generate latency metric
+	if !s.latency.Timestamp.IsZero() {
+		latency := time.Since(s.latency.Timestamp).Seconds()
+		s.ch <- prometheus.MustNewConstMetric(latencyDesc, prometheus.GaugeValue, float64(latency), s.labels...)
+	}
 }
 
-func scrapeMetric(svc *cloudwatch.CloudWatch, metric Metric, instance config.Instance, collector *Collector, ch chan<- prometheus.Metric, labels []string) error {
+func (s *Scrape) scrapeMetric(metric Metric) error {
 	now := time.Now()
 	end := now.Add(-Delay)
 
@@ -70,15 +112,15 @@ func scrapeMetric(svc *cloudwatch.CloudWatch, metric Metric, instance config.Ins
 
 	params.Dimensions = append(params.Dimensions, &cloudwatch.Dimension{
 		Name:  aws.String("DBInstanceIdentifier"),
-		Value: aws.String(instance.Instance),
+		Value: aws.String(s.instance.Instance),
 	})
 
 	// Call CloudWatch to gather the datapoints
-	resp, err := svc.GetMetricStatistics(params)
-	collector.TotalRequests.Inc()
+	resp, err := s.svc.GetMetricStatistics(params)
+	s.collector.TotalRequests.Inc()
 
 	if err != nil {
-		collector.ErroneousRequests.Inc()
+		s.collector.ErroneousRequests.Inc()
 		return err
 	}
 
@@ -89,7 +131,23 @@ func scrapeMetric(svc *cloudwatch.CloudWatch, metric Metric, instance config.Ins
 
 	// Pick the latest datapoint
 	dp := getLatestDatapoint(resp.Datapoints)
-	ch <- prometheus.MustNewConstMetric(metric.Desc, prometheus.GaugeValue, aws.Float64Value(dp.Average), labels...)
+	s.ch <- prometheus.MustNewConstMetric(metric.Desc, prometheus.GaugeValue, aws.Float64Value(dp.Average), s.labels...)
+
+	// Take the oldest timestamp for latency metric
+	s.latency.TakeOldest(aws.TimeValue(dp.Timestamp))
 
 	return nil
+}
+
+type Latency struct {
+	Timestamp time.Time
+	sync.RWMutex
+}
+
+func (l *Latency) TakeOldest(t time.Time) {
+	l.Lock()
+	defer l.Unlock()
+	if l.Timestamp.IsZero() || t.Before(l.Timestamp) {
+		l.Timestamp = t
+	}
 }
