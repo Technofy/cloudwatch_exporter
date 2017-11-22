@@ -20,6 +20,8 @@ func (m Metric) FqName() string {
 		return "node_memory_Cached"
 	case "CPUUtilization":
 		return "node_cpu"
+	case "EngineUptime":
+		return "node_boot_time"
 	}
 
 	return safeName("AWS/RDS_" + toSnakeCase(string(m)) + "_average")

@@ -12,9 +12,9 @@ import (
 )
 
 var (
-	Period      = 60 * time.Second
-	Delay       = 600 * time.Second
-	Range       = 600 * time.Second
+	Period = 60 * time.Second
+	Delay  = 600 * time.Second
+	Range  = 600 * time.Second
 
 	latencyDesc = prometheus.NewDesc(
 		"rds_latency",
@@ -131,10 +131,20 @@ func (s *Scrape) scrapeMetric(metric Metric) error {
 
 	// Pick the latest datapoint
 	dp := getLatestDatapoint(resp.Datapoints)
-	s.ch <- prometheus.MustNewConstMetric(metric.Desc, prometheus.GaugeValue, aws.Float64Value(dp.Average), s.labels...)
 
 	// Take the oldest timestamp for latency metric
 	s.latency.TakeOldest(aws.TimeValue(dp.Timestamp))
+
+	// Get the metric.
+	v := aws.Float64Value(dp.Average)
+	switch metric.Name {
+	case "EngineUptime":
+		// "Fake EngineUptime -> node_boot_time with time.Now().Unix() - EngineUptime."
+		v = float64(time.Now().Unix() - int64(v))
+	}
+
+	// Send metric.
+	s.ch <- prometheus.MustNewConstMetric(metric.Desc, prometheus.GaugeValue, v, s.labels...)
 
 	return nil
 }
