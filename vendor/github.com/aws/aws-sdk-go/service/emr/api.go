@@ -17,19 +17,18 @@ const opAddInstanceFleet = "AddInstanceFleet"
 
 // AddInstanceFleetRequest generates a "aws/request.Request" representing the
 // client's request for the AddInstanceFleet operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See AddInstanceFleet for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the AddInstanceFleet method directly
-// instead.
+// See AddInstanceFleet for more information on using the AddInstanceFleet
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the AddInstanceFleetRequest method.
 //    req, resp := client.AddInstanceFleetRequest(params)
@@ -103,19 +102,18 @@ const opAddInstanceGroups = "AddInstanceGroups"
 
 // AddInstanceGroupsRequest generates a "aws/request.Request" representing the
 // client's request for the AddInstanceGroups operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See AddInstanceGroups for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the AddInstanceGroups method directly
-// instead.
+// See AddInstanceGroups for more information on using the AddInstanceGroups
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the AddInstanceGroupsRequest method.
 //    req, resp := client.AddInstanceGroupsRequest(params)
@@ -184,19 +182,18 @@ const opAddJobFlowSteps = "AddJobFlowSteps"
 
 // AddJobFlowStepsRequest generates a "aws/request.Request" representing the
 // client's request for the AddJobFlowSteps operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See AddJobFlowSteps for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the AddJobFlowSteps method directly
-// instead.
+// See AddJobFlowSteps for more information on using the AddJobFlowSteps
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the AddJobFlowStepsRequest method.
 //    req, resp := client.AddJobFlowStepsRequest(params)
@@ -233,7 +230,7 @@ func (c *EMR) AddJobFlowStepsRequest(input *AddJobFlowStepsInput) (req *request.
 // the 256-step limitation in various ways, including using SSH to connect to
 // the master node and submitting queries directly to the software running on
 // the master node, such as Hive and Hadoop. For more information on how to
-// do this, see Add More than 256 Steps to a Cluster (http://docs.aws.amazon.com/ElasticMapReduce/latest/ManagementGuide/AddMoreThan256Steps.html)
+// do this, see Add More than 256 Steps to a Cluster (http://docs.aws.amazon.com/emr/latest/ManagementGuide/AddMoreThan256Steps.html)
 // in the Amazon EMR Management Guide.
 //
 // A step specifies the location of a JAR file stored either on the master node
@@ -287,19 +284,18 @@ const opAddTags = "AddTags"
 
 // AddTagsRequest generates a "aws/request.Request" representing the
 // client's request for the AddTags operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See AddTags for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the AddTags method directly
-// instead.
+// See AddTags for more information on using the AddTags
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the AddTagsRequest method.
 //    req, resp := client.AddTagsRequest(params)
@@ -330,8 +326,7 @@ func (c *EMR) AddTagsRequest(input *AddTagsInput) (req *request.Request, output 
 //
 // Adds tags to an Amazon EMR resource. Tags make it easier to associate clusters
 // in various ways, such as grouping clusters to track your Amazon EMR resource
-// allocation costs. For more information, see Tagging Amazon EMR Resources
-// (http://docs.aws.amazon.com/ElasticMapReduce/latest/DeveloperGuide/emr-plan-tags.html).
+// allocation costs. For more information, see Tag Clusters (http://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-plan-tags.html).
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -373,19 +368,18 @@ const opCancelSteps = "CancelSteps"
 
 // CancelStepsRequest generates a "aws/request.Request" representing the
 // client's request for the CancelSteps operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See CancelSteps for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the CancelSteps method directly
-// instead.
+// See CancelSteps for more information on using the CancelSteps
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the CancelStepsRequest method.
 //    req, resp := client.CancelStepsRequest(params)
@@ -461,19 +455,18 @@ const opCreateSecurityConfiguration = "CreateSecurityConfiguration"
 
 // CreateSecurityConfigurationRequest generates a "aws/request.Request" representing the
 // client's request for the CreateSecurityConfiguration operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See CreateSecurityConfiguration for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the CreateSecurityConfiguration method directly
-// instead.
+// See CreateSecurityConfiguration for more information on using the CreateSecurityConfiguration
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the CreateSecurityConfigurationRequest method.
 //    req, resp := client.CreateSecurityConfigurationRequest(params)
@@ -545,19 +538,18 @@ const opDeleteSecurityConfiguration = "DeleteSecurityConfiguration"
 
 // DeleteSecurityConfigurationRequest generates a "aws/request.Request" representing the
 // client's request for the DeleteSecurityConfiguration operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See DeleteSecurityConfiguration for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the DeleteSecurityConfiguration method directly
-// instead.
+// See DeleteSecurityConfiguration for more information on using the DeleteSecurityConfiguration
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the DeleteSecurityConfigurationRequest method.
 //    req, resp := client.DeleteSecurityConfigurationRequest(params)
@@ -628,19 +620,18 @@ const opDescribeCluster = "DescribeCluster"
 
 // DescribeClusterRequest generates a "aws/request.Request" representing the
 // client's request for the DescribeCluster operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See DescribeCluster for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the DescribeCluster method directly
-// instead.
+// See DescribeCluster for more information on using the DescribeCluster
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the DescribeClusterRequest method.
 //    req, resp := client.DescribeClusterRequest(params)
@@ -712,19 +703,18 @@ const opDescribeJobFlows = "DescribeJobFlows"
 
 // DescribeJobFlowsRequest generates a "aws/request.Request" representing the
 // client's request for the DescribeJobFlows operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See DescribeJobFlows for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the DescribeJobFlows method directly
-// instead.
+// See DescribeJobFlows for more information on using the DescribeJobFlows
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the DescribeJobFlowsRequest method.
 //    req, resp := client.DescribeJobFlowsRequest(params)
@@ -815,19 +805,18 @@ const opDescribeSecurityConfiguration = "DescribeSecurityConfiguration"
 
 // DescribeSecurityConfigurationRequest generates a "aws/request.Request" representing the
 // client's request for the DescribeSecurityConfiguration operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See DescribeSecurityConfiguration for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the DescribeSecurityConfiguration method directly
-// instead.
+// See DescribeSecurityConfiguration for more information on using the DescribeSecurityConfiguration
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the DescribeSecurityConfigurationRequest method.
 //    req, resp := client.DescribeSecurityConfigurationRequest(params)
@@ -899,19 +888,18 @@ const opDescribeStep = "DescribeStep"
 
 // DescribeStepRequest generates a "aws/request.Request" representing the
 // client's request for the DescribeStep operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See DescribeStep for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the DescribeStep method directly
-// instead.
+// See DescribeStep for more information on using the DescribeStep
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the DescribeStepRequest method.
 //    req, resp := client.DescribeStepRequest(params)
@@ -982,19 +970,18 @@ const opListBootstrapActions = "ListBootstrapActions"
 
 // ListBootstrapActionsRequest generates a "aws/request.Request" representing the
 // client's request for the ListBootstrapActions operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See ListBootstrapActions for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the ListBootstrapActions method directly
-// instead.
+// See ListBootstrapActions for more information on using the ListBootstrapActions
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the ListBootstrapActionsRequest method.
 //    req, resp := client.ListBootstrapActionsRequest(params)
@@ -1121,19 +1108,18 @@ const opListClusters = "ListClusters"
 
 // ListClustersRequest generates a "aws/request.Request" representing the
 // client's request for the ListClusters operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See ListClusters for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the ListClusters method directly
-// instead.
+// See ListClusters for more information on using the ListClusters
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the ListClustersRequest method.
 //    req, resp := client.ListClustersRequest(params)
@@ -1264,19 +1250,18 @@ const opListInstanceFleets = "ListInstanceFleets"
 
 // ListInstanceFleetsRequest generates a "aws/request.Request" representing the
 // client's request for the ListInstanceFleets operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See ListInstanceFleets for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the ListInstanceFleets method directly
-// instead.
+// See ListInstanceFleets for more information on using the ListInstanceFleets
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the ListInstanceFleetsRequest method.
 //    req, resp := client.ListInstanceFleetsRequest(params)
@@ -1406,19 +1391,18 @@ const opListInstanceGroups = "ListInstanceGroups"
 
 // ListInstanceGroupsRequest generates a "aws/request.Request" representing the
 // client's request for the ListInstanceGroups operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See ListInstanceGroups for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the ListInstanceGroups method directly
-// instead.
+// See ListInstanceGroups for more information on using the ListInstanceGroups
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the ListInstanceGroupsRequest method.
 //    req, resp := client.ListInstanceGroupsRequest(params)
@@ -1545,19 +1529,18 @@ const opListInstances = "ListInstances"
 
 // ListInstancesRequest generates a "aws/request.Request" representing the
 // client's request for the ListInstances operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See ListInstances for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the ListInstances method directly
-// instead.
+// See ListInstances for more information on using the ListInstances
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the ListInstancesRequest method.
 //    req, resp := client.ListInstancesRequest(params)
@@ -1592,11 +1575,10 @@ func (c *EMR) ListInstancesRequest(input *ListInstancesInput) (req *request.Requ
 
 // ListInstances API operation for Amazon Elastic MapReduce.
 //
-// Provides information about the cluster instances that Amazon EMR provisions
-// on behalf of a user when it creates the cluster. For example, this operation
-// indicates when the EC2 instances reach the Ready state, when instances become
-// available to Amazon EMR to use for jobs, and the IP addresses for cluster
-// instances, etc.
+// Provides information for all active EC2 instances and EC2 instances terminated
+// in the last 30 days, up to a maximum of 2,000. EC2 instances in any of the
+// following states are considered active: AWAITING_FULFILLMENT, PROVISIONING,
+// BOOTSTRAPPING, RUNNING.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -1688,19 +1670,18 @@ const opListSecurityConfigurations = "ListSecurityConfigurations"
 
 // ListSecurityConfigurationsRequest generates a "aws/request.Request" representing the
 // client's request for the ListSecurityConfigurations operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See ListSecurityConfigurations for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the ListSecurityConfigurations method directly
-// instead.
+// See ListSecurityConfigurations for more information on using the ListSecurityConfigurations
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the ListSecurityConfigurationsRequest method.
 //    req, resp := client.ListSecurityConfigurationsRequest(params)
@@ -1774,19 +1755,18 @@ const opListSteps = "ListSteps"
 
 // ListStepsRequest generates a "aws/request.Request" representing the
 // client's request for the ListSteps operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See ListSteps for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the ListSteps method directly
-// instead.
+// See ListSteps for more information on using the ListSteps
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the ListStepsRequest method.
 //    req, resp := client.ListStepsRequest(params)
@@ -1914,19 +1894,18 @@ const opModifyInstanceFleet = "ModifyInstanceFleet"
 
 // ModifyInstanceFleetRequest generates a "aws/request.Request" representing the
 // client's request for the ModifyInstanceFleet operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See ModifyInstanceFleet for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the ModifyInstanceFleet method directly
-// instead.
+// See ModifyInstanceFleet for more information on using the ModifyInstanceFleet
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the ModifyInstanceFleetRequest method.
 //    req, resp := client.ModifyInstanceFleetRequest(params)
@@ -2004,19 +1983,18 @@ const opModifyInstanceGroups = "ModifyInstanceGroups"
 
 // ModifyInstanceGroupsRequest generates a "aws/request.Request" representing the
 // client's request for the ModifyInstanceGroups operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See ModifyInstanceGroups for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the ModifyInstanceGroups method directly
-// instead.
+// See ModifyInstanceGroups for more information on using the ModifyInstanceGroups
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the ModifyInstanceGroupsRequest method.
 //    req, resp := client.ModifyInstanceGroupsRequest(params)
@@ -2090,19 +2068,18 @@ const opPutAutoScalingPolicy = "PutAutoScalingPolicy"
 
 // PutAutoScalingPolicyRequest generates a "aws/request.Request" representing the
 // client's request for the PutAutoScalingPolicy operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See PutAutoScalingPolicy for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the PutAutoScalingPolicy method directly
-// instead.
+// See PutAutoScalingPolicy for more information on using the PutAutoScalingPolicy
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the PutAutoScalingPolicyRequest method.
 //    req, resp := client.PutAutoScalingPolicyRequest(params)
@@ -2168,19 +2145,18 @@ const opRemoveAutoScalingPolicy = "RemoveAutoScalingPolicy"
 
 // RemoveAutoScalingPolicyRequest generates a "aws/request.Request" representing the
 // client's request for the RemoveAutoScalingPolicy operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See RemoveAutoScalingPolicy for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the RemoveAutoScalingPolicy method directly
-// instead.
+// See RemoveAutoScalingPolicy for more information on using the RemoveAutoScalingPolicy
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the RemoveAutoScalingPolicyRequest method.
 //    req, resp := client.RemoveAutoScalingPolicyRequest(params)
@@ -2244,19 +2220,18 @@ const opRemoveTags = "RemoveTags"
 
 // RemoveTagsRequest generates a "aws/request.Request" representing the
 // client's request for the RemoveTags operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See RemoveTags for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the RemoveTags method directly
-// instead.
+// See RemoveTags for more information on using the RemoveTags
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the RemoveTagsRequest method.
 //    req, resp := client.RemoveTagsRequest(params)
@@ -2287,8 +2262,7 @@ func (c *EMR) RemoveTagsRequest(input *RemoveTagsInput) (req *request.Request, o
 //
 // Removes tags from an Amazon EMR resource. Tags make it easier to associate
 // clusters in various ways, such as grouping clusters to track your Amazon
-// EMR resource allocation costs. For more information, see Tagging Amazon EMR
-// Resources (http://docs.aws.amazon.com/ElasticMapReduce/latest/DeveloperGuide/emr-plan-tags.html).
+// EMR resource allocation costs. For more information, see Tag Clusters (http://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-plan-tags.html).
 //
 // The following example removes the stack tag with value Prod from a cluster:
 //
@@ -2332,19 +2306,18 @@ const opRunJobFlow = "RunJobFlow"
 
 // RunJobFlowRequest generates a "aws/request.Request" representing the
 // client's request for the RunJobFlow operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See RunJobFlow for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the RunJobFlow method directly
-// instead.
+// See RunJobFlow for more information on using the RunJobFlow
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the RunJobFlowRequest method.
 //    req, resp := client.RunJobFlowRequest(params)
@@ -2391,7 +2364,7 @@ func (c *EMR) RunJobFlowRequest(input *RunJobFlowInput) (req *request.Request, o
 // the 256-step limitation in various ways, including using the SSH shell to
 // connect to the master node and submitting queries directly to the software
 // running on the master node, such as Hive and Hadoop. For more information
-// on how to do this, see Add More than 256 Steps to a Cluster (http://docs.aws.amazon.com/ElasticMapReduce/latest/Management/Guide/AddMoreThan256Steps.html)
+// on how to do this, see Add More than 256 Steps to a Cluster (http://docs.aws.amazon.com/emr/latest/ManagementGuide/AddMoreThan256Steps.html)
 // in the Amazon EMR Management Guide.
 //
 // For long running clusters, we recommend that you periodically store your
@@ -2439,19 +2412,18 @@ const opSetTerminationProtection = "SetTerminationProtection"
 
 // SetTerminationProtectionRequest generates a "aws/request.Request" representing the
 // client's request for the SetTerminationProtection operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See SetTerminationProtection for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the SetTerminationProtection method directly
-// instead.
+// See SetTerminationProtection for more information on using the SetTerminationProtection
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the SetTerminationProtectionRequest method.
 //    req, resp := client.SetTerminationProtectionRequest(params)
@@ -2538,19 +2510,18 @@ const opSetVisibleToAllUsers = "SetVisibleToAllUsers"
 
 // SetVisibleToAllUsersRequest generates a "aws/request.Request" representing the
 // client's request for the SetVisibleToAllUsers operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See SetVisibleToAllUsers for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the SetVisibleToAllUsers method directly
-// instead.
+// See SetVisibleToAllUsers for more information on using the SetVisibleToAllUsers
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the SetVisibleToAllUsersRequest method.
 //    req, resp := client.SetVisibleToAllUsersRequest(params)
@@ -2626,19 +2597,18 @@ const opTerminateJobFlows = "TerminateJobFlows"
 
 // TerminateJobFlowsRequest generates a "aws/request.Request" representing the
 // client's request for the TerminateJobFlows operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See TerminateJobFlows for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the TerminateJobFlows method directly
-// instead.
+// See TerminateJobFlows for more information on using the TerminateJobFlows
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the TerminateJobFlowsRequest method.
 //    req, resp := client.TerminateJobFlowsRequest(params)
@@ -3072,7 +3042,7 @@ func (s AddTagsOutput) GoString() string {
 // software to use with the cluster and accepts a user argument list. Amazon
 // EMR accepts and forwards the argument list to the corresponding installation
 // script as bootstrap action argument. For more information, see Using the
-// MapR Distribution for Hadoop (http://docs.aws.amazon.com/ElasticMapReduce/latest/ManagementGuide/emr-mapr.html).
+// MapR Distribution for Hadoop (http://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-mapr.html).
 // Currently supported values are:
 //
 //    * "mapr-m3" - launch the cluster using MapR M3 Edition.
@@ -3082,7 +3052,7 @@ func (s AddTagsOutput) GoString() string {
 //    * "mapr" with the user arguments specifying "--edition,m3" or "--edition,m5"
 //    - launch the cluster using MapR M3 or M5 Edition, respectively.
 //
-// In Amazon EMR releases 4.0 and greater, the only accepted parameter is the
+// In Amazon EMR releases 4.x and later, the only accepted parameter is the
 // application name. To pass arguments to applications, you supply a configuration
 // for each application.
 // Please also see https://docs.aws.amazon.com/goto/WebAPI/elasticmapreduce-2009-03-31/Application
@@ -3674,10 +3644,17 @@ type Cluster struct {
 	// Specifies whether the cluster should terminate after completing all steps.
 	AutoTerminate *bool `type:"boolean"`
 
-	// Amazon EMR releases 4.x or later.
-	//
-	// The list of Configurations supplied to the EMR cluster.
+	// Applies only to Amazon EMR releases 4.x and later. The list of Configurations
+	// supplied to the EMR cluster.
 	Configurations []*Configuration `type:"list"`
+
+	// Available only in Amazon EMR version 5.7.0 and later. The ID of a custom
+	// Amazon EBS-backed Linux AMI if the cluster uses a custom AMI.
+	CustomAmiId *string `type:"string"`
+
+	// The size, in GiB, of the EBS root device volume of the Linux AMI that is
+	// used for each EC2 instance. Available in Amazon EMR version 4.x and later.
+	EbsRootVolumeSize *int64 `type:"integer"`
 
 	// Provides information about the EC2 instances in a cluster grouped by category.
 	// For example, key name, subnet ID, IAM instance profile, and so on.
@@ -3694,10 +3671,17 @@ type Cluster struct {
 	// indicates an instance fleets configuration.
 	InstanceCollectionType *string `type:"string" enum:"InstanceCollectionType"`
 
+	// Attributes for Kerberos configuration when Kerberos authentication is enabled
+	// using a security configuration. For more information see Use Kerberos Authentication
+	// (http://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-kerberos.html)
+	// in the EMR Management Guide.
+	KerberosAttributes *KerberosAttributes `type:"structure"`
+
 	// The path to the Amazon S3 location where logs for this cluster are stored.
 	LogUri *string `type:"string"`
 
-	// The public DNS name of the master EC2 instance.
+	// The DNS name of the master node. If the cluster is on a private subnet, this
+	// is the private DNS name. On a public subnet, this is the public DNS name.
 	MasterPublicDnsName *string `type:"string"`
 
 	// The name of the cluster.
@@ -3711,9 +3695,13 @@ type Cluster struct {
 	// the actual billing rate.
 	NormalizedInstanceHours *int64 `type:"integer"`
 
-	// The release label for the Amazon EMR release. For Amazon EMR 3.x and 2.x
-	// AMIs, use amiVersion instead instead of ReleaseLabel.
+	// The release label for the Amazon EMR release.
 	ReleaseLabel *string `type:"string"`
+
+	// Applies only when CustomAmiID is used. Specifies the type of updates that
+	// are applied from the Amazon Linux AMI package repositories when an instance
+	// boots using the AMI.
+	RepoUpgradeOnBoot *string `type:"string" enum:"RepoUpgradeOnBoot"`
 
 	// The AMI version requested for this cluster.
 	RequestedAmiVersion *string `type:"string"`
@@ -3796,6 +3784,18 @@ func (s *Cluster) SetConfigurations(v []*Configuration) *Cluster {
 	return s
 }
 
+// SetCustomAmiId sets the CustomAmiId field's value.
+func (s *Cluster) SetCustomAmiId(v string) *Cluster {
+	s.CustomAmiId = &v
+	return s
+}
+
+// SetEbsRootVolumeSize sets the EbsRootVolumeSize field's value.
+func (s *Cluster) SetEbsRootVolumeSize(v int64) *Cluster {
+	s.EbsRootVolumeSize = &v
+	return s
+}
+
 // SetEc2InstanceAttributes sets the Ec2InstanceAttributes field's value.
 func (s *Cluster) SetEc2InstanceAttributes(v *Ec2InstanceAttributes) *Cluster {
 	s.Ec2InstanceAttributes = v
@@ -3811,6 +3811,12 @@ func (s *Cluster) SetId(v string) *Cluster {
 // SetInstanceCollectionType sets the InstanceCollectionType field's value.
 func (s *Cluster) SetInstanceCollectionType(v string) *Cluster {
 	s.InstanceCollectionType = &v
+	return s
+}
+
+// SetKerberosAttributes sets the KerberosAttributes field's value.
+func (s *Cluster) SetKerberosAttributes(v *KerberosAttributes) *Cluster {
+	s.KerberosAttributes = v
 	return s
 }
 
@@ -3841,6 +3847,12 @@ func (s *Cluster) SetNormalizedInstanceHours(v int64) *Cluster {
 // SetReleaseLabel sets the ReleaseLabel field's value.
 func (s *Cluster) SetReleaseLabel(v string) *Cluster {
 	s.ReleaseLabel = &v
+	return s
+}
+
+// SetRepoUpgradeOnBoot sets the RepoUpgradeOnBoot field's value.
+func (s *Cluster) SetRepoUpgradeOnBoot(v string) *Cluster {
+	s.RepoUpgradeOnBoot = &v
 	return s
 }
 
@@ -4178,7 +4190,9 @@ type CreateSecurityConfigurationInput struct {
 	// Name is a required field
 	Name *string `type:"string" required:"true"`
 
-	// The security configuration details in JSON format.
+	// The security configuration details in JSON format. For JSON parameters and
+	// examples, see Use Security Configurations to Set Up Cluster Security (http://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-security-configurations.html)
+	// in the Amazon EMR Management Guide.
 	//
 	// SecurityConfiguration is a required field
 	SecurityConfiguration *string `type:"string" required:"true"`
@@ -4835,20 +4849,26 @@ type Ec2InstanceAttributes struct {
 	// of the cluster assume this role.
 	IamInstanceProfile *string `type:"string"`
 
-	// Applies to clusters configured with the The list of availability zones to
-	// choose from. The service will choose the availability zone with the best
-	// mix of available capacity and lowest cost to launch the cluster. If you do
-	// not specify this value, the cluster is launched in any availability zone
-	// that the customer account has access to.
+	// Applies to clusters configured with the instance fleets option. Specifies
+	// one or more Availability Zones in which to launch EC2 cluster instances when
+	// the EC2-Classic network configuration is supported. Amazon EMR chooses the
+	// Availability Zone with the best fit from among the list of RequestedEc2AvailabilityZones,
+	// and then launches all cluster instances within that Availability Zone. If
+	// you do not specify this value, Amazon EMR chooses the Availability Zone for
+	// you. RequestedEc2SubnetIDs and RequestedEc2AvailabilityZones cannot be specified
+	// together.
 	RequestedEc2AvailabilityZones []*string `type:"list"`
 
 	// Applies to clusters configured with the instance fleets option. Specifies
 	// the unique identifier of one or more Amazon EC2 subnets in which to launch
-	// EC2 cluster instances. Amazon EMR chooses the EC2 subnet with the best performance
-	// and cost characteristics from among the list of RequestedEc2SubnetIds and
-	// launches all cluster instances within that subnet. If this value is not specified,
-	// and the account supports EC2-Classic networks, the cluster launches instances
-	// in the EC2-Classic network and uses Requested
+	// EC2 cluster instances. Subnets must exist within the same VPC. Amazon EMR
+	// chooses the EC2 subnet with the best fit from among the list of RequestedEc2SubnetIds,
+	// and then launches all cluster instances within that Subnet. If this value
+	// is not specified, and the account and region support EC2-Classic networks,
+	// the cluster launches instances in the EC2-Classic network and uses RequestedEc2AvailabilityZones
+	// instead of this setting. If EC2-Classic is not supported, and no Subnet is
+	// specified, Amazon EMR chooses the subnet for you. RequestedEc2SubnetIDs and
+	// RequestedEc2AvailabilityZones cannot be specified together.
 	RequestedEc2SubnetIds []*string `type:"list"`
 
 	// The identifier of the Amazon EC2 security group for the Amazon EMR service
@@ -5679,6 +5699,26 @@ type InstanceFleetStatus struct {
 	_ struct{} `type:"structure"`
 
 	// A code representing the instance fleet status.
+	//
+	//    * PROVISIONING—The instance fleet is provisioning EC2 resources and is
+	//    not yet ready to run jobs.
+	//
+	//    * BOOTSTRAPPING—EC2 instances and other resources have been provisioned
+	//    and the bootstrap actions specified for the instances are underway.
+	//
+	//    * RUNNING—EC2 instances and other resources are running. They are either
+	//    executing jobs or waiting to execute jobs.
+	//
+	//    * RESIZING—A resize operation is underway. EC2 instances are either being
+	//    added or removed.
+	//
+	//    * SUSPENDED—A resize operation could not complete. Existing EC2 instances
+	//    are running, but instances can't be added or removed.
+	//
+	//    * TERMINATING—The instance fleet is terminating EC2 instances.
+	//
+	//    * TERMINATED—The instance fleet is no longer active, and all EC2 instances
+	//    have been terminated.
 	State *string `type:"string" enum:"InstanceFleetState"`
 
 	// Provides status change reason details for the instance fleet.
@@ -6590,9 +6630,9 @@ type InstanceTypeConfig struct {
 	BidPrice *string `type:"string"`
 
 	// The bid price, as a percentage of On-Demand price, for each EC2 Spot instance
-	// as defined by InstanceType. Expressed as a number between 0 and 1000 (for
-	// example, 20 specifies 20%). If neither BidPrice nor BidPriceAsPercentageOfOnDemandPrice
-	// is provided, BidPriceAsPercentageOfOnDemandPrice defaults to 100%.
+	// as defined by InstanceType. Expressed as a number (for example, 20 specifies
+	// 20%). If neither BidPrice nor BidPriceAsPercentageOfOnDemandPrice is provided,
+	// BidPriceAsPercentageOfOnDemandPrice defaults to 100%.
 	BidPriceAsPercentageOfOnDemandPrice *float64 `type:"double"`
 
 	// A configuration classification that applies when provisioning cluster instances,
@@ -6611,8 +6651,8 @@ type InstanceTypeConfig struct {
 
 	// The number of units that a provisioned instance of this type provides toward
 	// fulfilling the target capacities defined in InstanceFleetConfig. This value
-	// is 1 for a master instance fleet, and must be greater than 0 for core and
-	// task instance fleets.
+	// is 1 for a master instance fleet, and must be 1 or greater for core and task
+	// instance fleets. Defaults to 1 if not specified.
 	WeightedCapacity *int64 `type:"integer"`
 }
 
@@ -6779,9 +6819,9 @@ func (s *InstanceTypeSpecification) SetWeightedCapacity(v int64) *InstanceTypeSp
 type JobFlowDetail struct {
 	_ struct{} `type:"structure"`
 
-	// The version of the AMI used to initialize Amazon EC2 instances in the job
-	// flow. For a list of AMI versions currently supported by Amazon EMR, see AMI
-	// Versions Supported in EMR (http://docs.aws.amazon.com/ElasticMapReduce/latest/DeveloperGuide/EnvironmentConfig_AMIVersion.html#ami-versions-supported)
+	// Used only for version 2.x and 3.x of Amazon EMR. The version of the AMI used
+	// to initialize Amazon EC2 instances in the job flow. For a list of AMI versions
+	// supported by Amazon EMR, see AMI Versions Supported in EMR (http://docs.aws.amazon.com/emr/latest/DeveloperGuide/emr-dg.pdf#nameddest=ami-versions-supported)
 	// in the Amazon EMR Developer Guide.
 	AmiVersion *string `type:"string"`
 
@@ -7301,7 +7341,8 @@ type JobFlowInstancesDetail struct {
 	// MasterInstanceType is a required field
 	MasterInstanceType *string `min:"1" type:"string" required:"true"`
 
-	// The DNS name of the master node.
+	// The DNS name of the master node. If the cluster is on a private subnet, this
+	// is the private DNS name. On a public subnet, this is the public DNS name.
 	MasterPublicDnsName *string `type:"string"`
 
 	// An approximation of the cost of the cluster, represented in m1.small/hours.
@@ -7411,6 +7452,96 @@ func (s *JobFlowInstancesDetail) SetSlaveInstanceType(v string) *JobFlowInstance
 // SetTerminationProtected sets the TerminationProtected field's value.
 func (s *JobFlowInstancesDetail) SetTerminationProtected(v bool) *JobFlowInstancesDetail {
 	s.TerminationProtected = &v
+	return s
+}
+
+// Attributes for Kerberos configuration when Kerberos authentication is enabled
+// using a security configuration. For more information see Use Kerberos Authentication
+// (http://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-kerberos.html)
+// in the EMR Management Guide.
+// Please also see https://docs.aws.amazon.com/goto/WebAPI/elasticmapreduce-2009-03-31/KerberosAttributes
+type KerberosAttributes struct {
+	_ struct{} `type:"structure"`
+
+	// The Active Directory password for ADDomainJoinUser.
+	ADDomainJoinPassword *string `type:"string"`
+
+	// Required only when establishing a cross-realm trust with an Active Directory
+	// domain. A user with sufficient privileges to join resources to the domain.
+	ADDomainJoinUser *string `type:"string"`
+
+	// Required only when establishing a cross-realm trust with a KDC in a different
+	// realm. The cross-realm principal password, which must be identical across
+	// realms.
+	CrossRealmTrustPrincipalPassword *string `type:"string"`
+
+	// The password used within the cluster for the kadmin service on the cluster-dedicated
+	// KDC, which maintains Kerberos principals, password policies, and keytabs
+	// for the cluster.
+	//
+	// KdcAdminPassword is a required field
+	KdcAdminPassword *string `type:"string" required:"true"`
+
+	// The name of the Kerberos realm to which all nodes in a cluster belong. For
+	// example, EC2.INTERNAL.
+	//
+	// Realm is a required field
+	Realm *string `type:"string" required:"true"`
+}
+
+// String returns the string representation
+func (s KerberosAttributes) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation
+func (s KerberosAttributes) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *KerberosAttributes) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "KerberosAttributes"}
+	if s.KdcAdminPassword == nil {
+		invalidParams.Add(request.NewErrParamRequired("KdcAdminPassword"))
+	}
+	if s.Realm == nil {
+		invalidParams.Add(request.NewErrParamRequired("Realm"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetADDomainJoinPassword sets the ADDomainJoinPassword field's value.
+func (s *KerberosAttributes) SetADDomainJoinPassword(v string) *KerberosAttributes {
+	s.ADDomainJoinPassword = &v
+	return s
+}
+
+// SetADDomainJoinUser sets the ADDomainJoinUser field's value.
+func (s *KerberosAttributes) SetADDomainJoinUser(v string) *KerberosAttributes {
+	s.ADDomainJoinUser = &v
+	return s
+}
+
+// SetCrossRealmTrustPrincipalPassword sets the CrossRealmTrustPrincipalPassword field's value.
+func (s *KerberosAttributes) SetCrossRealmTrustPrincipalPassword(v string) *KerberosAttributes {
+	s.CrossRealmTrustPrincipalPassword = &v
+	return s
+}
+
+// SetKdcAdminPassword sets the KdcAdminPassword field's value.
+func (s *KerberosAttributes) SetKdcAdminPassword(v string) *KerberosAttributes {
+	s.KdcAdminPassword = &v
+	return s
+}
+
+// SetRealm sets the Realm field's value.
+func (s *KerberosAttributes) SetRealm(v string) *KerberosAttributes {
+	s.Realm = &v
 	return s
 }
 
@@ -8560,21 +8691,16 @@ type RunJobFlowInput struct {
 	// A JSON string for selecting additional features.
 	AdditionalInfo *string `type:"string"`
 
-	// For Amazon EMR releases 3.x and 2.x. For Amazon EMR releases 4.x and greater,
-	// use ReleaseLabel.
-	//
+	// For Amazon EMR AMI versions 3.x and 2.x. For Amazon EMR releases 4.0 and
+	// later, the Linux AMI is determined by the ReleaseLabel specified or by CustomAmiID.
 	// The version of the Amazon Machine Image (AMI) to use when launching Amazon
-	// EC2 instances in the job flow. The following values are valid:
-	//
-	//    * The version number of the AMI to use, for example, "2.0."
+	// EC2 instances in the job flow. For details about the AMI versions currently
+	// supported in EMR version 3.x and 2.x, see AMI Versions Supported in EMR (emr/latest/DeveloperGuide/emr-dg.pdf#nameddest=ami-versions-supported)
+	// in the Amazon EMR Developer Guide.
 	//
 	// If the AMI supports multiple versions of Hadoop (for example, AMI 1.0 supports
-	// both Hadoop 0.18 and 0.20) you can use the JobFlowInstancesConfigHadoopVersion
+	// both Hadoop 0.18 and 0.20), you can use the JobFlowInstancesConfigHadoopVersion
 	// parameter to modify the version of Hadoop from the defaults shown above.
-	//
-	// For details about the AMI versions currently supported by Amazon Elastic
-	// MapReduce, see AMI Versions Supported in Elastic MapReduce (http://docs.aws.amazon.com/ElasticMapReduce/latest/DeveloperGuide/EnvironmentConfig_AMIVersion.html#ami-versions-supported)
-	// in the Amazon Elastic MapReduce Developer Guide.
 	//
 	// Previously, the EMR AMI version API parameter options allowed you to use
 	// latest for the latest AMI version rather than specify a numerical value.
@@ -8583,10 +8709,9 @@ type RunJobFlowInput struct {
 	// release label release (EMR 4.x or later).
 	AmiVersion *string `type:"string"`
 
-	// Amazon EMR releases 4.x or later.
-	//
-	// A list of applications for the cluster. Valid values are: "Hadoop", "Hive",
-	// "Mahout", "Pig", and "Spark." They are case insensitive.
+	// For Amazon EMR releases 4.0 and later. A list of applications for the cluster.
+	// Valid values are: "Hadoop", "Hive", "Mahout", "Pig", and "Spark." They are
+	// case insensitive.
 	Applications []*Application `type:"list"`
 
 	// An IAM role for automatic scaling policies. The default role is EMR_AutoScaling_DefaultRole.
@@ -8597,10 +8722,27 @@ type RunJobFlowInput struct {
 	// A list of bootstrap actions to run before Hadoop starts on the cluster nodes.
 	BootstrapActions []*BootstrapActionConfig `type:"list"`
 
-	// Amazon EMR releases 4.x or later.
-	//
-	// The list of configurations supplied for the EMR cluster you are creating.
+	// For Amazon EMR releases 4.0 and later. The list of configurations supplied
+	// for the EMR cluster you are creating.
 	Configurations []*Configuration `type:"list"`
+
+	// Available only in Amazon EMR version 5.7.0 and later. The ID of a custom
+	// Amazon EBS-backed Linux AMI. If specified, Amazon EMR uses this AMI when
+	// it launches cluster EC2 instances. For more information about custom AMIs
+	// in Amazon EMR, see Using a Custom AMI (http://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-custom-ami.html)
+	// in the Amazon EMR Management Guide. If omitted, the cluster uses the base
+	// Linux AMI for the ReleaseLabel specified. For Amazon EMR versions 2.x and
+	// 3.x, use AmiVersion instead.
+	//
+	// For information about creating a custom AMI, see Creating an Amazon EBS-Backed
+	// Linux AMI (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/creating-an-ami-ebs.html)
+	// in the Amazon Elastic Compute Cloud User Guide for Linux Instances. For information
+	// about finding an AMI ID, see Finding a Linux AMI (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/finding-an-ami.html).
+	CustomAmiId *string `type:"string"`
+
+	// The size, in GiB, of the EBS root device volume of the Linux AMI that is
+	// used for each EC2 instance. Available in Amazon EMR version 4.x and later.
+	EbsRootVolumeSize *int64 `type:"integer"`
 
 	// A specification of the number and type of Amazon EC2 instances.
 	//
@@ -8613,6 +8755,12 @@ type RunJobFlowInput struct {
 	// the CLI or console.
 	JobFlowRole *string `type:"string"`
 
+	// Attributes for Kerberos configuration when Kerberos authentication is enabled
+	// using a security configuration. For more information see Use Kerberos Authentication
+	// (http://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-kerberos.html)
+	// in the EMR Management Guide.
+	KerberosAttributes *KerberosAttributes `type:"structure"`
+
 	// The location in Amazon S3 to write the log files of the job flow. If a value
 	// is not provided, logs are not created.
 	LogUri *string `type:"string"`
@@ -8622,14 +8770,14 @@ type RunJobFlowInput struct {
 	// Name is a required field
 	Name *string `type:"string" required:"true"`
 
-	// For Amazon EMR releases 3.x and 2.x. For Amazon EMR releases 4.x and greater,
+	// For Amazon EMR releases 3.x and 2.x. For Amazon EMR releases 4.x and later,
 	// use Applications.
 	//
 	// A list of strings that indicates third-party software to use with the job
 	// flow that accepts a user argument list. EMR accepts and forwards the argument
 	// list to the corresponding installation script as bootstrap action arguments.
 	// For more information, see "Launch a Job Flow on the MapR Distribution for
-	// Hadoop" in the Amazon EMR Developer Guide (http://docs.aws.amazon.com/http:/docs.aws.amazon.com/emr/latest/DeveloperGuide/emr-dg.pdf).
+	// Hadoop" in the Amazon EMR Developer Guide (http://docs.aws.amazon.com/emr/latest/DeveloperGuide/emr-dg.pdf).
 	// Supported values are:
 	//
 	//    * "mapr-m3" - launch the cluster using MapR M3 Edition.
@@ -8650,11 +8798,16 @@ type RunJobFlowInput struct {
 	//    * "ganglia" - launch the cluster with the Ganglia Monitoring System installed.
 	NewSupportedProducts []*SupportedProductConfig `type:"list"`
 
-	// Amazon EMR releases 4.x or later.
-	//
 	// The release label for the Amazon EMR release. For Amazon EMR 3.x and 2.x
-	// AMIs, use amiVersion instead instead of ReleaseLabel.
+	// AMIs, use AmiVersion instead.
 	ReleaseLabel *string `type:"string"`
+
+	// Applies only when CustomAmiID is used. Specifies which updates from the Amazon
+	// Linux AMI package repositories to apply automatically when the instance boots
+	// using the AMI. If omitted, the default is SECURITY, which indicates that
+	// only security updates are applied. If NONE is specified, no updates are applied,
+	// and all updates must be applied manually.
+	RepoUpgradeOnBoot *string `type:"string" enum:"RepoUpgradeOnBoot"`
 
 	// Specifies the way that individual Amazon EC2 instances terminate when an
 	// automatic scale-in activity occurs or an instance group is resized. TERMINATE_AT_INSTANCE_HOUR
@@ -8680,11 +8833,11 @@ type RunJobFlowInput struct {
 	// A list of steps to run.
 	Steps []*StepConfig `type:"list"`
 
-	// For Amazon EMR releases 3.x and 2.x. For Amazon EMR releases 4.x and greater,
+	// For Amazon EMR releases 3.x and 2.x. For Amazon EMR releases 4.x and later,
 	// use Applications.
 	//
 	// A list of strings that indicates third-party software to use. For more information,
-	// see Use Third Party Applications with Amazon EMR (http://docs.aws.amazon.com/ElasticMapReduce/latest/DeveloperGuide/emr-supported-products.html).
+	// see the Amazon EMR Developer Guide (http://docs.aws.amazon.com/emr/latest/DeveloperGuide/emr-dg.pdf).
 	// Currently supported values are:
 	//
 	//    * "mapr-m3" - launch the job flow using MapR M3 Edition.
@@ -8735,6 +8888,11 @@ func (s *RunJobFlowInput) Validate() error {
 	if s.Instances != nil {
 		if err := s.Instances.Validate(); err != nil {
 			invalidParams.AddNested("Instances", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.KerberosAttributes != nil {
+		if err := s.KerberosAttributes.Validate(); err != nil {
+			invalidParams.AddNested("KerberosAttributes", err.(request.ErrInvalidParams))
 		}
 	}
 	if s.Steps != nil {
@@ -8790,6 +8948,18 @@ func (s *RunJobFlowInput) SetConfigurations(v []*Configuration) *RunJobFlowInput
 	return s
 }
 
+// SetCustomAmiId sets the CustomAmiId field's value.
+func (s *RunJobFlowInput) SetCustomAmiId(v string) *RunJobFlowInput {
+	s.CustomAmiId = &v
+	return s
+}
+
+// SetEbsRootVolumeSize sets the EbsRootVolumeSize field's value.
+func (s *RunJobFlowInput) SetEbsRootVolumeSize(v int64) *RunJobFlowInput {
+	s.EbsRootVolumeSize = &v
+	return s
+}
+
 // SetInstances sets the Instances field's value.
 func (s *RunJobFlowInput) SetInstances(v *JobFlowInstancesConfig) *RunJobFlowInput {
 	s.Instances = v
@@ -8799,6 +8969,12 @@ func (s *RunJobFlowInput) SetInstances(v *JobFlowInstancesConfig) *RunJobFlowInp
 // SetJobFlowRole sets the JobFlowRole field's value.
 func (s *RunJobFlowInput) SetJobFlowRole(v string) *RunJobFlowInput {
 	s.JobFlowRole = &v
+	return s
+}
+
+// SetKerberosAttributes sets the KerberosAttributes field's value.
+func (s *RunJobFlowInput) SetKerberosAttributes(v *KerberosAttributes) *RunJobFlowInput {
+	s.KerberosAttributes = v
 	return s
 }
 
@@ -8823,6 +8999,12 @@ func (s *RunJobFlowInput) SetNewSupportedProducts(v []*SupportedProductConfig) *
 // SetReleaseLabel sets the ReleaseLabel field's value.
 func (s *RunJobFlowInput) SetReleaseLabel(v string) *RunJobFlowInput {
 	s.ReleaseLabel = &v
+	return s
+}
+
+// SetRepoUpgradeOnBoot sets the RepoUpgradeOnBoot field's value.
+func (s *RunJobFlowInput) SetRepoUpgradeOnBoot(v string) *RunJobFlowInput {
+	s.RepoUpgradeOnBoot = &v
 	return s
 }
 
@@ -9428,8 +9610,8 @@ type SimpleScalingPolicyConfiguration struct {
 	// indicates that the EC2 instance count increments or decrements by ScalingAdjustment,
 	// which should be expressed as an integer. PERCENT_CHANGE_IN_CAPACITY indicates
 	// the instance count increments or decrements by the percentage specified by
-	// ScalingAdjustment, which should be expressed as a decimal. For example, 0.20
-	// indicates an increase in 20% increments of cluster capacity. EXACT_CAPACITY
+	// ScalingAdjustment, which should be expressed as an integer. For example,
+	// 20 indicates an increase in 20% increments of cluster capacity. EXACT_CAPACITY
 	// indicates the scaling activity results in an instance group with the number
 	// of EC2 instances specified by ScalingAdjustment, which should be expressed
 	// as a positive integer.
@@ -9444,8 +9626,8 @@ type SimpleScalingPolicyConfiguration struct {
 	// A positive value adds to the instance group's EC2 instance count while a
 	// negative number removes instances. If AdjustmentType is set to EXACT_CAPACITY,
 	// the number should only be a positive integer. If AdjustmentType is set to
-	// PERCENT_CHANGE_IN_CAPACITY, the value should express the percentage as a
-	// decimal. For example, -0.20 indicates a decrease in 20% increments of cluster
+	// PERCENT_CHANGE_IN_CAPACITY, the value should express the percentage as an
+	// integer. For example, -20 indicates a decrease in 20% increments of cluster
 	// capacity.
 	//
 	// ScalingAdjustment is a required field
@@ -9514,8 +9696,9 @@ type SpotProvisioningSpecification struct {
 
 	// The action to take when TargetSpotCapacity has not been fulfilled when the
 	// TimeoutDurationMinutes has expired. Spot instances are not uprovisioned within
-	// the Spot provisioining timeout. Valid values are TERMINATE_CLUSTER and SWITCH_TO_ON_DEMAND
-	// to fulfill the remaining capacity.
+	// the Spot provisioining timeout. Valid values are TERMINATE_CLUSTER and SWITCH_TO_ON_DEMAND.
+	// SWITCH_TO_ON_DEMAND specifies that if no Spot instances are available, On-Demand
+	// Instances should be provisioned to fulfill any remaining Spot capacity.
 	//
 	// TimeoutAction is a required field
 	TimeoutAction *string `type:"string" required:"true" enum:"SpotProvisioningTimeoutAction"`
@@ -10038,18 +10221,17 @@ func (s *SupportedProductConfig) SetName(v string) *SupportedProductConfig {
 // A key/value pair containing user-defined metadata that you can associate
 // with an Amazon EMR resource. Tags make it easier to associate clusters in
 // various ways, such as grouping clusters to track your Amazon EMR resource
-// allocation costs. For more information, see Tagging Amazon EMR Resources
-// (http://docs.aws.amazon.com/ElasticMapReduce/latest/DeveloperGuide/emr-plan-tags.html).
+// allocation costs. For more information, see Tag Clusters (http://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-plan-tags.html).
 // Please also see https://docs.aws.amazon.com/goto/WebAPI/elasticmapreduce-2009-03-31/Tag
 type Tag struct {
 	_ struct{} `type:"structure"`
 
 	// A user-defined key, which is the minimum required information for a valid
-	// tag. For more information, see Tagging Amazon EMR Resources (http://docs.aws.amazon.com/ElasticMapReduce/latest/DeveloperGuide/emr-plan-tags.html).
+	// tag. For more information, see Tag  (http://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-plan-tags.html).
 	Key *string `type:"string"`
 
 	// A user-defined value, which is optional in a tag. For more information, see
-	// Tagging Amazon EMR Resources (http://docs.aws.amazon.com/ElasticMapReduce/latest/DeveloperGuide/emr-plan-tags.html).
+	// Tag Clusters (http://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-plan-tags.html).
 	Value *string `type:"string"`
 }
 
@@ -10292,6 +10474,9 @@ const (
 	// ClusterStateChangeReasonCodeInstanceFailure is a ClusterStateChangeReasonCode enum value
 	ClusterStateChangeReasonCodeInstanceFailure = "INSTANCE_FAILURE"
 
+	// ClusterStateChangeReasonCodeInstanceFleetTimeout is a ClusterStateChangeReasonCode enum value
+	ClusterStateChangeReasonCodeInstanceFleetTimeout = "INSTANCE_FLEET_TIMEOUT"
+
 	// ClusterStateChangeReasonCodeBootstrapFailure is a ClusterStateChangeReasonCode enum value
 	ClusterStateChangeReasonCodeBootstrapFailure = "BOOTSTRAP_FAILURE"
 
@@ -10510,6 +10695,14 @@ const (
 
 	// MarketTypeSpot is a MarketType enum value
 	MarketTypeSpot = "SPOT"
+)
+
+const (
+	// RepoUpgradeOnBootSecurity is a RepoUpgradeOnBoot enum value
+	RepoUpgradeOnBootSecurity = "SECURITY"
+
+	// RepoUpgradeOnBootNone is a RepoUpgradeOnBoot enum value
+	RepoUpgradeOnBootNone = "NONE"
 )
 
 const (

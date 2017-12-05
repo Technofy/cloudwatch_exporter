@@ -17,19 +17,18 @@ const opAttachInstances = "AttachInstances"
 
 // AttachInstancesRequest generates a "aws/request.Request" representing the
 // client's request for the AttachInstances operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See AttachInstances for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the AttachInstances method directly
-// instead.
+// See AttachInstances for more information on using the AttachInstances
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the AttachInstancesRequest method.
 //    req, resp := client.AttachInstancesRequest(params)
@@ -114,19 +113,18 @@ const opAttachLoadBalancerTargetGroups = "AttachLoadBalancerTargetGroups"
 
 // AttachLoadBalancerTargetGroupsRequest generates a "aws/request.Request" representing the
 // client's request for the AttachLoadBalancerTargetGroups operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See AttachLoadBalancerTargetGroups for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the AttachLoadBalancerTargetGroups method directly
-// instead.
+// See AttachLoadBalancerTargetGroups for more information on using the AttachLoadBalancerTargetGroups
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the AttachLoadBalancerTargetGroupsRequest method.
 //    req, resp := client.AttachLoadBalancerTargetGroupsRequest(params)
@@ -202,19 +200,18 @@ const opAttachLoadBalancers = "AttachLoadBalancers"
 
 // AttachLoadBalancersRequest generates a "aws/request.Request" representing the
 // client's request for the AttachLoadBalancers operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See AttachLoadBalancers for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the AttachLoadBalancers method directly
-// instead.
+// See AttachLoadBalancers for more information on using the AttachLoadBalancers
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the AttachLoadBalancersRequest method.
 //    req, resp := client.AttachLoadBalancersRequest(params)
@@ -293,19 +290,18 @@ const opCompleteLifecycleAction = "CompleteLifecycleAction"
 
 // CompleteLifecycleActionRequest generates a "aws/request.Request" representing the
 // client's request for the CompleteLifecycleAction operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See CompleteLifecycleAction for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the CompleteLifecycleAction method directly
-// instead.
+// See CompleteLifecycleAction for more information on using the CompleteLifecycleAction
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the CompleteLifecycleActionRequest method.
 //    req, resp := client.CompleteLifecycleActionRequest(params)
@@ -396,19 +392,18 @@ const opCreateAutoScalingGroup = "CreateAutoScalingGroup"
 
 // CreateAutoScalingGroupRequest generates a "aws/request.Request" representing the
 // client's request for the CreateAutoScalingGroup operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See CreateAutoScalingGroup for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the CreateAutoScalingGroup method directly
-// instead.
+// See CreateAutoScalingGroup for more information on using the CreateAutoScalingGroup
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the CreateAutoScalingGroupRequest method.
 //    req, resp := client.CreateAutoScalingGroupRequest(params)
@@ -495,19 +490,18 @@ const opCreateLaunchConfiguration = "CreateLaunchConfiguration"
 
 // CreateLaunchConfigurationRequest generates a "aws/request.Request" representing the
 // client's request for the CreateLaunchConfiguration operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See CreateLaunchConfiguration for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the CreateLaunchConfiguration method directly
-// instead.
+// See CreateLaunchConfiguration for more information on using the CreateLaunchConfiguration
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the CreateLaunchConfigurationRequest method.
 //    req, resp := client.CreateLaunchConfigurationRequest(params)
@@ -594,19 +588,18 @@ const opCreateOrUpdateTags = "CreateOrUpdateTags"
 
 // CreateOrUpdateTagsRequest generates a "aws/request.Request" representing the
 // client's request for the CreateOrUpdateTags operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See CreateOrUpdateTags for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the CreateOrUpdateTags method directly
-// instead.
+// See CreateOrUpdateTags for more information on using the CreateOrUpdateTags
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the CreateOrUpdateTagsRequest method.
 //    req, resp := client.CreateOrUpdateTagsRequest(params)
@@ -666,6 +659,9 @@ func (c *AutoScaling) CreateOrUpdateTagsRequest(input *CreateOrUpdateTagsInput) 
 //   You already have a pending update to an Auto Scaling resource (for example,
 //   a group, instance, or load balancer).
 //
+//   * ErrCodeResourceInUseFault "ResourceInUse"
+//   The operation can't be performed because the resource is in use.
+//
 // Please also see https://docs.aws.amazon.com/goto/WebAPI/autoscaling-2011-01-01/CreateOrUpdateTags
 func (c *AutoScaling) CreateOrUpdateTags(input *CreateOrUpdateTagsInput) (*CreateOrUpdateTagsOutput, error) {
 	req, out := c.CreateOrUpdateTagsRequest(input)
@@ -692,19 +688,18 @@ const opDeleteAutoScalingGroup = "DeleteAutoScalingGroup"
 
 // DeleteAutoScalingGroupRequest generates a "aws/request.Request" representing the
 // client's request for the DeleteAutoScalingGroup operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See DeleteAutoScalingGroup for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the DeleteAutoScalingGroup method directly
-// instead.
+// See DeleteAutoScalingGroup for more information on using the DeleteAutoScalingGroup
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the DeleteAutoScalingGroupRequest method.
 //    req, resp := client.DeleteAutoScalingGroupRequest(params)
@@ -796,19 +791,18 @@ const opDeleteLaunchConfiguration = "DeleteLaunchConfiguration"
 
 // DeleteLaunchConfigurationRequest generates a "aws/request.Request" representing the
 // client's request for the DeleteLaunchConfiguration operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See DeleteLaunchConfiguration for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the DeleteLaunchConfiguration method directly
-// instead.
+// See DeleteLaunchConfiguration for more information on using the DeleteLaunchConfiguration
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the DeleteLaunchConfigurationRequest method.
 //    req, resp := client.DeleteLaunchConfigurationRequest(params)
@@ -886,19 +880,18 @@ const opDeleteLifecycleHook = "DeleteLifecycleHook"
 
 // DeleteLifecycleHookRequest generates a "aws/request.Request" representing the
 // client's request for the DeleteLifecycleHook operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See DeleteLifecycleHook for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the DeleteLifecycleHook method directly
-// instead.
+// See DeleteLifecycleHook for more information on using the DeleteLifecycleHook
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the DeleteLifecycleHookRequest method.
 //    req, resp := client.DeleteLifecycleHookRequest(params)
@@ -970,19 +963,18 @@ const opDeleteNotificationConfiguration = "DeleteNotificationConfiguration"
 
 // DeleteNotificationConfigurationRequest generates a "aws/request.Request" representing the
 // client's request for the DeleteNotificationConfiguration operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See DeleteNotificationConfiguration for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the DeleteNotificationConfiguration method directly
-// instead.
+// See DeleteNotificationConfiguration for more information on using the DeleteNotificationConfiguration
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the DeleteNotificationConfigurationRequest method.
 //    req, resp := client.DeleteNotificationConfigurationRequest(params)
@@ -1053,19 +1045,18 @@ const opDeletePolicy = "DeletePolicy"
 
 // DeletePolicyRequest generates a "aws/request.Request" representing the
 // client's request for the DeletePolicy operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See DeletePolicy for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the DeletePolicy method directly
-// instead.
+// See DeletePolicy for more information on using the DeletePolicy
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the DeletePolicyRequest method.
 //    req, resp := client.DeletePolicyRequest(params)
@@ -1139,19 +1130,18 @@ const opDeleteScheduledAction = "DeleteScheduledAction"
 
 // DeleteScheduledActionRequest generates a "aws/request.Request" representing the
 // client's request for the DeleteScheduledAction operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See DeleteScheduledAction for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the DeleteScheduledAction method directly
-// instead.
+// See DeleteScheduledAction for more information on using the DeleteScheduledAction
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the DeleteScheduledActionRequest method.
 //    req, resp := client.DeleteScheduledActionRequest(params)
@@ -1222,19 +1212,18 @@ const opDeleteTags = "DeleteTags"
 
 // DeleteTagsRequest generates a "aws/request.Request" representing the
 // client's request for the DeleteTags operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See DeleteTags for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the DeleteTags method directly
-// instead.
+// See DeleteTags for more information on using the DeleteTags
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the DeleteTagsRequest method.
 //    req, resp := client.DeleteTagsRequest(params)
@@ -1279,6 +1268,9 @@ func (c *AutoScaling) DeleteTagsRequest(input *DeleteTagsInput) (req *request.Re
 //   You already have a pending update to an Auto Scaling resource (for example,
 //   a group, instance, or load balancer).
 //
+//   * ErrCodeResourceInUseFault "ResourceInUse"
+//   The operation can't be performed because the resource is in use.
+//
 // Please also see https://docs.aws.amazon.com/goto/WebAPI/autoscaling-2011-01-01/DeleteTags
 func (c *AutoScaling) DeleteTags(input *DeleteTagsInput) (*DeleteTagsOutput, error) {
 	req, out := c.DeleteTagsRequest(input)
@@ -1305,19 +1297,18 @@ const opDescribeAccountLimits = "DescribeAccountLimits"
 
 // DescribeAccountLimitsRequest generates a "aws/request.Request" representing the
 // client's request for the DescribeAccountLimits operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See DescribeAccountLimits for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the DescribeAccountLimits method directly
-// instead.
+// See DescribeAccountLimits for more information on using the DescribeAccountLimits
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the DescribeAccountLimitsRequest method.
 //    req, resp := client.DescribeAccountLimitsRequest(params)
@@ -1390,19 +1381,18 @@ const opDescribeAdjustmentTypes = "DescribeAdjustmentTypes"
 
 // DescribeAdjustmentTypesRequest generates a "aws/request.Request" representing the
 // client's request for the DescribeAdjustmentTypes operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See DescribeAdjustmentTypes for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the DescribeAdjustmentTypes method directly
-// instead.
+// See DescribeAdjustmentTypes for more information on using the DescribeAdjustmentTypes
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the DescribeAdjustmentTypesRequest method.
 //    req, resp := client.DescribeAdjustmentTypesRequest(params)
@@ -1471,19 +1461,18 @@ const opDescribeAutoScalingGroups = "DescribeAutoScalingGroups"
 
 // DescribeAutoScalingGroupsRequest generates a "aws/request.Request" representing the
 // client's request for the DescribeAutoScalingGroups operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See DescribeAutoScalingGroups for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the DescribeAutoScalingGroups method directly
-// instead.
+// See DescribeAutoScalingGroups for more information on using the DescribeAutoScalingGroups
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the DescribeAutoScalingGroupsRequest method.
 //    req, resp := client.DescribeAutoScalingGroupsRequest(params)
@@ -1611,19 +1600,18 @@ const opDescribeAutoScalingInstances = "DescribeAutoScalingInstances"
 
 // DescribeAutoScalingInstancesRequest generates a "aws/request.Request" representing the
 // client's request for the DescribeAutoScalingInstances operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See DescribeAutoScalingInstances for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the DescribeAutoScalingInstances method directly
-// instead.
+// See DescribeAutoScalingInstances for more information on using the DescribeAutoScalingInstances
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the DescribeAutoScalingInstancesRequest method.
 //    req, resp := client.DescribeAutoScalingInstancesRequest(params)
@@ -1751,19 +1739,18 @@ const opDescribeAutoScalingNotificationTypes = "DescribeAutoScalingNotificationT
 
 // DescribeAutoScalingNotificationTypesRequest generates a "aws/request.Request" representing the
 // client's request for the DescribeAutoScalingNotificationTypes operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See DescribeAutoScalingNotificationTypes for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the DescribeAutoScalingNotificationTypes method directly
-// instead.
+// See DescribeAutoScalingNotificationTypes for more information on using the DescribeAutoScalingNotificationTypes
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the DescribeAutoScalingNotificationTypesRequest method.
 //    req, resp := client.DescribeAutoScalingNotificationTypesRequest(params)
@@ -1832,19 +1819,18 @@ const opDescribeLaunchConfigurations = "DescribeLaunchConfigurations"
 
 // DescribeLaunchConfigurationsRequest generates a "aws/request.Request" representing the
 // client's request for the DescribeLaunchConfigurations operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See DescribeLaunchConfigurations for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the DescribeLaunchConfigurations method directly
-// instead.
+// See DescribeLaunchConfigurations for more information on using the DescribeLaunchConfigurations
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the DescribeLaunchConfigurationsRequest method.
 //    req, resp := client.DescribeLaunchConfigurationsRequest(params)
@@ -1972,19 +1958,18 @@ const opDescribeLifecycleHookTypes = "DescribeLifecycleHookTypes"
 
 // DescribeLifecycleHookTypesRequest generates a "aws/request.Request" representing the
 // client's request for the DescribeLifecycleHookTypes operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See DescribeLifecycleHookTypes for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the DescribeLifecycleHookTypes method directly
-// instead.
+// See DescribeLifecycleHookTypes for more information on using the DescribeLifecycleHookTypes
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the DescribeLifecycleHookTypesRequest method.
 //    req, resp := client.DescribeLifecycleHookTypesRequest(params)
@@ -2053,19 +2038,18 @@ const opDescribeLifecycleHooks = "DescribeLifecycleHooks"
 
 // DescribeLifecycleHooksRequest generates a "aws/request.Request" representing the
 // client's request for the DescribeLifecycleHooks operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See DescribeLifecycleHooks for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the DescribeLifecycleHooks method directly
-// instead.
+// See DescribeLifecycleHooks for more information on using the DescribeLifecycleHooks
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the DescribeLifecycleHooksRequest method.
 //    req, resp := client.DescribeLifecycleHooksRequest(params)
@@ -2134,19 +2118,18 @@ const opDescribeLoadBalancerTargetGroups = "DescribeLoadBalancerTargetGroups"
 
 // DescribeLoadBalancerTargetGroupsRequest generates a "aws/request.Request" representing the
 // client's request for the DescribeLoadBalancerTargetGroups operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See DescribeLoadBalancerTargetGroups for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the DescribeLoadBalancerTargetGroups method directly
-// instead.
+// See DescribeLoadBalancerTargetGroups for more information on using the DescribeLoadBalancerTargetGroups
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the DescribeLoadBalancerTargetGroupsRequest method.
 //    req, resp := client.DescribeLoadBalancerTargetGroupsRequest(params)
@@ -2215,19 +2198,18 @@ const opDescribeLoadBalancers = "DescribeLoadBalancers"
 
 // DescribeLoadBalancersRequest generates a "aws/request.Request" representing the
 // client's request for the DescribeLoadBalancers operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See DescribeLoadBalancers for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the DescribeLoadBalancers method directly
-// instead.
+// See DescribeLoadBalancers for more information on using the DescribeLoadBalancers
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the DescribeLoadBalancersRequest method.
 //    req, resp := client.DescribeLoadBalancersRequest(params)
@@ -2299,19 +2281,18 @@ const opDescribeMetricCollectionTypes = "DescribeMetricCollectionTypes"
 
 // DescribeMetricCollectionTypesRequest generates a "aws/request.Request" representing the
 // client's request for the DescribeMetricCollectionTypes operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See DescribeMetricCollectionTypes for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the DescribeMetricCollectionTypes method directly
-// instead.
+// See DescribeMetricCollectionTypes for more information on using the DescribeMetricCollectionTypes
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the DescribeMetricCollectionTypesRequest method.
 //    req, resp := client.DescribeMetricCollectionTypesRequest(params)
@@ -2383,19 +2364,18 @@ const opDescribeNotificationConfigurations = "DescribeNotificationConfigurations
 
 // DescribeNotificationConfigurationsRequest generates a "aws/request.Request" representing the
 // client's request for the DescribeNotificationConfigurations operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See DescribeNotificationConfigurations for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the DescribeNotificationConfigurations method directly
-// instead.
+// See DescribeNotificationConfigurations for more information on using the DescribeNotificationConfigurations
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the DescribeNotificationConfigurationsRequest method.
 //    req, resp := client.DescribeNotificationConfigurationsRequest(params)
@@ -2524,19 +2504,18 @@ const opDescribePolicies = "DescribePolicies"
 
 // DescribePoliciesRequest generates a "aws/request.Request" representing the
 // client's request for the DescribePolicies operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See DescribePolicies for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the DescribePolicies method directly
-// instead.
+// See DescribePolicies for more information on using the DescribePolicies
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the DescribePoliciesRequest method.
 //    req, resp := client.DescribePoliciesRequest(params)
@@ -2664,19 +2643,18 @@ const opDescribeScalingActivities = "DescribeScalingActivities"
 
 // DescribeScalingActivitiesRequest generates a "aws/request.Request" representing the
 // client's request for the DescribeScalingActivities operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See DescribeScalingActivities for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the DescribeScalingActivities method directly
-// instead.
+// See DescribeScalingActivities for more information on using the DescribeScalingActivities
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the DescribeScalingActivitiesRequest method.
 //    req, resp := client.DescribeScalingActivitiesRequest(params)
@@ -2804,19 +2782,18 @@ const opDescribeScalingProcessTypes = "DescribeScalingProcessTypes"
 
 // DescribeScalingProcessTypesRequest generates a "aws/request.Request" representing the
 // client's request for the DescribeScalingProcessTypes operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See DescribeScalingProcessTypes for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the DescribeScalingProcessTypes method directly
-// instead.
+// See DescribeScalingProcessTypes for more information on using the DescribeScalingProcessTypes
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the DescribeScalingProcessTypesRequest method.
 //    req, resp := client.DescribeScalingProcessTypesRequest(params)
@@ -2885,19 +2862,18 @@ const opDescribeScheduledActions = "DescribeScheduledActions"
 
 // DescribeScheduledActionsRequest generates a "aws/request.Request" representing the
 // client's request for the DescribeScheduledActions operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See DescribeScheduledActions for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the DescribeScheduledActions method directly
-// instead.
+// See DescribeScheduledActions for more information on using the DescribeScheduledActions
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the DescribeScheduledActionsRequest method.
 //    req, resp := client.DescribeScheduledActionsRequest(params)
@@ -3026,19 +3002,18 @@ const opDescribeTags = "DescribeTags"
 
 // DescribeTagsRequest generates a "aws/request.Request" representing the
 // client's request for the DescribeTags operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See DescribeTags for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the DescribeTags method directly
-// instead.
+// See DescribeTags for more information on using the DescribeTags
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the DescribeTagsRequest method.
 //    req, resp := client.DescribeTagsRequest(params)
@@ -3175,19 +3150,18 @@ const opDescribeTerminationPolicyTypes = "DescribeTerminationPolicyTypes"
 
 // DescribeTerminationPolicyTypesRequest generates a "aws/request.Request" representing the
 // client's request for the DescribeTerminationPolicyTypes operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See DescribeTerminationPolicyTypes for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the DescribeTerminationPolicyTypes method directly
-// instead.
+// See DescribeTerminationPolicyTypes for more information on using the DescribeTerminationPolicyTypes
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the DescribeTerminationPolicyTypesRequest method.
 //    req, resp := client.DescribeTerminationPolicyTypesRequest(params)
@@ -3256,19 +3230,18 @@ const opDetachInstances = "DetachInstances"
 
 // DetachInstancesRequest generates a "aws/request.Request" representing the
 // client's request for the DetachInstances operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See DetachInstances for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the DetachInstances method directly
-// instead.
+// See DetachInstances for more information on using the DetachInstances
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the DetachInstancesRequest method.
 //    req, resp := client.DetachInstancesRequest(params)
@@ -3352,19 +3325,18 @@ const opDetachLoadBalancerTargetGroups = "DetachLoadBalancerTargetGroups"
 
 // DetachLoadBalancerTargetGroupsRequest generates a "aws/request.Request" representing the
 // client's request for the DetachLoadBalancerTargetGroups operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See DetachLoadBalancerTargetGroups for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the DetachLoadBalancerTargetGroups method directly
-// instead.
+// See DetachLoadBalancerTargetGroups for more information on using the DetachLoadBalancerTargetGroups
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the DetachLoadBalancerTargetGroupsRequest method.
 //    req, resp := client.DetachLoadBalancerTargetGroupsRequest(params)
@@ -3433,19 +3405,18 @@ const opDetachLoadBalancers = "DetachLoadBalancers"
 
 // DetachLoadBalancersRequest generates a "aws/request.Request" representing the
 // client's request for the DetachLoadBalancers operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See DetachLoadBalancers for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the DetachLoadBalancers method directly
-// instead.
+// See DetachLoadBalancers for more information on using the DetachLoadBalancers
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the DetachLoadBalancersRequest method.
 //    req, resp := client.DetachLoadBalancersRequest(params)
@@ -3523,19 +3494,18 @@ const opDisableMetricsCollection = "DisableMetricsCollection"
 
 // DisableMetricsCollectionRequest generates a "aws/request.Request" representing the
 // client's request for the DisableMetricsCollection operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See DisableMetricsCollection for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the DisableMetricsCollection method directly
-// instead.
+// See DisableMetricsCollection for more information on using the DisableMetricsCollection
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the DisableMetricsCollectionRequest method.
 //    req, resp := client.DisableMetricsCollectionRequest(params)
@@ -3606,19 +3576,18 @@ const opEnableMetricsCollection = "EnableMetricsCollection"
 
 // EnableMetricsCollectionRequest generates a "aws/request.Request" representing the
 // client's request for the EnableMetricsCollection operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See EnableMetricsCollection for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the EnableMetricsCollection method directly
-// instead.
+// See EnableMetricsCollection for more information on using the EnableMetricsCollection
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the EnableMetricsCollectionRequest method.
 //    req, resp := client.EnableMetricsCollectionRequest(params)
@@ -3691,19 +3660,18 @@ const opEnterStandby = "EnterStandby"
 
 // EnterStandbyRequest generates a "aws/request.Request" representing the
 // client's request for the EnterStandby operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See EnterStandby for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the EnterStandby method directly
-// instead.
+// See EnterStandby for more information on using the EnterStandby
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the EnterStandbyRequest method.
 //    req, resp := client.EnterStandbyRequest(params)
@@ -3776,19 +3744,18 @@ const opExecutePolicy = "ExecutePolicy"
 
 // ExecutePolicyRequest generates a "aws/request.Request" representing the
 // client's request for the ExecutePolicy operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See ExecutePolicy for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the ExecutePolicy method directly
-// instead.
+// See ExecutePolicy for more information on using the ExecutePolicy
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the ExecutePolicyRequest method.
 //    req, resp := client.ExecutePolicyRequest(params)
@@ -3863,19 +3830,18 @@ const opExitStandby = "ExitStandby"
 
 // ExitStandbyRequest generates a "aws/request.Request" representing the
 // client's request for the ExitStandby operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See ExitStandby for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the ExitStandby method directly
-// instead.
+// See ExitStandby for more information on using the ExitStandby
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the ExitStandbyRequest method.
 //    req, resp := client.ExitStandbyRequest(params)
@@ -3948,19 +3914,18 @@ const opPutLifecycleHook = "PutLifecycleHook"
 
 // PutLifecycleHookRequest generates a "aws/request.Request" representing the
 // client's request for the PutLifecycleHook operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See PutLifecycleHook for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the PutLifecycleHook method directly
-// instead.
+// See PutLifecycleHook for more information on using the PutLifecycleHook
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the PutLifecycleHookRequest method.
 //    req, resp := client.PutLifecycleHookRequest(params)
@@ -4064,19 +4029,18 @@ const opPutNotificationConfiguration = "PutNotificationConfiguration"
 
 // PutNotificationConfigurationRequest generates a "aws/request.Request" representing the
 // client's request for the PutNotificationConfiguration operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See PutNotificationConfiguration for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the PutNotificationConfiguration method directly
-// instead.
+// See PutNotificationConfiguration for more information on using the PutNotificationConfiguration
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the PutNotificationConfigurationRequest method.
 //    req, resp := client.PutNotificationConfigurationRequest(params)
@@ -4160,19 +4124,18 @@ const opPutScalingPolicy = "PutScalingPolicy"
 
 // PutScalingPolicyRequest generates a "aws/request.Request" representing the
 // client's request for the PutScalingPolicy operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See PutScalingPolicy for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the PutScalingPolicy method directly
-// instead.
+// See PutScalingPolicy for more information on using the PutScalingPolicy
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the PutScalingPolicyRequest method.
 //    req, resp := client.PutScalingPolicyRequest(params)
@@ -4254,19 +4217,18 @@ const opPutScheduledUpdateGroupAction = "PutScheduledUpdateGroupAction"
 
 // PutScheduledUpdateGroupActionRequest generates a "aws/request.Request" representing the
 // client's request for the PutScheduledUpdateGroupAction operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See PutScheduledUpdateGroupAction for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the PutScheduledUpdateGroupAction method directly
-// instead.
+// See PutScheduledUpdateGroupAction for more information on using the PutScheduledUpdateGroupAction
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the PutScheduledUpdateGroupActionRequest method.
 //    req, resp := client.PutScheduledUpdateGroupActionRequest(params)
@@ -4351,19 +4313,18 @@ const opRecordLifecycleActionHeartbeat = "RecordLifecycleActionHeartbeat"
 
 // RecordLifecycleActionHeartbeatRequest generates a "aws/request.Request" representing the
 // client's request for the RecordLifecycleActionHeartbeat operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See RecordLifecycleActionHeartbeat for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the RecordLifecycleActionHeartbeat method directly
-// instead.
+// See RecordLifecycleActionHeartbeat for more information on using the RecordLifecycleActionHeartbeat
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the RecordLifecycleActionHeartbeatRequest method.
 //    req, resp := client.RecordLifecycleActionHeartbeatRequest(params)
@@ -4455,19 +4416,18 @@ const opResumeProcesses = "ResumeProcesses"
 
 // ResumeProcessesRequest generates a "aws/request.Request" representing the
 // client's request for the ResumeProcesses operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See ResumeProcesses for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the ResumeProcesses method directly
-// instead.
+// See ResumeProcesses for more information on using the ResumeProcesses
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the ResumeProcessesRequest method.
 //    req, resp := client.ResumeProcessesRequest(params)
@@ -4546,19 +4506,18 @@ const opSetDesiredCapacity = "SetDesiredCapacity"
 
 // SetDesiredCapacityRequest generates a "aws/request.Request" representing the
 // client's request for the SetDesiredCapacity operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See SetDesiredCapacity for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the SetDesiredCapacity method directly
-// instead.
+// See SetDesiredCapacity for more information on using the SetDesiredCapacity
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the SetDesiredCapacityRequest method.
 //    req, resp := client.SetDesiredCapacityRequest(params)
@@ -4636,19 +4595,18 @@ const opSetInstanceHealth = "SetInstanceHealth"
 
 // SetInstanceHealthRequest generates a "aws/request.Request" representing the
 // client's request for the SetInstanceHealth operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See SetInstanceHealth for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the SetInstanceHealth method directly
-// instead.
+// See SetInstanceHealth for more information on using the SetInstanceHealth
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the SetInstanceHealthRequest method.
 //    req, resp := client.SetInstanceHealthRequest(params)
@@ -4722,19 +4680,18 @@ const opSetInstanceProtection = "SetInstanceProtection"
 
 // SetInstanceProtectionRequest generates a "aws/request.Request" representing the
 // client's request for the SetInstanceProtection operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See SetInstanceProtection for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the SetInstanceProtection method directly
-// instead.
+// See SetInstanceProtection for more information on using the SetInstanceProtection
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the SetInstanceProtectionRequest method.
 //    req, resp := client.SetInstanceProtectionRequest(params)
@@ -4811,19 +4768,18 @@ const opSuspendProcesses = "SuspendProcesses"
 
 // SuspendProcessesRequest generates a "aws/request.Request" representing the
 // client's request for the SuspendProcesses operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See SuspendProcesses for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the SuspendProcesses method directly
-// instead.
+// See SuspendProcesses for more information on using the SuspendProcesses
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the SuspendProcessesRequest method.
 //    req, resp := client.SuspendProcessesRequest(params)
@@ -4907,19 +4863,18 @@ const opTerminateInstanceInAutoScalingGroup = "TerminateInstanceInAutoScalingGro
 
 // TerminateInstanceInAutoScalingGroupRequest generates a "aws/request.Request" representing the
 // client's request for the TerminateInstanceInAutoScalingGroup operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See TerminateInstanceInAutoScalingGroup for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the TerminateInstanceInAutoScalingGroup method directly
-// instead.
+// See TerminateInstanceInAutoScalingGroup for more information on using the TerminateInstanceInAutoScalingGroup
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the TerminateInstanceInAutoScalingGroupRequest method.
 //    req, resp := client.TerminateInstanceInAutoScalingGroupRequest(params)
@@ -4996,19 +4951,18 @@ const opUpdateAutoScalingGroup = "UpdateAutoScalingGroup"
 
 // UpdateAutoScalingGroupRequest generates a "aws/request.Request" representing the
 // client's request for the UpdateAutoScalingGroup operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See UpdateAutoScalingGroup for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the UpdateAutoScalingGroup method directly
-// instead.
+// See UpdateAutoScalingGroup for more information on using the UpdateAutoScalingGroup
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the UpdateAutoScalingGroupRequest method.
 //    req, resp := client.UpdateAutoScalingGroupRequest(params)
@@ -5286,7 +5240,7 @@ func (s *Alarm) SetAlarmName(v string) *Alarm {
 type AttachInstancesInput struct {
 	_ struct{} `type:"structure"`
 
-	// The name of the group.
+	// The name of the Auto Scaling group.
 	//
 	// AutoScalingGroupName is a required field
 	AutoScalingGroupName *string `min:"1" type:"string" required:"true"`
@@ -5423,7 +5377,7 @@ func (s AttachLoadBalancerTargetGroupsOutput) GoString() string {
 type AttachLoadBalancersInput struct {
 	_ struct{} `type:"structure"`
 
-	// The name of the group.
+	// The name of the Auto Scaling group.
 	//
 	// AutoScalingGroupName is a required field
 	AutoScalingGroupName *string `min:"1" type:"string" required:"true"`
@@ -5576,7 +5530,7 @@ func (s *BlockDeviceMapping) SetVirtualName(v string) *BlockDeviceMapping {
 type CompleteLifecycleActionInput struct {
 	_ struct{} `type:"structure"`
 
-	// The name of the group for the lifecycle hook.
+	// The name of the Auto Scaling group.
 	//
 	// AutoScalingGroupName is a required field
 	AutoScalingGroupName *string `min:"1" type:"string" required:"true"`
@@ -5691,8 +5645,8 @@ func (s CompleteLifecycleActionOutput) GoString() string {
 type CreateAutoScalingGroupInput struct {
 	_ struct{} `type:"structure"`
 
-	// The name of the group. This name must be unique within the scope of your
-	// AWS account.
+	// The name of the Auto Scaling group. This name must be unique within the scope
+	// of your AWS account.
 	//
 	// AutoScalingGroupName is a required field
 	AutoScalingGroupName *string `min:"1" type:"string" required:"true"`
@@ -5733,7 +5687,8 @@ type CreateAutoScalingGroupInput struct {
 	HealthCheckType *string `min:"1" type:"string"`
 
 	// The ID of the instance used to create a launch configuration for the group.
-	// Alternatively, specify a launch configuration instead of an EC2 instance.
+	// You must specify one of the following: an EC2 instance, a launch configuration,
+	// or a launch template.
 	//
 	// When you specify an ID of an instance, Auto Scaling creates a new launch
 	// configuration and associates it with the group. This launch configuration
@@ -5745,9 +5700,16 @@ type CreateAutoScalingGroupInput struct {
 	// in the Auto Scaling User Guide.
 	InstanceId *string `min:"1" type:"string"`
 
-	// The name of the launch configuration. Alternatively, specify an EC2 instance
-	// instead of a launch configuration.
+	// The name of the launch configuration. You must specify one of the following:
+	// a launch configuration, a launch template, or an EC2 instance.
 	LaunchConfigurationName *string `min:"1" type:"string"`
+
+	// The launch template to use to launch instances. You must specify one of the
+	// following: a launch template, a launch configuration, or an EC2 instance.
+	LaunchTemplate *LaunchTemplateSpecification `type:"structure"`
+
+	// One or more lifecycle hooks.
+	LifecycleHookSpecificationList []*LifecycleHookSpecification `type:"list"`
 
 	// One or more Classic Load Balancers. To specify an Application Load Balancer,
 	// use TargetGroupARNs instead.
@@ -5847,6 +5809,21 @@ func (s *CreateAutoScalingGroupInput) Validate() error {
 	if s.VPCZoneIdentifier != nil && len(*s.VPCZoneIdentifier) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("VPCZoneIdentifier", 1))
 	}
+	if s.LaunchTemplate != nil {
+		if err := s.LaunchTemplate.Validate(); err != nil {
+			invalidParams.AddNested("LaunchTemplate", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.LifecycleHookSpecificationList != nil {
+		for i, v := range s.LifecycleHookSpecificationList {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "LifecycleHookSpecificationList", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
 	if s.Tags != nil {
 		for i, v := range s.Tags {
 			if v == nil {
@@ -5909,6 +5886,18 @@ func (s *CreateAutoScalingGroupInput) SetInstanceId(v string) *CreateAutoScaling
 // SetLaunchConfigurationName sets the LaunchConfigurationName field's value.
 func (s *CreateAutoScalingGroupInput) SetLaunchConfigurationName(v string) *CreateAutoScalingGroupInput {
 	s.LaunchConfigurationName = &v
+	return s
+}
+
+// SetLaunchTemplate sets the LaunchTemplate field's value.
+func (s *CreateAutoScalingGroupInput) SetLaunchTemplate(v *LaunchTemplateSpecification) *CreateAutoScalingGroupInput {
+	s.LaunchTemplate = v
+	return s
+}
+
+// SetLifecycleHookSpecificationList sets the LifecycleHookSpecificationList field's value.
+func (s *CreateAutoScalingGroupInput) SetLifecycleHookSpecificationList(v []*LifecycleHookSpecification) *CreateAutoScalingGroupInput {
+	s.LifecycleHookSpecificationList = v
 	return s
 }
 
@@ -6382,11 +6371,107 @@ func (s CreateOrUpdateTagsOutput) GoString() string {
 	return s.String()
 }
 
+// Configures a customized metric for a target tracking policy.
+// Please also see https://docs.aws.amazon.com/goto/WebAPI/autoscaling-2011-01-01/CustomizedMetricSpecification
+type CustomizedMetricSpecification struct {
+	_ struct{} `type:"structure"`
+
+	// The dimensions of the metric.
+	Dimensions []*MetricDimension `type:"list"`
+
+	// The name of the metric.
+	//
+	// MetricName is a required field
+	MetricName *string `type:"string" required:"true"`
+
+	// The namespace of the metric.
+	//
+	// Namespace is a required field
+	Namespace *string `type:"string" required:"true"`
+
+	// The statistic of the metric.
+	//
+	// Statistic is a required field
+	Statistic *string `type:"string" required:"true" enum:"MetricStatistic"`
+
+	// The unit of the metric.
+	Unit *string `type:"string"`
+}
+
+// String returns the string representation
+func (s CustomizedMetricSpecification) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation
+func (s CustomizedMetricSpecification) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *CustomizedMetricSpecification) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "CustomizedMetricSpecification"}
+	if s.MetricName == nil {
+		invalidParams.Add(request.NewErrParamRequired("MetricName"))
+	}
+	if s.Namespace == nil {
+		invalidParams.Add(request.NewErrParamRequired("Namespace"))
+	}
+	if s.Statistic == nil {
+		invalidParams.Add(request.NewErrParamRequired("Statistic"))
+	}
+	if s.Dimensions != nil {
+		for i, v := range s.Dimensions {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "Dimensions", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetDimensions sets the Dimensions field's value.
+func (s *CustomizedMetricSpecification) SetDimensions(v []*MetricDimension) *CustomizedMetricSpecification {
+	s.Dimensions = v
+	return s
+}
+
+// SetMetricName sets the MetricName field's value.
+func (s *CustomizedMetricSpecification) SetMetricName(v string) *CustomizedMetricSpecification {
+	s.MetricName = &v
+	return s
+}
+
+// SetNamespace sets the Namespace field's value.
+func (s *CustomizedMetricSpecification) SetNamespace(v string) *CustomizedMetricSpecification {
+	s.Namespace = &v
+	return s
+}
+
+// SetStatistic sets the Statistic field's value.
+func (s *CustomizedMetricSpecification) SetStatistic(v string) *CustomizedMetricSpecification {
+	s.Statistic = &v
+	return s
+}
+
+// SetUnit sets the Unit field's value.
+func (s *CustomizedMetricSpecification) SetUnit(v string) *CustomizedMetricSpecification {
+	s.Unit = &v
+	return s
+}
+
 // Please also see https://docs.aws.amazon.com/goto/WebAPI/autoscaling-2011-01-01/DeleteAutoScalingGroupType
 type DeleteAutoScalingGroupInput struct {
 	_ struct{} `type:"structure"`
 
-	// The name of the group to delete.
+	// The name of the Auto Scaling group.
 	//
 	// AutoScalingGroupName is a required field
 	AutoScalingGroupName *string `min:"1" type:"string" required:"true"`
@@ -6511,7 +6596,7 @@ func (s DeleteLaunchConfigurationOutput) GoString() string {
 type DeleteLifecycleHookInput struct {
 	_ struct{} `type:"structure"`
 
-	// The name of the Auto Scaling group for the lifecycle hook.
+	// The name of the Auto Scaling group.
 	//
 	// AutoScalingGroupName is a required field
 	AutoScalingGroupName *string `min:"1" type:"string" required:"true"`
@@ -6974,8 +7059,8 @@ func (s *DescribeAdjustmentTypesOutput) SetAdjustmentTypes(v []*AdjustmentType) 
 type DescribeAutoScalingGroupsInput struct {
 	_ struct{} `type:"structure"`
 
-	// The group names. If you omit this parameter, all Auto Scaling groups are
-	// described.
+	// The names of the Auto Scaling groups. If you omit this parameter, all Auto
+	// Scaling groups are described.
 	AutoScalingGroupNames []*string `type:"list"`
 
 	// The maximum number of items to return with this call. The default value is
@@ -7294,7 +7379,7 @@ func (s *DescribeLifecycleHookTypesOutput) SetLifecycleHookTypes(v []*string) *D
 type DescribeLifecycleHooksInput struct {
 	_ struct{} `type:"structure"`
 
-	// The name of the group.
+	// The name of the Auto Scaling group.
 	//
 	// AutoScalingGroupName is a required field
 	AutoScalingGroupName *string `min:"1" type:"string" required:"true"`
@@ -7466,7 +7551,7 @@ func (s *DescribeLoadBalancerTargetGroupsOutput) SetNextToken(v string) *Describ
 type DescribeLoadBalancersInput struct {
 	_ struct{} `type:"structure"`
 
-	// The name of the group.
+	// The name of the Auto Scaling group.
 	//
 	// AutoScalingGroupName is a required field
 	AutoScalingGroupName *string `min:"1" type:"string" required:"true"`
@@ -7610,7 +7695,7 @@ func (s *DescribeMetricCollectionTypesOutput) SetMetrics(v []*MetricCollectionTy
 type DescribeNotificationConfigurationsInput struct {
 	_ struct{} `type:"structure"`
 
-	// The name of the group.
+	// The name of the Auto Scaling group.
 	AutoScalingGroupNames []*string `type:"list"`
 
 	// The maximum number of items to return with this call. The default value is
@@ -7690,7 +7775,7 @@ func (s *DescribeNotificationConfigurationsOutput) SetNotificationConfigurations
 type DescribePoliciesInput struct {
 	_ struct{} `type:"structure"`
 
-	// The name of the group.
+	// The name of the Auto Scaling group.
 	AutoScalingGroupName *string `min:"1" type:"string"`
 
 	// The maximum number of items to be returned with each call. The default value
@@ -7701,10 +7786,10 @@ type DescribePoliciesInput struct {
 	// a previous call.)
 	NextToken *string `type:"string"`
 
-	// One or more policy names or policy ARNs to be described. If you omit this
-	// parameter, all policy names are described. If an group name is provided,
-	// the results are limited to that group. This list is limited to 50 items.
-	// If you specify an unknown policy name, it is ignored with no error.
+	// The names of one or more policies. If you omit this parameter, all policies
+	// are described. If an group name is provided, the results are limited to that
+	// group. This list is limited to 50 items. If you specify an unknown policy
+	// name, it is ignored with no error.
 	PolicyNames []*string `type:"list"`
 
 	// One or more policy types. Valid values are SimpleScaling and StepScaling.
@@ -7809,7 +7894,7 @@ type DescribeScalingActivitiesInput struct {
 	// they are ignored with no error.
 	ActivityIds []*string `type:"list"`
 
-	// The name of the group.
+	// The name of the Auto Scaling group.
 	AutoScalingGroupName *string `min:"1" type:"string"`
 
 	// The maximum number of items to return with this call. The default value is
@@ -7948,7 +8033,7 @@ func (s *DescribeScalingProcessTypesOutput) SetProcesses(v []*ProcessType) *Desc
 type DescribeScheduledActionsInput struct {
 	_ struct{} `type:"structure"`
 
-	// The name of the group.
+	// The name of the Auto Scaling group.
 	AutoScalingGroupName *string `min:"1" type:"string"`
 
 	// The latest scheduled start time to return. If scheduled action names are
@@ -8192,7 +8277,7 @@ func (s *DescribeTerminationPolicyTypesOutput) SetTerminationPolicyTypes(v []*st
 type DetachInstancesInput struct {
 	_ struct{} `type:"structure"`
 
-	// The name of the group.
+	// The name of the Auto Scaling group.
 	//
 	// AutoScalingGroupName is a required field
 	AutoScalingGroupName *string `min:"1" type:"string" required:"true"`
@@ -8424,7 +8509,7 @@ func (s DetachLoadBalancersOutput) GoString() string {
 type DisableMetricsCollectionInput struct {
 	_ struct{} `type:"structure"`
 
-	// The name or Amazon Resource Name (ARN) of the group.
+	// The name of the Auto Scaling group.
 	//
 	// AutoScalingGroupName is a required field
 	AutoScalingGroupName *string `min:"1" type:"string" required:"true"`
@@ -8620,7 +8705,7 @@ func (s *Ebs) SetVolumeType(v string) *Ebs {
 type EnableMetricsCollectionInput struct {
 	_ struct{} `type:"structure"`
 
-	// The name or ARN of the Auto Scaling group.
+	// The name of the Auto Scaling group.
 	//
 	// AutoScalingGroupName is a required field
 	AutoScalingGroupName *string `min:"1" type:"string" required:"true"`
@@ -8864,7 +8949,7 @@ func (s *EnterStandbyOutput) SetActivities(v []*Activity) *EnterStandbyOutput {
 type ExecutePolicyInput struct {
 	_ struct{} `type:"structure"`
 
-	// The name or Amazon Resource Name (ARN) of the Auto Scaling group.
+	// The name of the Auto Scaling group.
 	AutoScalingGroupName *string `min:"1" type:"string"`
 
 	// The breach threshold for the alarm.
@@ -9091,10 +9176,10 @@ func (s *Filter) SetValues(v []*string) *Filter {
 type Group struct {
 	_ struct{} `type:"structure"`
 
-	// The Amazon Resource Name (ARN) of the group.
+	// The Amazon Resource Name (ARN) of the Auto Scaling group.
 	AutoScalingGroupARN *string `min:"1" type:"string"`
 
-	// The name of the group.
+	// The name of the Auto Scaling group.
 	//
 	// AutoScalingGroupName is a required field
 	AutoScalingGroupName *string `min:"1" type:"string" required:"true"`
@@ -9137,6 +9222,9 @@ type Group struct {
 
 	// The name of the associated launch configuration.
 	LaunchConfigurationName *string `min:"1" type:"string"`
+
+	// The launch template for the group.
+	LaunchTemplate *LaunchTemplateSpecification `type:"structure"`
 
 	// One or more load balancers associated with the group.
 	LoadBalancerNames []*string `type:"list"`
@@ -9258,6 +9346,12 @@ func (s *Group) SetLaunchConfigurationName(v string) *Group {
 	return s
 }
 
+// SetLaunchTemplate sets the LaunchTemplate field's value.
+func (s *Group) SetLaunchTemplate(v *LaunchTemplateSpecification) *Group {
+	s.LaunchTemplate = v
+	return s
+}
+
 // SetLoadBalancerNames sets the LoadBalancerNames field's value.
 func (s *Group) SetLoadBalancerNames(v []*string) *Group {
 	s.LoadBalancerNames = v
@@ -9347,9 +9441,10 @@ type Instance struct {
 	InstanceId *string `min:"1" type:"string" required:"true"`
 
 	// The launch configuration associated with the instance.
-	//
-	// LaunchConfigurationName is a required field
-	LaunchConfigurationName *string `min:"1" type:"string" required:"true"`
+	LaunchConfigurationName *string `min:"1" type:"string"`
+
+	// The launch template for the instance.
+	LaunchTemplate *LaunchTemplateSpecification `type:"structure"`
 
 	// A description of the current lifecycle state. Note that the Quarantined state
 	// is not used.
@@ -9398,6 +9493,12 @@ func (s *Instance) SetLaunchConfigurationName(v string) *Instance {
 	return s
 }
 
+// SetLaunchTemplate sets the LaunchTemplate field's value.
+func (s *Instance) SetLaunchTemplate(v *LaunchTemplateSpecification) *Instance {
+	s.LaunchTemplate = v
+	return s
+}
+
 // SetLifecycleState sets the LifecycleState field's value.
 func (s *Instance) SetLifecycleState(v string) *Instance {
 	s.LifecycleState = &v
@@ -9415,7 +9516,7 @@ func (s *Instance) SetProtectedFromScaleIn(v bool) *Instance {
 type InstanceDetails struct {
 	_ struct{} `type:"structure"`
 
-	// The name of the Auto Scaling group associated with the instance.
+	// The name of the Auto Scaling group for the instance.
 	//
 	// AutoScalingGroupName is a required field
 	AutoScalingGroupName *string `min:"1" type:"string" required:"true"`
@@ -9439,9 +9540,10 @@ type InstanceDetails struct {
 
 	// The launch configuration used to launch the instance. This value is not available
 	// if you attached the instance to the Auto Scaling group.
-	//
-	// LaunchConfigurationName is a required field
-	LaunchConfigurationName *string `min:"1" type:"string" required:"true"`
+	LaunchConfigurationName *string `min:"1" type:"string"`
+
+	// The launch template for the instance.
+	LaunchTemplate *LaunchTemplateSpecification `type:"structure"`
 
 	// The lifecycle state for the instance. For more information, see Auto Scaling
 	// Lifecycle (http://docs.aws.amazon.com/autoscaling/latest/userguide/AutoScalingGroupLifecycle.html)
@@ -9494,6 +9596,12 @@ func (s *InstanceDetails) SetInstanceId(v string) *InstanceDetails {
 // SetLaunchConfigurationName sets the LaunchConfigurationName field's value.
 func (s *InstanceDetails) SetLaunchConfigurationName(v string) *InstanceDetails {
 	s.LaunchConfigurationName = &v
+	return s
+}
+
+// SetLaunchTemplate sets the LaunchTemplate field's value.
+func (s *InstanceDetails) SetLaunchTemplate(v *LaunchTemplateSpecification) *InstanceDetails {
+	s.LaunchTemplate = v
 	return s
 }
 
@@ -9739,15 +9847,75 @@ func (s *LaunchConfiguration) SetUserData(v string) *LaunchConfiguration {
 	return s
 }
 
+// Describes a launch template.
+// Please also see https://docs.aws.amazon.com/goto/WebAPI/autoscaling-2011-01-01/LaunchTemplateSpecification
+type LaunchTemplateSpecification struct {
+	_ struct{} `type:"structure"`
+
+	// The ID of the launch template. You must specify either a template ID or a
+	// template name.
+	LaunchTemplateId *string `min:"1" type:"string"`
+
+	// The name of the launch template. You must specify either a template name
+	// or a template ID.
+	LaunchTemplateName *string `min:"3" type:"string"`
+
+	// The version number. By default, the default version of the launch template
+	// is used.
+	Version *string `min:"1" type:"string"`
+}
+
+// String returns the string representation
+func (s LaunchTemplateSpecification) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation
+func (s LaunchTemplateSpecification) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *LaunchTemplateSpecification) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "LaunchTemplateSpecification"}
+	if s.LaunchTemplateId != nil && len(*s.LaunchTemplateId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("LaunchTemplateId", 1))
+	}
+	if s.LaunchTemplateName != nil && len(*s.LaunchTemplateName) < 3 {
+		invalidParams.Add(request.NewErrParamMinLen("LaunchTemplateName", 3))
+	}
+	if s.Version != nil && len(*s.Version) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Version", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetLaunchTemplateId sets the LaunchTemplateId field's value.
+func (s *LaunchTemplateSpecification) SetLaunchTemplateId(v string) *LaunchTemplateSpecification {
+	s.LaunchTemplateId = &v
+	return s
+}
+
+// SetLaunchTemplateName sets the LaunchTemplateName field's value.
+func (s *LaunchTemplateSpecification) SetLaunchTemplateName(v string) *LaunchTemplateSpecification {
+	s.LaunchTemplateName = &v
+	return s
+}
+
+// SetVersion sets the Version field's value.
+func (s *LaunchTemplateSpecification) SetVersion(v string) *LaunchTemplateSpecification {
+	s.Version = &v
+	return s
+}
+
 // Describes a lifecycle hook, which tells Auto Scaling that you want to perform
-// an action when an instance launches or terminates. When you have a lifecycle
-// hook in place, the Auto Scaling group will either:
+// an action whenever it launches instances or whenever it terminates instances.
 //
-//    * Pause the instance after it launches, but before it is put into service
-//
-//    * Pause the instance as it terminates, but before it is fully terminated
-//
-// For more information, see Auto Scaling Lifecycle (http://docs.aws.amazon.com/autoscaling/latest/userguide/AutoScalingGroupLifecycle.html)
+// For more information, see Auto Scaling Lifecycle Hooks (http://docs.aws.amazon.com/autoscaling/latest/userguide/lifecycle-hooks.html)
 // in the Auto Scaling User Guide.
 // Please also see https://docs.aws.amazon.com/goto/WebAPI/autoscaling-2011-01-01/LifecycleHook
 type LifecycleHook struct {
@@ -9767,9 +9935,8 @@ type LifecycleHook struct {
 	GlobalTimeout *int64 `type:"integer"`
 
 	// The maximum time, in seconds, that can elapse before the lifecycle hook times
-	// out. The default is 3600 seconds (1 hour). When the lifecycle hook times
-	// out, Auto Scaling performs the default action. You can prevent the lifecycle
-	// hook from timing out by calling RecordLifecycleActionHeartbeat.
+	// out. If the lifecycle hook times out, Auto Scaling performs the default action.
+	// You can prevent the lifecycle hook from timing out by calling RecordLifecycleActionHeartbeat.
 	HeartbeatTimeout *int64 `type:"integer"`
 
 	// The name of the lifecycle hook.
@@ -9783,24 +9950,9 @@ type LifecycleHook struct {
 	// a message to the notification target.
 	NotificationMetadata *string `min:"1" type:"string"`
 
-	// The ARN of the notification target that Auto Scaling uses to notify you when
-	// an instance is in the transition state for the lifecycle hook. This ARN target
-	// can be either an SQS queue or an SNS topic. The notification message sent
-	// to the target includes the following:
-	//
-	//    * Lifecycle action token
-	//
-	//    * User account ID
-	//
-	//    * Name of the Auto Scaling group
-	//
-	//    * Lifecycle hook name
-	//
-	//    * EC2 instance ID
-	//
-	//    * Lifecycle transition
-	//
-	//    * Notification metadata
+	// The ARN of the target that Auto Scaling sends notifications to when an instance
+	// is in the transition state for the lifecycle hook. The notification target
+	// can be either an SQS queue or an SNS topic.
 	NotificationTargetARN *string `min:"1" type:"string"`
 
 	// The ARN of the IAM role that allows the Auto Scaling group to publish to
@@ -9868,6 +10020,127 @@ func (s *LifecycleHook) SetNotificationTargetARN(v string) *LifecycleHook {
 
 // SetRoleARN sets the RoleARN field's value.
 func (s *LifecycleHook) SetRoleARN(v string) *LifecycleHook {
+	s.RoleARN = &v
+	return s
+}
+
+// Describes a lifecycle hook, which tells Auto Scaling that you want to perform
+// an action whenever it launches instances or whenever it terminates instances.
+//
+// For more information, see Auto Scaling Lifecycle Hooks (http://docs.aws.amazon.com/autoscaling/latest/userguide/lifecycle-hooks.html)
+// in the Auto Scaling User Guide.
+// Please also see https://docs.aws.amazon.com/goto/WebAPI/autoscaling-2011-01-01/LifecycleHookSpecification
+type LifecycleHookSpecification struct {
+	_ struct{} `type:"structure"`
+
+	// Defines the action the Auto Scaling group should take when the lifecycle
+	// hook timeout elapses or if an unexpected failure occurs. The valid values
+	// are CONTINUE and ABANDON.
+	DefaultResult *string `type:"string"`
+
+	// The maximum time, in seconds, that can elapse before the lifecycle hook times
+	// out. If the lifecycle hook times out, Auto Scaling performs the default action.
+	// You can prevent the lifecycle hook from timing out by calling RecordLifecycleActionHeartbeat.
+	HeartbeatTimeout *int64 `type:"integer"`
+
+	// The name of the lifecycle hook.
+	//
+	// LifecycleHookName is a required field
+	LifecycleHookName *string `min:"1" type:"string" required:"true"`
+
+	// The state of the EC2 instance to which you want to attach the lifecycle hook.
+	// For a list of lifecycle hook types, see DescribeLifecycleHookTypes.
+	//
+	// LifecycleTransition is a required field
+	LifecycleTransition *string `type:"string" required:"true"`
+
+	// Additional information that you want to include any time Auto Scaling sends
+	// a message to the notification target.
+	NotificationMetadata *string `min:"1" type:"string"`
+
+	// The ARN of the target that Auto Scaling sends notifications to when an instance
+	// is in the transition state for the lifecycle hook. The notification target
+	// can be either an SQS queue or an SNS topic.
+	NotificationTargetARN *string `type:"string"`
+
+	// The ARN of the IAM role that allows the Auto Scaling group to publish to
+	// the specified notification target.
+	RoleARN *string `min:"1" type:"string"`
+}
+
+// String returns the string representation
+func (s LifecycleHookSpecification) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation
+func (s LifecycleHookSpecification) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *LifecycleHookSpecification) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "LifecycleHookSpecification"}
+	if s.LifecycleHookName == nil {
+		invalidParams.Add(request.NewErrParamRequired("LifecycleHookName"))
+	}
+	if s.LifecycleHookName != nil && len(*s.LifecycleHookName) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("LifecycleHookName", 1))
+	}
+	if s.LifecycleTransition == nil {
+		invalidParams.Add(request.NewErrParamRequired("LifecycleTransition"))
+	}
+	if s.NotificationMetadata != nil && len(*s.NotificationMetadata) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("NotificationMetadata", 1))
+	}
+	if s.RoleARN != nil && len(*s.RoleARN) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("RoleARN", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetDefaultResult sets the DefaultResult field's value.
+func (s *LifecycleHookSpecification) SetDefaultResult(v string) *LifecycleHookSpecification {
+	s.DefaultResult = &v
+	return s
+}
+
+// SetHeartbeatTimeout sets the HeartbeatTimeout field's value.
+func (s *LifecycleHookSpecification) SetHeartbeatTimeout(v int64) *LifecycleHookSpecification {
+	s.HeartbeatTimeout = &v
+	return s
+}
+
+// SetLifecycleHookName sets the LifecycleHookName field's value.
+func (s *LifecycleHookSpecification) SetLifecycleHookName(v string) *LifecycleHookSpecification {
+	s.LifecycleHookName = &v
+	return s
+}
+
+// SetLifecycleTransition sets the LifecycleTransition field's value.
+func (s *LifecycleHookSpecification) SetLifecycleTransition(v string) *LifecycleHookSpecification {
+	s.LifecycleTransition = &v
+	return s
+}
+
+// SetNotificationMetadata sets the NotificationMetadata field's value.
+func (s *LifecycleHookSpecification) SetNotificationMetadata(v string) *LifecycleHookSpecification {
+	s.NotificationMetadata = &v
+	return s
+}
+
+// SetNotificationTargetARN sets the NotificationTargetARN field's value.
+func (s *LifecycleHookSpecification) SetNotificationTargetARN(v string) *LifecycleHookSpecification {
+	s.NotificationTargetARN = &v
+	return s
+}
+
+// SetRoleARN sets the RoleARN field's value.
+func (s *LifecycleHookSpecification) SetRoleARN(v string) *LifecycleHookSpecification {
 	s.RoleARN = &v
 	return s
 }
@@ -10028,6 +10301,60 @@ func (s *MetricCollectionType) SetMetric(v string) *MetricCollectionType {
 	return s
 }
 
+// Describes the dimension of a metric.
+// Please also see https://docs.aws.amazon.com/goto/WebAPI/autoscaling-2011-01-01/MetricDimension
+type MetricDimension struct {
+	_ struct{} `type:"structure"`
+
+	// The name of the dimension.
+	//
+	// Name is a required field
+	Name *string `type:"string" required:"true"`
+
+	// The value of the dimension.
+	//
+	// Value is a required field
+	Value *string `type:"string" required:"true"`
+}
+
+// String returns the string representation
+func (s MetricDimension) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation
+func (s MetricDimension) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *MetricDimension) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "MetricDimension"}
+	if s.Name == nil {
+		invalidParams.Add(request.NewErrParamRequired("Name"))
+	}
+	if s.Value == nil {
+		invalidParams.Add(request.NewErrParamRequired("Value"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetName sets the Name field's value.
+func (s *MetricDimension) SetName(v string) *MetricDimension {
+	s.Name = &v
+	return s
+}
+
+// SetValue sets the Value field's value.
+func (s *MetricDimension) SetValue(v string) *MetricDimension {
+	s.Value = &v
+	return s
+}
+
 // Describes a granularity of a metric.
 // Please also see https://docs.aws.amazon.com/goto/WebAPI/autoscaling-2011-01-01/MetricGranularityType
 type MetricGranularityType struct {
@@ -10058,7 +10385,7 @@ func (s *MetricGranularityType) SetGranularity(v string) *MetricGranularityType 
 type NotificationConfiguration struct {
 	_ struct{} `type:"structure"`
 
-	// The name of the group.
+	// The name of the Auto Scaling group.
 	AutoScalingGroupName *string `min:"1" type:"string"`
 
 	// One of the following event notification types:
@@ -10104,6 +10431,81 @@ func (s *NotificationConfiguration) SetNotificationType(v string) *NotificationC
 // SetTopicARN sets the TopicARN field's value.
 func (s *NotificationConfiguration) SetTopicARN(v string) *NotificationConfiguration {
 	s.TopicARN = &v
+	return s
+}
+
+// Configures a predefined metric for a target tracking policy.
+// Please also see https://docs.aws.amazon.com/goto/WebAPI/autoscaling-2011-01-01/PredefinedMetricSpecification
+type PredefinedMetricSpecification struct {
+	_ struct{} `type:"structure"`
+
+	// The metric type.
+	//
+	// PredefinedMetricType is a required field
+	PredefinedMetricType *string `type:"string" required:"true" enum:"MetricType"`
+
+	// Identifies the resource associated with the metric type. The following predefined
+	// metrics are available:
+	//
+	//    * ASGAverageCPUUtilization - average CPU utilization of the Auto Scaling
+	//    group
+	//
+	//    * ASGAverageNetworkIn - average number of bytes received on all network
+	//    interfaces by the Auto Scaling group
+	//
+	//    * ASGAverageNetworkOut - average number of bytes sent out on all network
+	//    interfaces by the Auto Scaling group
+	//
+	//    * ALBRequestCountPerTarget - number of requests completed per target in
+	//    an Application Load Balancer target group
+	//
+	// For predefined metric types ASGAverageCPUUtilization, ASGAverageNetworkIn,
+	// and ASGAverageNetworkOut, the parameter must not be specified as the resource
+	// associated with the metric type is the Auto Scaling group. For predefined
+	// metric type ALBRequestCountPerTarget, the parameter must be specified in
+	// the format: app/load-balancer-name/load-balancer-id/targetgroup/target-group-name/target-group-id,
+	// where app/load-balancer-name/load-balancer-id is the final portion of the
+	// load balancer ARN, and targetgroup/target-group-name/target-group-id is the
+	// final portion of the target group ARN. The target group must be attached
+	// to the Auto Scaling group.
+	ResourceLabel *string `min:"1" type:"string"`
+}
+
+// String returns the string representation
+func (s PredefinedMetricSpecification) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation
+func (s PredefinedMetricSpecification) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *PredefinedMetricSpecification) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "PredefinedMetricSpecification"}
+	if s.PredefinedMetricType == nil {
+		invalidParams.Add(request.NewErrParamRequired("PredefinedMetricType"))
+	}
+	if s.ResourceLabel != nil && len(*s.ResourceLabel) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ResourceLabel", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetPredefinedMetricType sets the PredefinedMetricType field's value.
+func (s *PredefinedMetricSpecification) SetPredefinedMetricType(v string) *PredefinedMetricSpecification {
+	s.PredefinedMetricType = &v
+	return s
+}
+
+// SetResourceLabel sets the ResourceLabel field's value.
+func (s *PredefinedMetricSpecification) SetResourceLabel(v string) *PredefinedMetricSpecification {
+	s.ResourceLabel = &v
 	return s
 }
 
@@ -10157,8 +10559,7 @@ func (s *ProcessType) SetProcessName(v string) *ProcessType {
 type PutLifecycleHookInput struct {
 	_ struct{} `type:"structure"`
 
-	// The name of the Auto Scaling group to which you want to assign the lifecycle
-	// hook.
+	// The name of the Auto Scaling group.
 	//
 	// AutoScalingGroupName is a required field
 	AutoScalingGroupName *string `min:"1" type:"string" required:"true"`
@@ -10168,10 +10569,12 @@ type PutLifecycleHookInput struct {
 	// be either CONTINUE or ABANDON. The default value is ABANDON.
 	DefaultResult *string `type:"string"`
 
-	// The amount of time, in seconds, that can elapse before the lifecycle hook
-	// times out. When the lifecycle hook times out, Auto Scaling performs the default
-	// action. You can prevent the lifecycle hook from timing out by calling RecordLifecycleActionHeartbeat.
-	// The default is 3600 seconds (1 hour).
+	// The maximum time, in seconds, that can elapse before the lifecycle hook times
+	// out. The range is from 30 to 7200 seconds. The default is 3600 seconds (1
+	// hour).
+	//
+	// If the lifecycle hook times out, Auto Scaling performs the default action.
+	// You can prevent the lifecycle hook from timing out by calling RecordLifecycleActionHeartbeat.
 	HeartbeatTimeout *int64 `type:"integer"`
 
 	// The name of the lifecycle hook.
@@ -10407,16 +10810,16 @@ func (s PutNotificationConfigurationOutput) GoString() string {
 type PutScalingPolicyInput struct {
 	_ struct{} `type:"structure"`
 
-	// The adjustment type. Valid values are ChangeInCapacity, ExactCapacity, and
-	// PercentChangeInCapacity.
+	// The adjustment type. The valid values are ChangeInCapacity, ExactCapacity,
+	// and PercentChangeInCapacity.
+	//
+	// This parameter is supported if the policy type is SimpleScaling or StepScaling.
 	//
 	// For more information, see Dynamic Scaling (http://docs.aws.amazon.com/autoscaling/latest/userguide/as-scale-based-on-demand.html)
 	// in the Auto Scaling User Guide.
-	//
-	// AdjustmentType is a required field
-	AdjustmentType *string `min:"1" type:"string" required:"true"`
+	AdjustmentType *string `min:"1" type:"string"`
 
-	// The name or ARN of the group.
+	// The name of the Auto Scaling group.
 	//
 	// AutoScalingGroupName is a required field
 	AutoScalingGroupName *string `min:"1" type:"string" required:"true"`
@@ -10425,7 +10828,7 @@ type PutScalingPolicyInput struct {
 	// the next scaling activity can start. If this parameter is not specified,
 	// the default cooldown period for the group applies.
 	//
-	// This parameter is not supported unless the policy type is SimpleScaling.
+	// This parameter is supported if the policy type is SimpleScaling.
 	//
 	// For more information, see Auto Scaling Cooldowns (http://docs.aws.amazon.com/autoscaling/latest/userguide/Cooldown.html)
 	// in the Auto Scaling User Guide.
@@ -10435,20 +10838,22 @@ type PutScalingPolicyInput struct {
 	// to the CloudWatch metrics. The default is to use the value specified for
 	// the default cooldown period for the group.
 	//
-	// This parameter is not supported if the policy type is SimpleScaling.
+	// This parameter is supported if the policy type is StepScaling or TargetTrackingScaling.
 	EstimatedInstanceWarmup *int64 `type:"integer"`
 
-	// The aggregation type for the CloudWatch metrics. Valid values are Minimum,
+	// The aggregation type for the CloudWatch metrics. The valid values are Minimum,
 	// Maximum, and Average. If the aggregation type is null, the value is treated
 	// as Average.
 	//
-	// This parameter is not supported if the policy type is SimpleScaling.
+	// This parameter is supported if the policy type is StepScaling.
 	MetricAggregationType *string `min:"1" type:"string"`
 
 	// The minimum number of instances to scale. If the value of AdjustmentType
 	// is PercentChangeInCapacity, the scaling policy changes the DesiredCapacity
 	// of the Auto Scaling group by at least this many instances. Otherwise, the
 	// error is ValidationError.
+	//
+	// This parameter is supported if the policy type is SimpleScaling or StepScaling.
 	MinAdjustmentMagnitude *int64 `type:"integer"`
 
 	// Available for backward compatibility. Use MinAdjustmentMagnitude instead.
@@ -10459,8 +10864,8 @@ type PutScalingPolicyInput struct {
 	// PolicyName is a required field
 	PolicyName *string `min:"1" type:"string" required:"true"`
 
-	// The policy type. Valid values are SimpleScaling and StepScaling. If the policy
-	// type is null, the value is treated as SimpleScaling.
+	// The policy type. The valid values are SimpleScaling, StepScaling, and TargetTrackingScaling.
+	// If the policy type is null, the value is treated as SimpleScaling.
 	PolicyType *string `min:"1" type:"string"`
 
 	// The amount by which to scale, based on the specified adjustment type. A positive
@@ -10477,6 +10882,12 @@ type PutScalingPolicyInput struct {
 	// This parameter is required if the policy type is StepScaling and not supported
 	// otherwise.
 	StepAdjustments []*StepAdjustment `type:"list"`
+
+	// A target tracking policy.
+	//
+	// This parameter is required if the policy type is TargetTrackingScaling and
+	// not supported otherwise.
+	TargetTrackingConfiguration *TargetTrackingConfiguration `type:"structure"`
 }
 
 // String returns the string representation
@@ -10492,9 +10903,6 @@ func (s PutScalingPolicyInput) GoString() string {
 // Validate inspects the fields of the type to determine if they are valid.
 func (s *PutScalingPolicyInput) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "PutScalingPolicyInput"}
-	if s.AdjustmentType == nil {
-		invalidParams.Add(request.NewErrParamRequired("AdjustmentType"))
-	}
 	if s.AdjustmentType != nil && len(*s.AdjustmentType) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("AdjustmentType", 1))
 	}
@@ -10524,6 +10932,11 @@ func (s *PutScalingPolicyInput) Validate() error {
 			if err := v.Validate(); err != nil {
 				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "StepAdjustments", i), err.(request.ErrInvalidParams))
 			}
+		}
+	}
+	if s.TargetTrackingConfiguration != nil {
+		if err := s.TargetTrackingConfiguration.Validate(); err != nil {
+			invalidParams.AddNested("TargetTrackingConfiguration", err.(request.ErrInvalidParams))
 		}
 	}
 
@@ -10599,9 +11012,19 @@ func (s *PutScalingPolicyInput) SetStepAdjustments(v []*StepAdjustment) *PutScal
 	return s
 }
 
+// SetTargetTrackingConfiguration sets the TargetTrackingConfiguration field's value.
+func (s *PutScalingPolicyInput) SetTargetTrackingConfiguration(v *TargetTrackingConfiguration) *PutScalingPolicyInput {
+	s.TargetTrackingConfiguration = v
+	return s
+}
+
+// Contains the output of PutScalingPolicy.
 // Please also see https://docs.aws.amazon.com/goto/WebAPI/autoscaling-2011-01-01/PolicyARNType
 type PutScalingPolicyOutput struct {
 	_ struct{} `type:"structure"`
+
+	// The CloudWatch alarms created for the target tracking policy.
+	Alarms []*Alarm `type:"list"`
 
 	// The Amazon Resource Name (ARN) of the policy.
 	PolicyARN *string `min:"1" type:"string"`
@@ -10617,6 +11040,12 @@ func (s PutScalingPolicyOutput) GoString() string {
 	return s.String()
 }
 
+// SetAlarms sets the Alarms field's value.
+func (s *PutScalingPolicyOutput) SetAlarms(v []*Alarm) *PutScalingPolicyOutput {
+	s.Alarms = v
+	return s
+}
+
 // SetPolicyARN sets the PolicyARN field's value.
 func (s *PutScalingPolicyOutput) SetPolicyARN(v string) *PutScalingPolicyOutput {
 	s.PolicyARN = &v
@@ -10627,7 +11056,7 @@ func (s *PutScalingPolicyOutput) SetPolicyARN(v string) *PutScalingPolicyOutput 
 type PutScheduledUpdateGroupActionInput struct {
 	_ struct{} `type:"structure"`
 
-	// The name or Amazon Resource Name (ARN) of the Auto Scaling group.
+	// The name of the Auto Scaling group.
 	//
 	// AutoScalingGroupName is a required field
 	AutoScalingGroupName *string `min:"1" type:"string" required:"true"`
@@ -10776,7 +11205,7 @@ func (s PutScheduledUpdateGroupActionOutput) GoString() string {
 type RecordLifecycleActionHeartbeatInput struct {
 	_ struct{} `type:"structure"`
 
-	// The name of the Auto Scaling group for the hook.
+	// The name of the Auto Scaling group.
 	//
 	// AutoScalingGroupName is a required field
 	AutoScalingGroupName *string `min:"1" type:"string" required:"true"`
@@ -10899,7 +11328,7 @@ type ScalingPolicy struct {
 	// The CloudWatch alarms related to the policy.
 	Alarms []*Alarm `type:"list"`
 
-	// The name of the Auto Scaling group associated with this scaling policy.
+	// The name of the Auto Scaling group.
 	AutoScalingGroupName *string `min:"1" type:"string"`
 
 	// The amount of time, in seconds, after a scaling activity completes before
@@ -10940,6 +11369,9 @@ type ScalingPolicy struct {
 	// A set of adjustments that enable you to scale based on the size of the alarm
 	// breach.
 	StepAdjustments []*StepAdjustment `type:"list"`
+
+	// A target tracking policy.
+	TargetTrackingConfiguration *TargetTrackingConfiguration `type:"structure"`
 }
 
 // String returns the string representation
@@ -11030,11 +11462,17 @@ func (s *ScalingPolicy) SetStepAdjustments(v []*StepAdjustment) *ScalingPolicy {
 	return s
 }
 
+// SetTargetTrackingConfiguration sets the TargetTrackingConfiguration field's value.
+func (s *ScalingPolicy) SetTargetTrackingConfiguration(v *TargetTrackingConfiguration) *ScalingPolicy {
+	s.TargetTrackingConfiguration = v
+	return s
+}
+
 // Please also see https://docs.aws.amazon.com/goto/WebAPI/autoscaling-2011-01-01/ScalingProcessQuery
 type ScalingProcessQuery struct {
 	_ struct{} `type:"structure"`
 
-	// The name or Amazon Resource Name (ARN) of the Auto Scaling group.
+	// The name of the Auto Scaling group.
 	//
 	// AutoScalingGroupName is a required field
 	AutoScalingGroupName *string `min:"1" type:"string" required:"true"`
@@ -11103,7 +11541,7 @@ func (s *ScalingProcessQuery) SetScalingProcesses(v []*string) *ScalingProcessQu
 type ScheduledUpdateGroupAction struct {
 	_ struct{} `type:"structure"`
 
-	// The name of the group.
+	// The name of the Auto Scaling group.
 	AutoScalingGroupName *string `min:"1" type:"string"`
 
 	// The number of instances you prefer to maintain in the group.
@@ -11387,7 +11825,7 @@ func (s SetInstanceHealthOutput) GoString() string {
 type SetInstanceProtectionInput struct {
 	_ struct{} `type:"structure"`
 
-	// The name of the group.
+	// The name of the Auto Scaling group.
 	//
 	// AutoScalingGroupName is a required field
 	AutoScalingGroupName *string `min:"1" type:"string" required:"true"`
@@ -11759,6 +12197,88 @@ func (s *TagDescription) SetValue(v string) *TagDescription {
 	return s
 }
 
+// Represents a target tracking policy configuration.
+// Please also see https://docs.aws.amazon.com/goto/WebAPI/autoscaling-2011-01-01/TargetTrackingConfiguration
+type TargetTrackingConfiguration struct {
+	_ struct{} `type:"structure"`
+
+	// A customized metric.
+	CustomizedMetricSpecification *CustomizedMetricSpecification `type:"structure"`
+
+	// Indicates whether scale in by the target tracking policy is disabled. If
+	// the value is true, scale in is disabled and the target tracking policy won't
+	// remove instances from the Auto Scaling group. Otherwise, scale in is enabled
+	// and the target tracking policy can remove instances from the Auto Scaling
+	// group. The default value is false.
+	DisableScaleIn *bool `type:"boolean"`
+
+	// A predefined metric. You can specify either a predefined metric or a customized
+	// metric.
+	PredefinedMetricSpecification *PredefinedMetricSpecification `type:"structure"`
+
+	// The target value for the metric.
+	//
+	// TargetValue is a required field
+	TargetValue *float64 `type:"double" required:"true"`
+}
+
+// String returns the string representation
+func (s TargetTrackingConfiguration) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation
+func (s TargetTrackingConfiguration) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *TargetTrackingConfiguration) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "TargetTrackingConfiguration"}
+	if s.TargetValue == nil {
+		invalidParams.Add(request.NewErrParamRequired("TargetValue"))
+	}
+	if s.CustomizedMetricSpecification != nil {
+		if err := s.CustomizedMetricSpecification.Validate(); err != nil {
+			invalidParams.AddNested("CustomizedMetricSpecification", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.PredefinedMetricSpecification != nil {
+		if err := s.PredefinedMetricSpecification.Validate(); err != nil {
+			invalidParams.AddNested("PredefinedMetricSpecification", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetCustomizedMetricSpecification sets the CustomizedMetricSpecification field's value.
+func (s *TargetTrackingConfiguration) SetCustomizedMetricSpecification(v *CustomizedMetricSpecification) *TargetTrackingConfiguration {
+	s.CustomizedMetricSpecification = v
+	return s
+}
+
+// SetDisableScaleIn sets the DisableScaleIn field's value.
+func (s *TargetTrackingConfiguration) SetDisableScaleIn(v bool) *TargetTrackingConfiguration {
+	s.DisableScaleIn = &v
+	return s
+}
+
+// SetPredefinedMetricSpecification sets the PredefinedMetricSpecification field's value.
+func (s *TargetTrackingConfiguration) SetPredefinedMetricSpecification(v *PredefinedMetricSpecification) *TargetTrackingConfiguration {
+	s.PredefinedMetricSpecification = v
+	return s
+}
+
+// SetTargetValue sets the TargetValue field's value.
+func (s *TargetTrackingConfiguration) SetTargetValue(v float64) *TargetTrackingConfiguration {
+	s.TargetValue = &v
+	return s
+}
+
 // Please also see https://docs.aws.amazon.com/goto/WebAPI/autoscaling-2011-01-01/TerminateInstanceInAutoScalingGroupType
 type TerminateInstanceInAutoScalingGroupInput struct {
 	_ struct{} `type:"structure"`
@@ -11875,8 +12395,13 @@ type UpdateAutoScalingGroupInput struct {
 	// The service to use for the health checks. The valid values are EC2 and ELB.
 	HealthCheckType *string `min:"1" type:"string"`
 
-	// The name of the launch configuration.
+	// The name of the launch configuration. You must specify either a launch configuration
+	// or a launch template.
 	LaunchConfigurationName *string `min:"1" type:"string"`
+
+	// The launch template to use to specify the updates. You must specify a launch
+	// configuration or a launch template.
+	LaunchTemplate *LaunchTemplateSpecification `type:"structure"`
 
 	// The maximum size of the Auto Scaling group.
 	MaxSize *int64 `type:"integer"`
@@ -11947,6 +12472,11 @@ func (s *UpdateAutoScalingGroupInput) Validate() error {
 	if s.VPCZoneIdentifier != nil && len(*s.VPCZoneIdentifier) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("VPCZoneIdentifier", 1))
 	}
+	if s.LaunchTemplate != nil {
+		if err := s.LaunchTemplate.Validate(); err != nil {
+			invalidParams.AddNested("LaunchTemplate", err.(request.ErrInvalidParams))
+		}
+	}
 
 	if invalidParams.Len() > 0 {
 		return invalidParams
@@ -11993,6 +12523,12 @@ func (s *UpdateAutoScalingGroupInput) SetHealthCheckType(v string) *UpdateAutoSc
 // SetLaunchConfigurationName sets the LaunchConfigurationName field's value.
 func (s *UpdateAutoScalingGroupInput) SetLaunchConfigurationName(v string) *UpdateAutoScalingGroupInput {
 	s.LaunchConfigurationName = &v
+	return s
+}
+
+// SetLaunchTemplate sets the LaunchTemplate field's value.
+func (s *UpdateAutoScalingGroupInput) SetLaunchTemplate(v *LaunchTemplateSpecification) *UpdateAutoScalingGroupInput {
+	s.LaunchTemplate = v
 	return s
 }
 
@@ -12086,6 +12622,37 @@ const (
 
 	// LifecycleStateStandby is a LifecycleState enum value
 	LifecycleStateStandby = "Standby"
+)
+
+const (
+	// MetricStatisticAverage is a MetricStatistic enum value
+	MetricStatisticAverage = "Average"
+
+	// MetricStatisticMinimum is a MetricStatistic enum value
+	MetricStatisticMinimum = "Minimum"
+
+	// MetricStatisticMaximum is a MetricStatistic enum value
+	MetricStatisticMaximum = "Maximum"
+
+	// MetricStatisticSampleCount is a MetricStatistic enum value
+	MetricStatisticSampleCount = "SampleCount"
+
+	// MetricStatisticSum is a MetricStatistic enum value
+	MetricStatisticSum = "Sum"
+)
+
+const (
+	// MetricTypeAsgaverageCpuutilization is a MetricType enum value
+	MetricTypeAsgaverageCpuutilization = "ASGAverageCPUUtilization"
+
+	// MetricTypeAsgaverageNetworkIn is a MetricType enum value
+	MetricTypeAsgaverageNetworkIn = "ASGAverageNetworkIn"
+
+	// MetricTypeAsgaverageNetworkOut is a MetricType enum value
+	MetricTypeAsgaverageNetworkOut = "ASGAverageNetworkOut"
+
+	// MetricTypeAlbrequestCountPerTarget is a MetricType enum value
+	MetricTypeAlbrequestCountPerTarget = "ALBRequestCountPerTarget"
 )
 
 const (
