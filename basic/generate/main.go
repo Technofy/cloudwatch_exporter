@@ -146,9 +146,9 @@ func main() {
 	defer f.Close()
 
 	packageTemplate.Execute(f, struct {
-		Metrics   []Metric
+		Metrics []Metric
 	}{
-		Metrics:   metrics,
+		Metrics: metrics,
 	})
 }
 

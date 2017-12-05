@@ -129,7 +129,7 @@ var Metrics = []Metric{
 			"node_cpu",
 			"The percentage of CPU utilization. Units: Percent",
 			[]string{"instance", "region"},
-			map[string]string{"mode":"idle", "cpu":"All"},
+			map[string]string{"mode": "idle", "cpu": "All"},
 		),
 	},
 	{

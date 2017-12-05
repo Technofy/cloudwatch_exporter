@@ -60,19 +60,27 @@ func main() {
 		log.Fatalf("Can't read configuration file: %s\n", err.Error())
 	}
 
-	// Create new Exporter with provided settings and session pool.
-	basicExporter := basic.New(settings, sessionsPool)
-	prometheus.MustRegister(basicExporter)
+	// Basic Metrics
+	{
+		// Create new Exporter with provided settings and session pool.
+		exporter := basic.New(settings, sessionsPool)
+		registry := prometheus.NewRegistry()
+		registry.MustRegister(exporter)
+		handler := promhttp.HandlerFor(registry, promhttp.HandlerOpts{})
+		// Expose the exporter's own metrics on given path
+		http.Handle(*basicMetricsPath, handler)
+	}
 
-	// Expose the exporter's own metrics on given path
-	http.Handle(*basicMetricsPath, promhttp.Handler())
-
-	// Create new Exporter with provided settings and session pool.
-	enhancedExporter := enhanced.New(settings, sessionsPool)
-	prometheus.MustRegister(enhancedExporter)
-
-	// Expose the exporter's own metrics on given path
-	http.Handle(*enhancedMetricsPath, promhttp.Handler())
+	// Enhanced Metrics
+	{
+		// Create new Exporter with provided settings and session pool.
+		exporter := enhanced.New(settings, sessionsPool)
+		registry := prometheus.NewRegistry()
+		registry.MustRegister(exporter)
+		handler := promhttp.HandlerFor(registry, promhttp.HandlerOpts{})
+		// Expose the exporter's own metrics on given path
+		http.Handle(*enhancedMetricsPath, handler)
+	}
 
 	// Allows manual reload of the configuration
 	http.HandleFunc("/reload", handleReload)

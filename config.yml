@@ -2,6 +2,8 @@ instances:
 - instance: mysql56
   region: us-east-1
 - instance: mysql57
-  region: eu-west-1
+  region: us-east-1
 - instance: aurora1
+  region: us-east-1
+- instance: aurora2
   region: us-east-1
