@@ -1,5 +1,5 @@
-hash: 698f096356afaf1002e98e53e12e46e628e3021ae850612348c8bf68812be3eb
-updated: 2017-12-05T00:52:51.275889+01:00
+hash: 050e9513c3d57c93ea7f5e31601bc84130b5b4979c3bd786fd75402a12f13210
+updated: 2017-12-06T16:08:31.663141+01:00
 imports:
 - name: github.com/alecthomas/template
   version: a0175ee3bccc567396460bf5acd36800cb10c49c
@@ -8,7 +8,7 @@ imports:
 - name: github.com/alecthomas/units
   version: 2efee857e7cfd4f3d0138cc3cbb1b4966962b93a
 - name: github.com/aws/aws-sdk-go
-  version: aa9956770100d7054c3902d3e89256d55d69f511
+  version: 9aa9c61f7edcc096340c81a61f357139e499c8fe
   subpackages:
   - aws
   - aws/awserr
@@ -75,13 +75,13 @@ imports:
   subpackages:
   - xfs
 - name: github.com/sirupsen/logrus
-  version: 95cd2b9c79aa5e72ab0bc69b7ccc2be15bf850f6
+  version: d682213848ed68c0a260ca37d6dd5ace8423f5ba
 - name: golang.org/x/crypto
   version: 94eea52f7b742c7cbe0b03b22f0c4c8631ece122
   subpackages:
   - ssh/terminal
 - name: golang.org/x/sys
-  version: 8b4580aae2a0dd0c231a45d3ccb8434ff533b840
+  version: 9167dbfd0f8e88b731dd88cbf73a270701a37bb4
   subpackages:
   - unix
   - windows

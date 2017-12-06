@@ -4,10 +4,11 @@ import (
 	"sync"
 	"time"
 
+	"github.com/prometheus/client_golang/prometheus"
+
 	"github.com/percona/rds_exporter/config"
 	"github.com/percona/rds_exporter/latency"
 	"github.com/percona/rds_exporter/sessions"
-	"github.com/prometheus/client_golang/prometheus"
 )
 
 //go:generate go run generate/main.go generate/utils.go

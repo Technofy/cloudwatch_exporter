@@ -7,9 +7,10 @@ import (
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/cloudwatch"
+	"github.com/prometheus/client_golang/prometheus"
+
 	"github.com/percona/rds_exporter/config"
 	"github.com/percona/rds_exporter/latency"
-	"github.com/prometheus/client_golang/prometheus"
 )
 
 var (

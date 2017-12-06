@@ -9,11 +9,12 @@ import (
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/cloudwatchlogs"
+	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/common/log"
+
 	"github.com/percona/rds_exporter/config"
 	"github.com/percona/rds_exporter/latency"
 	"github.com/percona/rds_exporter/sessions"
-	"github.com/prometheus/client_golang/prometheus"
-	"github.com/prometheus/common/log"
 )
 
 //go:generate go run generate/main.go

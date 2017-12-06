@@ -3,9 +3,10 @@ package basic
 import (
 	"testing"
 
+	"github.com/prometheus/client_golang/prometheus"
+
 	"github.com/percona/rds_exporter/config"
 	"github.com/percona/rds_exporter/sessions"
-	"github.com/prometheus/client_golang/prometheus"
 )
 
 func TestNew(t *testing.T) {
