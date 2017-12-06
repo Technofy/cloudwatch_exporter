@@ -5,11 +5,21 @@ import (
 	"time"
 
 	"github.com/percona/rds_exporter/config"
+	"github.com/percona/rds_exporter/latency"
 	"github.com/percona/rds_exporter/sessions"
 	"github.com/prometheus/client_golang/prometheus"
 )
 
 //go:generate go run generate/main.go generate/utils.go
+
+var (
+	ScrapeTimeDesc = prometheus.NewDesc(
+		"rds_exporter_scrape_duration_seconds",
+		"Time this RDS scrape took, in seconds.",
+		[]string{},
+		nil,
+	)
+)
 
 type Metric struct {
 	Name string
@@ -19,9 +29,9 @@ type Metric struct {
 type Exporter struct {
 	Settings *config.Settings
 	Sessions *sessions.Sessions
-	Metrics  []Metric
 
-	ScrapeTime        prometheus.Gauge
+	// Metrics
+	Metrics           []Metric
 	ErroneousRequests prometheus.Counter
 	TotalRequests     prometheus.Counter
 }
@@ -32,16 +42,12 @@ func New(settings *config.Settings, sessions *sessions.Sessions) *Exporter {
 		Settings: settings,
 		Sessions: sessions,
 		Metrics:  Metrics,
-		ScrapeTime: prometheus.NewGauge(prometheus.GaugeOpts{
-			Name: "rds_exporter_scrape_duration_seconds",
-			Help: "Time this RDS scrape took, in seconds.",
-		}),
-		ErroneousRequests: prometheus.NewGauge(prometheus.GaugeOpts{
+		ErroneousRequests: prometheus.NewCounter(prometheus.CounterOpts{
 			Name: "rds_exporter_erroneous_requests",
-			Help: "The number of erroneous request made by this scrape.",
+			Help: "The number of erroneous API request made to CloudWatch.",
 		}),
 		TotalRequests: prometheus.NewCounter(prometheus.CounterOpts{
-			Name: "rds_requests_total",
+			Name: "rds_exporter_requests_total",
 			Help: "API requests made to CloudWatch",
 		}),
 	}
@@ -49,29 +55,43 @@ func New(settings *config.Settings, sessions *sessions.Sessions) *Exporter {
 
 func (e *Exporter) Collect(ch chan<- prometheus.Metric) {
 	now := time.Now()
+	e.collect(ch)
+
+	// Collect scrape time
+	ch <- prometheus.MustNewConstMetric(ScrapeTimeDesc, prometheus.GaugeValue, float64(time.Since(now).Seconds()))
+
+	// Collect global number of requests, and global number of failed requests
+	ch <- e.TotalRequests
+	ch <- e.ErroneousRequests
+}
+
+func (e *Exporter) collect(ch chan<- prometheus.Metric) {
 	wg := &sync.WaitGroup{}
+	defer wg.Wait()
+
 	instances := e.Settings.Config().Instances
 	wg.Add(len(instances))
 	for _, instance := range instances {
 		go func(instance config.Instance) {
-			NewScrape(instance, e, ch).Scrape()
+			NewScraper(instance, e, ch).Scrape()
 			wg.Done()
 		}(instance)
 	}
-	wg.Wait()
-	e.ScrapeTime.Set(time.Since(now).Seconds())
-
-	ch <- e.ScrapeTime
-	ch <- e.ErroneousRequests
-	ch <- e.TotalRequests
 }
 
 func (e *Exporter) Describe(ch chan<- *prometheus.Desc) {
-	ch <- e.ScrapeTime.Desc()
-	ch <- e.ErroneousRequests.Desc()
-	ch <- e.TotalRequests.Desc()
-
+	// RDS metrics
 	for _, m := range e.Metrics {
 		ch <- m.Desc
 	}
+
+	// Latency metric
+	ch <- latency.Desc
+
+	// Scrape time
+	ch <- ScrapeTimeDesc
+
+	// Global number of requests, and global number of failed requests
+	ch <- e.TotalRequests.Desc()
+	ch <- e.ErroneousRequests.Desc()
 }

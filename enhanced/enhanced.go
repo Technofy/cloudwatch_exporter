@@ -4,300 +4,188 @@ import (
 	"encoding/json"
 	"fmt"
 	"strconv"
-	"strings"
 	"sync"
+	"time"
 
 	"github.com/aws/aws-sdk-go/aws"
-	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/cloudwatchlogs"
 	"github.com/percona/rds_exporter/config"
+	"github.com/percona/rds_exporter/latency"
 	"github.com/percona/rds_exporter/sessions"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/common/log"
 )
+
+//go:generate go run generate/main.go
 
 const (
 	namespace    = "rdsosmetrics"
 	logGroupName = "RDSOSMetrics"
 )
 
+var (
+	ScrapeTimeDesc = prometheus.NewDesc(
+		"rds_exporter_scrape_duration_seconds",
+		"Time this RDS scrape took, in seconds.",
+		[]string{},
+		nil,
+	)
+)
+
+type Metric struct {
+	Name string
+	Desc *prometheus.Desc
+}
+
 type Exporter struct {
 	Settings *config.Settings
 	Sessions *sessions.Sessions
 
-	// For simplification assume this sync.Map always store values of type *prometheus.Desc.
-	// If for any reason this leads to problems feel free to add type checks to increase safety.
-	desc sync.Map
+	// Metrics
+	Metrics           map[string]Metric
+	ErroneousRequests prometheus.Counter
+	TotalRequests     prometheus.Counter
 }
 
 func New(settings *config.Settings, sessions *sessions.Sessions) *Exporter {
 	return &Exporter{
 		Settings: settings,
 		Sessions: sessions,
+		Metrics:  Metrics,
+		ErroneousRequests: prometheus.NewCounter(prometheus.CounterOpts{
+			Name: "rds_exporter_erroneous_requests",
+			Help: "The number of erroneous API request made to CloudWatch.",
+		}),
+		TotalRequests: prometheus.NewCounter(prometheus.CounterOpts{
+			Name: "rds_exporter_requests_total",
+			Help: "API requests made to CloudWatch",
+		}),
 	}
 }
 
 func (e *Exporter) Describe(ch chan<- *prometheus.Desc) {
-	wg := sync.WaitGroup{}
-	defer wg.Wait()
-
-	instances := e.Settings.Config().Instances
-	wg.Add(len(instances))
-	for _, instance := range instances {
-		go func(region string) {
-			err := e.describeRegion(region)
-			if err != nil {
-				log.Error(err)
-			}
-			wg.Done()
-		}(instance.Region)
-	}
-	wg.Wait()
-
-	e.desc.Range(
-		func(key, value interface{}) bool {
-			ch <- value.(*prometheus.Desc)
-			return true
-		},
-	)
-}
-
-func (e *Exporter) describeRegion(regionID string) error {
-	sess := session.Must(session.NewSession(&aws.Config{
-		Region: aws.String(regionID),
-	}))
-	svc := cloudwatchlogs.New(sess)
-	DescribeLogStreamsOutput, err := svc.DescribeLogStreams(&cloudwatchlogs.DescribeLogStreamsInput{
-		LogGroupName: aws.String(logGroupName),
-	})
-	if err != nil {
-		return fmt.Errorf("region '%s' is without RDS Enhanced Monitoring: %s", regionID, err)
+	// RDS metrics
+	for _, m := range e.Metrics {
+		ch <- m.Desc
 	}
 
-	wg := sync.WaitGroup{}
-	defer wg.Wait()
-	logStreams := DescribeLogStreamsOutput.LogStreams
-	wg.Add(len(logStreams))
-	for _, logStream := range logStreams {
-		go func(logStreamName *string) {
-			err := e.describeLogStream(logStreamName, svc)
-			if err != nil {
-				log.Error(err)
-			}
-			wg.Done()
-		}(logStream.LogStreamName)
-	}
+	// Latency metric
+	ch <- latency.Desc
 
-	return nil
-}
+	// Scrape time
+	ch <- ScrapeTimeDesc
 
-func (e *Exporter) collectRegion(ch chan<- prometheus.Metric, regionID string) error {
-	sess := session.Must(session.NewSession(&aws.Config{
-		Region: aws.String(regionID),
-	}))
-	svc := cloudwatchlogs.New(sess)
-	DescribeLogStreamsOutput, err := svc.DescribeLogStreams(&cloudwatchlogs.DescribeLogStreamsInput{
-		LogGroupName: aws.String(logGroupName),
-	})
-	if err != nil {
-		// region without RDS Enhanced Monitoring
-		return fmt.Errorf("region '%s' is without RDS Enhanced Monitoring: %s", regionID, err)
-	}
-
-	wg := sync.WaitGroup{}
-	defer wg.Wait()
-	logStreams := DescribeLogStreamsOutput.LogStreams
-	wg.Add(len(logStreams))
-	for _, logStream := range logStreams {
-		go func(logStreamName *string) {
-			err := e.collectLogStream(ch, regionID, logStreamName, svc)
-			if err != nil {
-				log.Error(err)
-			}
-			wg.Done()
-		}(logStream.LogStreamName)
-	}
-
-	return nil
-}
-
-func (e *Exporter) describeLogStream(logStreamName *string, svc *cloudwatchlogs.CloudWatchLogs) error {
-	GetLogEventsOutput, err := svc.GetLogEvents(&cloudwatchlogs.GetLogEventsInput{
-		Limit:         aws.Int64(1),
-		LogGroupName:  aws.String(logGroupName),
-		LogStreamName: logStreamName,
-	})
-	if err != nil {
-		return err
-	}
-
-	var message interface{}
-	err = json.Unmarshal([]byte(*GetLogEventsOutput.Events[0].Message), &message)
-	if err != nil {
-		return err
-	}
-
-	wg := sync.WaitGroup{}
-	defer wg.Wait()
-
-	messages, ok := message.(map[string]interface{})
-	if !ok {
-		return fmt.Errorf("unsupported message type: %T", message)
-	}
-	wg.Add(len(messages))
-	for key, value := range messages {
-		go func(key string, value interface{}) {
-			err := e.describeValue(key, value)
-			if err != nil {
-				log.Error(err)
-			}
-			wg.Done()
-		}(key, value)
-	}
-
-	return nil
-}
-
-func (e *Exporter) describeValue(key string, value interface{}) error {
-	switch v := value.(type) {
-	case float64:
-		e.addDesc("", key)
-	case map[string]interface{}:
-		for kkey, vvvalue := range v {
-			switch vvvalue.(type) {
-			case float64:
-				e.addDesc(key, kkey)
-			}
-		}
-	case []interface{}:
-		for i, u := range v {
-			switch vvvalue := u.(type) {
-			case map[string]interface{}:
-				for kkey, vvvvalue := range vvvalue {
-					switch vvvvalue.(type) {
-					case float64:
-						e.addDesc(key, strconv.Itoa(i)+"_"+kkey)
-					}
-				}
-			}
-		}
-	case string:
-		switch key {
-		case
-			"engine",
-			"instanceID",
-			"instanceResourceID",
-			"timestamp",
-			"uptime":
-			// skipping those values
-		default:
-			return fmt.Errorf("unsupported key '%s' when describing value", key)
-		}
-	default:
-		return fmt.Errorf("unsupported value type '%T' for key '%s' when describing value", value, key)
-	}
-
-	return nil
-}
-
-func (e *Exporter) addDesc(subsystem string, name string) {
-	FQName := prometheus.BuildFQName(namespace, subsystem, name)
-
-	if _, ok := e.desc.Load(FQName); ok {
-		return
-	}
-
-	e.desc.Store(
-		FQName,
-		prometheus.NewDesc(
-			strings.ToLower(FQName),
-			"Automatically parsed metric from "+logGroupName+" Log Group",
-			[]string{
-				"region",
-				"instanceID",
-			},
-			nil,
-		),
-	)
-}
-
-func (e *Exporter) updateMetric(ch chan<- prometheus.Metric, region string, instanceID string, subsystem string, name string, value float64) {
-	FQName := prometheus.BuildFQName(namespace, subsystem, name)
-	if v, ok := e.desc.Load(FQName); ok {
-		ch <- prometheus.MustNewConstMetric(
-			v.(*prometheus.Desc),
-			prometheus.UntypedValue,
-			value,
-			region,
-			instanceID,
-		)
-	}
+	// Global number of requests, and global number of failed requests
+	ch <- e.TotalRequests.Desc()
+	ch <- e.ErroneousRequests.Desc()
 }
 
 func (e *Exporter) Collect(ch chan<- prometheus.Metric) {
-	wg := sync.WaitGroup{}
+	now := time.Now()
+	e.collect(ch)
+
+	// Collect scrape time
+	ch <- prometheus.MustNewConstMetric(ScrapeTimeDesc, prometheus.GaugeValue, float64(time.Since(now).Seconds()))
+
+	// Collect global number of requests, and global number of failed requests
+	ch <- e.TotalRequests
+	ch <- e.ErroneousRequests
+}
+
+func (e *Exporter) collect(ch chan<- prometheus.Metric) {
+	wg := &sync.WaitGroup{}
 	defer wg.Wait()
 
 	instances := e.Settings.Config().Instances
 	wg.Add(len(instances))
 	for _, instance := range instances {
-		go func(region string) {
-			err := e.collectRegion(ch, region)
+		go func(instance config.Instance) {
+			defer wg.Done()
+
+			err := e.collectInstance(ch, instance)
 			if err != nil {
 				log.Error(err)
 			}
-			wg.Done()
-		}(instance.Region)
+		}(instance)
 	}
 }
 
-func (e *Exporter) collectLogStream(ch chan<- prometheus.Metric, regionID string, logStreamName *string, svc *cloudwatchlogs.CloudWatchLogs) error {
-	GetLogEventsOutput, err := svc.GetLogEvents(&cloudwatchlogs.GetLogEventsInput{
-		Limit:         aws.Int64(1),
-		LogGroupName:  aws.String(logGroupName),
-		LogStreamName: logStreamName,
-	})
+func (e *Exporter) collectInstance(ch chan<- prometheus.Metric, instance config.Instance) error {
+	// Latency metric
+	l := &latency.Latency{}
+
+	// Collect all values
+	err := e.collectValues(ch, instance, l)
 	if err != nil {
 		return err
+	}
+
+	// Collect latency metric
+	if !l.IsZero() {
+		ch <- prometheus.MustNewConstMetric(latency.Desc, prometheus.GaugeValue, float64(l.Duration().Seconds()), instanceLabels(instance)...)
+	}
+	return nil
+}
+
+func (e *Exporter) collectValues(ch chan<- prometheus.Metric, instance config.Instance, l *latency.Latency) error {
+	sess := e.Sessions.Get(instance)
+	svc := cloudwatchlogs.New(sess)
+
+	FilterLogEventsOutput, err := svc.FilterLogEvents(&cloudwatchlogs.FilterLogEventsInput{
+		Limit:         aws.Int64(1),
+		LogGroupName:  aws.String(logGroupName),
+		FilterPattern: aws.String(fmt.Sprintf(`{ $.instanceID = "%s" }`, instance.Instance)),
+	})
+	if err != nil {
+		return fmt.Errorf("unable to get logs for instance %s: %s", instance.Instance, err)
+	}
+
+	if len(FilterLogEventsOutput.Events) == 0 {
+		return fmt.Errorf("no events in region %s for instance %s", instance.Region, instance.Instance)
 	}
 
 	var message interface{}
-	err = json.Unmarshal([]byte(*GetLogEventsOutput.Events[0].Message), &message)
+	err = json.Unmarshal([]byte(*FilterLogEventsOutput.Events[0].Message), &message)
 	if err != nil {
 		return err
 	}
 
-	wg := sync.WaitGroup{}
-	defer wg.Wait()
-
-	messages, ok := message.(map[string]interface{})
+	values, ok := message.(map[string]interface{})
 	if !ok {
 		return fmt.Errorf("unsupported message type: %T", message)
 	}
-	wg.Add(len(messages))
-	instanceID := messages["instanceID"].(string)
-	for key, value := range messages {
+
+	if len(values) == 0 {
+		return nil
+	}
+
+	wg := &sync.WaitGroup{}
+	defer wg.Wait()
+
+	wg.Add(len(values))
+	for key, value := range values {
 		go func(key string, value interface{}) {
-			err := e.collectValue(ch, regionID, instanceID, key, value)
+			defer wg.Done()
+
+			err := e.collectValue(ch, instance, key, value, l)
 			if err != nil {
 				log.Error(err)
 			}
-			wg.Done()
 		}(key, value)
 	}
 
 	return nil
 }
 
-func (e *Exporter) collectValue(ch chan<- prometheus.Metric, regionID string, instanceID string, key string, value interface{}) error {
+func (e *Exporter) collectValue(ch chan<- prometheus.Metric, instance config.Instance, key string, value interface{}, l *latency.Latency) error {
 	switch v := value.(type) {
 	case float64:
-		e.updateMetric(ch, regionID, instanceID, "", key, v)
+		e.sendMetric(ch, instance, "General", key, v)
 	case map[string]interface{}:
 		for kkey, vvvalue := range v {
 			switch vvvvalue := vvvalue.(type) {
 			case float64:
-				e.updateMetric(ch, regionID, instanceID, key, kkey, vvvvalue)
+				e.sendMetric(ch, instance, key, kkey, vvvvalue)
 			}
 		}
 	case []interface{}:
@@ -307,7 +195,10 @@ func (e *Exporter) collectValue(ch chan<- prometheus.Metric, regionID string, in
 				for kkey, vvvvalue := range vvvalue {
 					switch vvvvvalue := vvvvalue.(type) {
 					case float64:
-						e.updateMetric(ch, regionID, instanceID, key, strconv.Itoa(i)+"_"+kkey, vvvvvalue)
+						labels := []string{
+							strconv.Itoa(i),
+						}
+						e.sendMetric(ch, instance, key, kkey, vvvvvalue, labels...)
 					}
 				}
 			}
@@ -318,9 +209,14 @@ func (e *Exporter) collectValue(ch chan<- prometheus.Metric, regionID string, in
 			"engine",
 			"instanceID",
 			"instanceResourceID",
-			"timestamp",
 			"uptime":
 			// skipping those values
+		case "timestamp":
+			t, err := time.Parse(time.RFC3339, v)
+			if err != nil {
+				return err
+			}
+			l.TakeOldest(t)
 		default:
 			return fmt.Errorf("unsupported key '%s' when collecting value", key)
 		}
@@ -329,4 +225,32 @@ func (e *Exporter) collectValue(ch chan<- prometheus.Metric, regionID string, in
 	}
 
 	return nil
+}
+
+func (e *Exporter) sendMetric(ch chan<- prometheus.Metric, instance config.Instance, subsystem string, name string, value float64, extraLabels ...string) {
+	FQName := prometheus.BuildFQName(namespace, subsystem, name)
+	metric, ok := e.Metrics[FQName]
+	if !ok {
+		log.Errorf("unknown metric %s", FQName)
+		return
+	}
+
+	labels := instanceLabels(instance)
+	if len(extraLabels) > 0 {
+		labels = append(labels, extraLabels...)
+	}
+
+	ch <- prometheus.MustNewConstMetric(
+		metric.Desc,
+		prometheus.GaugeValue,
+		value,
+		labels...,
+	)
+}
+
+func instanceLabels(instance config.Instance) []string {
+	return []string{
+		instance.Instance,
+		instance.Region,
+	}
 }

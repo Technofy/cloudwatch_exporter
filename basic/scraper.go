@@ -8,6 +8,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/cloudwatch"
 	"github.com/percona/rds_exporter/config"
+	"github.com/percona/rds_exporter/latency"
 	"github.com/prometheus/client_golang/prometheus"
 )
 
@@ -15,16 +16,9 @@ var (
 	Period = 60 * time.Second
 	Delay  = 600 * time.Second
 	Range  = 600 * time.Second
-
-	latencyDesc = prometheus.NewDesc(
-		"rds_latency",
-		"The difference between the current time and timestamp in the metric itself",
-		[]string{"instance", "region"},
-		map[string]string(nil),
-	)
 )
 
-type Scrape struct {
+type Scraper struct {
 	// params
 	instance config.Instance
 	exporter *Exporter
@@ -33,19 +27,21 @@ type Scrape struct {
 	// internal
 	svc     *cloudwatch.CloudWatch
 	labels  []string
-	latency *Latency
+	latency *latency.Latency
 }
 
-func NewScrape(instance config.Instance, exporter *Exporter, ch chan<- prometheus.Metric) *Scrape {
+func NewScraper(instance config.Instance, exporter *Exporter, ch chan<- prometheus.Metric) *Scraper {
 	// Create CloudWatch client
 	sess := exporter.Sessions.Get(instance)
 	svc := cloudwatch.New(sess)
 
 	// Create labels for all metrics
-	labels := []string{}
-	labels = append(labels, instance.Instance, instance.Region)
+	labels := []string{
+		instance.Instance,
+		instance.Region,
+	}
 
-	return &Scrape{
+	return &Scraper{
 		// params
 		instance: instance,
 		exporter: exporter,
@@ -54,7 +50,7 @@ func NewScrape(instance config.Instance, exporter *Exporter, ch chan<- prometheu
 		// internal
 		svc:     svc,
 		labels:  labels,
-		latency: &Latency{},
+		latency: &latency.Latency{},
 	}
 }
 
@@ -72,8 +68,19 @@ func getLatestDatapoint(datapoints []*cloudwatch.Datapoint) *cloudwatch.Datapoin
 
 // Scrape makes the required calls to AWS CloudWatch by using the parameters in the Exporter.
 // Once converted into Prometheus format, the metrics are pushed on the ch channel.
-func (s *Scrape) Scrape() {
+func (s *Scraper) Scrape() {
+	s.scrape()
+
+	// Generate latency metric
+	if !s.latency.IsZero() {
+		s.ch <- prometheus.MustNewConstMetric(latency.Desc, prometheus.GaugeValue, float64(s.latency.Duration().Seconds()), s.labels...)
+	}
+}
+
+func (s *Scraper) scrape() {
 	wg := &sync.WaitGroup{}
+	defer wg.Wait()
+
 	wg.Add(len(s.exporter.Metrics))
 	for _, metric := range s.exporter.Metrics {
 		go func(metric Metric) {
@@ -85,16 +92,8 @@ func (s *Scrape) Scrape() {
 			wg.Done()
 		}(metric)
 	}
-	wg.Wait()
-
-	// Generate latency metric
-	if !s.latency.Timestamp.IsZero() {
-		latency := time.Since(s.latency.Timestamp).Seconds()
-		s.ch <- prometheus.MustNewConstMetric(latencyDesc, prometheus.GaugeValue, float64(latency), s.labels...)
-	}
 }
-
-func (s *Scrape) scrapeMetric(metric Metric) error {
+func (s *Scraper) scrapeMetric(metric Metric) error {
 	now := time.Now()
 	end := now.Add(-Delay)
 
@@ -147,17 +146,4 @@ func (s *Scrape) scrapeMetric(metric Metric) error {
 	s.ch <- prometheus.MustNewConstMetric(metric.Desc, prometheus.GaugeValue, v, s.labels...)
 
 	return nil
-}
-
-type Latency struct {
-	Timestamp time.Time
-	sync.RWMutex
-}
-
-func (l *Latency) TakeOldest(t time.Time) {
-	l.Lock()
-	defer l.Unlock()
-	if l.Timestamp.IsZero() || t.Before(l.Timestamp) {
-		l.Timestamp = t
-	}
 }
