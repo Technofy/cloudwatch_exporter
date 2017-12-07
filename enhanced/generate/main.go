@@ -8,6 +8,8 @@ import (
 	"os"
 	"text/template"
 
+	"github.com/percona/rds_exporter/enhanced"
+
 	"github.com/prometheus/client_golang/prometheus"
 )
 
@@ -23,10 +25,12 @@ type Metric struct {
 }
 
 func (m Metric) FqName() string {
+	namespace, subsystem, name, _ := enhanced.MapToNode(m.Group, m.Name)
 	switch m.Group {
-	case "cpuUtilization":
+	case "disk":
+		namespace = "node"
 	}
-	return prometheus.BuildFQName("rdsosmetrics", m.Group, m.Name)
+	return prometheus.BuildFQName(namespace, subsystem, name)
 }
 
 func (m Metric) Labels() []string {
@@ -35,6 +39,8 @@ func (m Metric) Labels() []string {
 		"region",
 	}
 	switch m.Group {
+	case "cpuUtilization":
+		labels = append(labels, "mode")
 	case "processList",
 		"network",
 		"diskIO",
@@ -48,13 +54,8 @@ func (m Metric) Labels() []string {
 func (m Metric) ConstLabels() map[string]string {
 	switch m.Group {
 	case "cpuUtilization":
-	}
-
-	switch m.Name {
-	case "CPUUtilization":
 		return map[string]string{
-			"cpu":  "All",
-			"mode": "idle",
+			"cpu": "All",
 		}
 	}
 
@@ -62,6 +63,16 @@ func (m Metric) ConstLabels() map[string]string {
 }
 
 func (g Group) Metrics() []Metric {
+	switch g.Name {
+	case "cpuUtilization":
+		return []Metric{
+			{
+				Group: g.Name,
+				Name:  "cpu",
+				Help:  "The percentage of CPU utilization. Units: Percent",
+			},
+		}
+	}
 	return g.metrics
 }
 
@@ -170,6 +181,10 @@ var (
 			"stopped":  "The number of tasks that are stopped.",
 			"total":    "The total number of tasks.",
 			"zombie":   "The number of child tasks that are inactive with an active parent task.",
+		},
+		"disk": {
+			"bytes_read":    "The total number of kilobytes read. This metric is not available for Amazon Aurora.",
+			"bytes_written": "The total number of kilobytes written. This metric is not available for Amazon Aurora.",
 		},
 	}
 )

@@ -6,334 +6,19 @@ import (
 )
 
 var Metrics = map[string]Metric{
-	"rdsosmetrics_cpuUtilization_guest": {
-		Name: "guest",
+	"rdsosmetrics_loadAverageMinute_five": {
+		Name: "five",
 		Desc: prometheus.NewDesc(
-			"rdsosmetrics_cpuUtilization_guest",
-			"The percentage of CPU in use by guest programs.",
+			"rdsosmetrics_loadAverageMinute_five",
+			"The number of processes requesting CPU time over the last 5 minutes.",
 			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
 	},
-	"rdsosmetrics_cpuUtilization_nice": {
-		Name: "nice",
-		Desc: prometheus.NewDesc(
-			"rdsosmetrics_cpuUtilization_nice",
-			"The percentage of CPU in use by programs running at lowest priority.",
-			[]string{"instance", "region"},
-			map[string]string(nil),
-		),
-	},
-	"rdsosmetrics_cpuUtilization_user": {
-		Name: "user",
-		Desc: prometheus.NewDesc(
-			"rdsosmetrics_cpuUtilization_user",
-			"The percentage of CPU in use by user programs.",
-			[]string{"instance", "region"},
-			map[string]string(nil),
-		),
-	},
-	"rdsosmetrics_cpuUtilization_wait": {
-		Name: "wait",
-		Desc: prometheus.NewDesc(
-			"rdsosmetrics_cpuUtilization_wait",
-			"The percentage of CPU unused while waiting for I/O access.",
-			[]string{"instance", "region"},
-			map[string]string(nil),
-		),
-	},
-	"rdsosmetrics_cpuUtilization_idle": {
-		Name: "idle",
-		Desc: prometheus.NewDesc(
-			"rdsosmetrics_cpuUtilization_idle",
-			"The percentage of CPU that is idle.",
-			[]string{"instance", "region"},
-			map[string]string(nil),
-		),
-	},
-	"rdsosmetrics_cpuUtilization_irq": {
-		Name: "irq",
-		Desc: prometheus.NewDesc(
-			"rdsosmetrics_cpuUtilization_irq",
-			"The percentage of CPU in use by software interrupts.",
-			[]string{"instance", "region"},
-			map[string]string(nil),
-		),
-	},
-	"rdsosmetrics_cpuUtilization_steal": {
-		Name: "steal",
-		Desc: prometheus.NewDesc(
-			"rdsosmetrics_cpuUtilization_steal",
-			"The percentage of CPU in use by other virtual machines.",
-			[]string{"instance", "region"},
-			map[string]string(nil),
-		),
-	},
-	"rdsosmetrics_cpuUtilization_system": {
-		Name: "system",
-		Desc: prometheus.NewDesc(
-			"rdsosmetrics_cpuUtilization_system",
-			"The percentage of CPU in use by the kernel.",
-			[]string{"instance", "region"},
-			map[string]string(nil),
-		),
-	},
-	"rdsosmetrics_cpuUtilization_total": {
-		Name: "total",
-		Desc: prometheus.NewDesc(
-			"rdsosmetrics_cpuUtilization_total",
-			"The total percentage of the CPU in use. This value includes the nice value.",
-			[]string{"instance", "region"},
-			map[string]string(nil),
-		),
-	},
-	"rdsosmetrics_diskIO_avgQueueLen": {
-		Name: "avgQueueLen",
-		Desc: prometheus.NewDesc(
-			"rdsosmetrics_diskIO_avgQueueLen",
-			"The number of requests waiting in the I/O device's queue. This metric is not available for Amazon Aurora.",
-			[]string{"instance", "region", "id"},
-			map[string]string(nil),
-		),
-	},
-	"rdsosmetrics_diskIO_readIOsPS": {
-		Name: "readIOsPS",
-		Desc: prometheus.NewDesc(
-			"rdsosmetrics_diskIO_readIOsPS",
-			"The number of read operations per second. This metric is not available for Amazon Aurora.",
-			[]string{"instance", "region", "id"},
-			map[string]string(nil),
-		),
-	},
-	"rdsosmetrics_diskIO_readKb": {
-		Name: "readKb",
-		Desc: prometheus.NewDesc(
-			"rdsosmetrics_diskIO_readKb",
-			"The total number of kilobytes read. This metric is not available for Amazon Aurora.",
-			[]string{"instance", "region", "id"},
-			map[string]string(nil),
-		),
-	},
-	"rdsosmetrics_diskIO_writeLatency": {
-		Name: "writeLatency",
-		Desc: prometheus.NewDesc(
-			"rdsosmetrics_diskIO_writeLatency",
-			"TODO",
-			[]string{"instance", "region", "id"},
-			map[string]string(nil),
-		),
-	},
-	"rdsosmetrics_diskIO_avgReqSz": {
-		Name: "avgReqSz",
-		Desc: prometheus.NewDesc(
-			"rdsosmetrics_diskIO_avgReqSz",
-			"The average request size, in kilobytes. This metric is not available for Amazon Aurora.",
-			[]string{"instance", "region", "id"},
-			map[string]string(nil),
-		),
-	},
-	"rdsosmetrics_diskIO_device": {
-		Name: "device",
-		Desc: prometheus.NewDesc(
-			"rdsosmetrics_diskIO_device",
-			"The identifier of the disk device in use. This metric is not available for Amazon Aurora.",
-			[]string{"instance", "region", "id"},
-			map[string]string(nil),
-		),
-	},
-	"rdsosmetrics_diskIO_rrqmPS": {
-		Name: "rrqmPS",
-		Desc: prometheus.NewDesc(
-			"rdsosmetrics_diskIO_rrqmPS",
-			"The number of merged read requests queued per second. This metric is not available for Amazon Aurora.",
-			[]string{"instance", "region", "id"},
-			map[string]string(nil),
-		),
-	},
-	"rdsosmetrics_diskIO_util": {
-		Name: "util",
-		Desc: prometheus.NewDesc(
-			"rdsosmetrics_diskIO_util",
-			"The percentage of CPU time during which requests were issued. This metric is not available for Amazon Aurora.",
-			[]string{"instance", "region", "id"},
-			map[string]string(nil),
-		),
-	},
-	"rdsosmetrics_diskIO_readThroughput": {
-		Name: "readThroughput",
-		Desc: prometheus.NewDesc(
-			"rdsosmetrics_diskIO_readThroughput",
-			"TODO",
-			[]string{"instance", "region", "id"},
-			map[string]string(nil),
-		),
-	},
-	"rdsosmetrics_diskIO_readKbPS": {
-		Name: "readKbPS",
-		Desc: prometheus.NewDesc(
-			"rdsosmetrics_diskIO_readKbPS",
-			"The number of kilobytes read per second. This metric is not available for Amazon Aurora.",
-			[]string{"instance", "region", "id"},
-			map[string]string(nil),
-		),
-	},
-	"rdsosmetrics_diskIO_tps": {
-		Name: "tps",
-		Desc: prometheus.NewDesc(
-			"rdsosmetrics_diskIO_tps",
-			"The number of I/O transactions per second. This metric is not available for Amazon Aurora.",
-			[]string{"instance", "region", "id"},
-			map[string]string(nil),
-		),
-	},
-	"rdsosmetrics_diskIO_readLatency": {
-		Name: "readLatency",
-		Desc: prometheus.NewDesc(
-			"rdsosmetrics_diskIO_readLatency",
-			"TODO",
-			[]string{"instance", "region", "id"},
-			map[string]string(nil),
-		),
-	},
-	"rdsosmetrics_diskIO_writeThroughput": {
-		Name: "writeThroughput",
-		Desc: prometheus.NewDesc(
-			"rdsosmetrics_diskIO_writeThroughput",
-			"TODO",
-			[]string{"instance", "region", "id"},
-			map[string]string(nil),
-		),
-	},
-	"rdsosmetrics_diskIO_await": {
-		Name: "await",
-		Desc: prometheus.NewDesc(
-			"rdsosmetrics_diskIO_await",
-			"The number of milliseconds required to respond to requests, including queue time and service time. This metric is not available for Amazon Aurora.",
-			[]string{"instance", "region", "id"},
-			map[string]string(nil),
-		),
-	},
-	"rdsosmetrics_diskIO_writeIOsPS": {
-		Name: "writeIOsPS",
-		Desc: prometheus.NewDesc(
-			"rdsosmetrics_diskIO_writeIOsPS",
-			"The number of write operations per second. This metric is not available for Amazon Aurora.",
-			[]string{"instance", "region", "id"},
-			map[string]string(nil),
-		),
-	},
-	"rdsosmetrics_diskIO_writeKb": {
-		Name: "writeKb",
-		Desc: prometheus.NewDesc(
-			"rdsosmetrics_diskIO_writeKb",
-			"The total number of kilobytes written. This metric is not available for Amazon Aurora.",
-			[]string{"instance", "region", "id"},
-			map[string]string(nil),
-		),
-	},
-	"rdsosmetrics_diskIO_writeKbPS": {
-		Name: "writeKbPS",
-		Desc: prometheus.NewDesc(
-			"rdsosmetrics_diskIO_writeKbPS",
-			"The number of kilobytes written per second. This metric is not available for Amazon Aurora.",
-			[]string{"instance", "region", "id"},
-			map[string]string(nil),
-		),
-	},
-	"rdsosmetrics_diskIO_wrqmPS": {
-		Name: "wrqmPS",
-		Desc: prometheus.NewDesc(
-			"rdsosmetrics_diskIO_wrqmPS",
-			"The number of merged write requests queued per second. This metric is not available for Amazon Aurora.",
-			[]string{"instance", "region", "id"},
-			map[string]string(nil),
-		),
-	},
-	"rdsosmetrics_diskIO_diskQueueDepth": {
-		Name: "diskQueueDepth",
-		Desc: prometheus.NewDesc(
-			"rdsosmetrics_diskIO_diskQueueDepth",
-			"TODO",
-			[]string{"instance", "region", "id"},
-			map[string]string(nil),
-		),
-	},
-	"rdsosmetrics_fileSys_usedFiles": {
-		Name: "usedFiles",
-		Desc: prometheus.NewDesc(
-			"rdsosmetrics_fileSys_usedFiles",
-			"The number of files in the file system.",
-			[]string{"instance", "region", "id"},
-			map[string]string(nil),
-		),
-	},
-	"rdsosmetrics_fileSys_maxFiles": {
-		Name: "maxFiles",
-		Desc: prometheus.NewDesc(
-			"rdsosmetrics_fileSys_maxFiles",
-			"The maximum number of files that can be created for the file system.",
-			[]string{"instance", "region", "id"},
-			map[string]string(nil),
-		),
-	},
-	"rdsosmetrics_fileSys_name": {
-		Name: "name",
-		Desc: prometheus.NewDesc(
-			"rdsosmetrics_fileSys_name",
-			"The name of the file system.",
-			[]string{"instance", "region", "id"},
-			map[string]string(nil),
-		),
-	},
-	"rdsosmetrics_fileSys_total": {
-		Name: "total",
-		Desc: prometheus.NewDesc(
-			"rdsosmetrics_fileSys_total",
-			"The total number of disk space available for the file system, in kilobytes.",
-			[]string{"instance", "region", "id"},
-			map[string]string(nil),
-		),
-	},
-	"rdsosmetrics_fileSys_used": {
-		Name: "used",
-		Desc: prometheus.NewDesc(
-			"rdsosmetrics_fileSys_used",
-			"The amount of disk space used by files in the file system, in kilobytes.",
-			[]string{"instance", "region", "id"},
-			map[string]string(nil),
-		),
-	},
-	"rdsosmetrics_fileSys_mountPoint": {
-		Name: "mountPoint",
-		Desc: prometheus.NewDesc(
-			"rdsosmetrics_fileSys_mountPoint",
-			"The path to the file system.",
-			[]string{"instance", "region", "id"},
-			map[string]string(nil),
-		),
-	},
-	"rdsosmetrics_fileSys_usedFilePercent": {
-		Name: "usedFilePercent",
-		Desc: prometheus.NewDesc(
-			"rdsosmetrics_fileSys_usedFilePercent",
-			"The percentage of available files in use.",
-			[]string{"instance", "region", "id"},
-			map[string]string(nil),
-		),
-	},
-	"rdsosmetrics_fileSys_usedPercent": {
-		Name: "usedPercent",
-		Desc: prometheus.NewDesc(
-			"rdsosmetrics_fileSys_usedPercent",
-			"The percentage of the file-system disk space in use.",
-			[]string{"instance", "region", "id"},
-			map[string]string(nil),
-		),
-	},
-	"rdsosmetrics_loadAverageMinute_one": {
+	"node_load1": {
 		Name: "one",
 		Desc: prometheus.NewDesc(
-			"rdsosmetrics_loadAverageMinute_one",
+			"node_load1",
 			"The number of processes requesting CPU time over the last minute.",
 			[]string{"instance", "region"},
 			map[string]string(nil),
@@ -348,11 +33,146 @@ var Metrics = map[string]Metric{
 			map[string]string(nil),
 		),
 	},
-	"rdsosmetrics_loadAverageMinute_five": {
-		Name: "five",
+	"node_memory_Buffers": {
+		Name: "buffers",
 		Desc: prometheus.NewDesc(
-			"rdsosmetrics_loadAverageMinute_five",
-			"The number of processes requesting CPU time over the last 5 minutes.",
+			"node_memory_Buffers",
+			"The amount of memory used for buffering I/O requests prior to writing to the storage device, in kilobytes.",
+			[]string{"instance", "region"},
+			map[string]string(nil),
+		),
+	},
+	"node_memory_MemTotal": {
+		Name: "total",
+		Desc: prometheus.NewDesc(
+			"node_memory_MemTotal",
+			"The total amount of memory, in kilobytes.",
+			[]string{"instance", "region"},
+			map[string]string(nil),
+		),
+	},
+	"rdsosmetrics_memory_writeback": {
+		Name: "writeback",
+		Desc: prometheus.NewDesc(
+			"rdsosmetrics_memory_writeback",
+			"The amount of dirty pages in RAM that are still being written to the backing storage, in kilobytes.",
+			[]string{"instance", "region"},
+			map[string]string(nil),
+		),
+	},
+	"node_memory_Cached": {
+		Name: "cached",
+		Desc: prometheus.NewDesc(
+			"node_memory_Cached",
+			"The amount of memory used for caching file system–based I/O.",
+			[]string{"instance", "region"},
+			map[string]string(nil),
+		),
+	},
+	"rdsosmetrics_memory_hugePagesSize": {
+		Name: "hugePagesSize",
+		Desc: prometheus.NewDesc(
+			"rdsosmetrics_memory_hugePagesSize",
+			"The size for each huge pages unit, in kilobytes.",
+			[]string{"instance", "region"},
+			map[string]string(nil),
+		),
+	},
+	"node_memory_Inactive": {
+		Name: "inactive",
+		Desc: prometheus.NewDesc(
+			"node_memory_Inactive",
+			"The amount of least-frequently used memory pages, in kilobytes.",
+			[]string{"instance", "region"},
+			map[string]string(nil),
+		),
+	},
+	"node_memory_Active": {
+		Name: "active",
+		Desc: prometheus.NewDesc(
+			"node_memory_Active",
+			"The amount of assigned memory, in kilobytes.",
+			[]string{"instance", "region"},
+			map[string]string(nil),
+		),
+	},
+	"node_memory_nr_dirty": {
+		Name: "dirty",
+		Desc: prometheus.NewDesc(
+			"node_memory_nr_dirty",
+			"The amount of memory pages in RAM that have been modified but not written to their related data block in storage, in kilobytes.",
+			[]string{"instance", "region"},
+			map[string]string(nil),
+		),
+	},
+	"node_memory_MemFree": {
+		Name: "free",
+		Desc: prometheus.NewDesc(
+			"node_memory_MemFree",
+			"The amount of unassigned memory, in kilobytes.",
+			[]string{"instance", "region"},
+			map[string]string(nil),
+		),
+	},
+	"rdsosmetrics_memory_hugePagesFree": {
+		Name: "hugePagesFree",
+		Desc: prometheus.NewDesc(
+			"rdsosmetrics_memory_hugePagesFree",
+			"The number of free huge pages.Huge pages are a feature of the Linux kernel.",
+			[]string{"instance", "region"},
+			map[string]string(nil),
+		),
+	},
+	"rdsosmetrics_memory_hugePagesRsvd": {
+		Name: "hugePagesRsvd",
+		Desc: prometheus.NewDesc(
+			"rdsosmetrics_memory_hugePagesRsvd",
+			"The number of committed huge pages.",
+			[]string{"instance", "region"},
+			map[string]string(nil),
+		),
+	},
+	"rdsosmetrics_memory_hugePagesSurp": {
+		Name: "hugePagesSurp",
+		Desc: prometheus.NewDesc(
+			"rdsosmetrics_memory_hugePagesSurp",
+			"The number of available surplus huge pages over the total.",
+			[]string{"instance", "region"},
+			map[string]string(nil),
+		),
+	},
+	"rdsosmetrics_memory_hugePagesTotal": {
+		Name: "hugePagesTotal",
+		Desc: prometheus.NewDesc(
+			"rdsosmetrics_memory_hugePagesTotal",
+			"The total number of huge pages for the system.",
+			[]string{"instance", "region"},
+			map[string]string(nil),
+		),
+	},
+	"node_memory_Mapped": {
+		Name: "mapped",
+		Desc: prometheus.NewDesc(
+			"node_memory_Mapped",
+			"The total amount of file-system contents that is memory mapped inside a process address space, in kilobytes.",
+			[]string{"instance", "region"},
+			map[string]string(nil),
+		),
+	},
+	"node_memory_PageTables": {
+		Name: "pageTables",
+		Desc: prometheus.NewDesc(
+			"node_memory_PageTables",
+			"The amount of memory used by page tables, in kilobytes.",
+			[]string{"instance", "region"},
+			map[string]string(nil),
+		),
+	},
+	"node_memory_Slab": {
+		Name: "slab",
+		Desc: prometheus.NewDesc(
+			"node_memory_Slab",
+			"The amount of reusable kernel data structures, in kilobytes.",
 			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
@@ -384,29 +204,29 @@ var Metrics = map[string]Metric{
 			map[string]string(nil),
 		),
 	},
-	"rdsosmetrics_General_engine": {
-		Name: "engine",
+	"rdsosmetrics_swap_cached": {
+		Name: "cached",
 		Desc: prometheus.NewDesc(
-			"rdsosmetrics_General_engine",
-			"The database engine for the DB instance.",
+			"rdsosmetrics_swap_cached",
+			"The amount of swap memory, in kilobytes, used as cache memory.",
 			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
 	},
-	"rdsosmetrics_General_instanceID": {
-		Name: "instanceID",
+	"node_memory_SwapFree": {
+		Name: "free",
 		Desc: prometheus.NewDesc(
-			"rdsosmetrics_General_instanceID",
-			"The DB instance identifier.",
+			"node_memory_SwapFree",
+			"The total amount of swap memory free, in kilobytes.",
 			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
 	},
-	"rdsosmetrics_General_instanceResourceID": {
-		Name: "instanceResourceID",
+	"node_memory_SwapTotal": {
+		Name: "total",
 		Desc: prometheus.NewDesc(
-			"rdsosmetrics_General_instanceResourceID",
-			"A region-unique, immutable identifier for the DB instance, also used as the log stream identifier.",
+			"node_memory_SwapTotal",
+			"The total amount of swap memory available, in kilobytes.",
 			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
@@ -447,164 +267,281 @@ var Metrics = map[string]Metric{
 			map[string]string(nil),
 		),
 	},
-	"rdsosmetrics_memory_hugePagesSize": {
-		Name: "hugePagesSize",
+	"rdsosmetrics_General_engine": {
+		Name: "engine",
 		Desc: prometheus.NewDesc(
-			"rdsosmetrics_memory_hugePagesSize",
-			"The size for each huge pages unit, in kilobytes.",
+			"rdsosmetrics_General_engine",
+			"The database engine for the DB instance.",
 			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
 	},
-	"rdsosmetrics_memory_hugePagesTotal": {
-		Name: "hugePagesTotal",
+	"rdsosmetrics_General_instanceID": {
+		Name: "instanceID",
 		Desc: prometheus.NewDesc(
-			"rdsosmetrics_memory_hugePagesTotal",
-			"The total number of huge pages for the system.",
+			"rdsosmetrics_General_instanceID",
+			"The DB instance identifier.",
 			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
 	},
-	"rdsosmetrics_memory_inactive": {
-		Name: "inactive",
+	"rdsosmetrics_General_instanceResourceID": {
+		Name: "instanceResourceID",
 		Desc: prometheus.NewDesc(
-			"rdsosmetrics_memory_inactive",
-			"The amount of least-frequently used memory pages, in kilobytes.",
+			"rdsosmetrics_General_instanceResourceID",
+			"A region-unique, immutable identifier for the DB instance, also used as the log stream identifier.",
 			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
 	},
-	"rdsosmetrics_memory_pageTables": {
-		Name: "pageTables",
+	"node_cpu": {
+		Name: "cpu",
 		Desc: prometheus.NewDesc(
-			"rdsosmetrics_memory_pageTables",
-			"The amount of memory used by page tables, in kilobytes.",
-			[]string{"instance", "region"},
-			map[string]string(nil),
+			"node_cpu",
+			"The percentage of CPU utilization. Units: Percent",
+			[]string{"instance", "region", "mode"},
+			map[string]string{"cpu": "All"},
 		),
 	},
-	"rdsosmetrics_memory_slab": {
-		Name: "slab",
+	"rdsosmetrics_diskIO_writeIOsPS": {
+		Name: "writeIOsPS",
 		Desc: prometheus.NewDesc(
-			"rdsosmetrics_memory_slab",
-			"The amount of reusable kernel data structures, in kilobytes.",
-			[]string{"instance", "region"},
-			map[string]string(nil),
-		),
-	},
-	"rdsosmetrics_memory_cached": {
-		Name: "cached",
-		Desc: prometheus.NewDesc(
-			"rdsosmetrics_memory_cached",
-			"The amount of memory used for caching file system–based I/O.",
-			[]string{"instance", "region"},
-			map[string]string(nil),
-		),
-	},
-	"rdsosmetrics_memory_hugePagesFree": {
-		Name: "hugePagesFree",
-		Desc: prometheus.NewDesc(
-			"rdsosmetrics_memory_hugePagesFree",
-			"The number of free huge pages.Huge pages are a feature of the Linux kernel.",
-			[]string{"instance", "region"},
-			map[string]string(nil),
-		),
-	},
-	"rdsosmetrics_memory_hugePagesRsvd": {
-		Name: "hugePagesRsvd",
-		Desc: prometheus.NewDesc(
-			"rdsosmetrics_memory_hugePagesRsvd",
-			"The number of committed huge pages.",
-			[]string{"instance", "region"},
-			map[string]string(nil),
-		),
-	},
-	"rdsosmetrics_memory_mapped": {
-		Name: "mapped",
-		Desc: prometheus.NewDesc(
-			"rdsosmetrics_memory_mapped",
-			"The total amount of file-system contents that is memory mapped inside a process address space, in kilobytes.",
-			[]string{"instance", "region"},
-			map[string]string(nil),
-		),
-	},
-	"rdsosmetrics_memory_total": {
-		Name: "total",
-		Desc: prometheus.NewDesc(
-			"rdsosmetrics_memory_total",
-			"The total amount of memory, in kilobytes.",
-			[]string{"instance", "region"},
-			map[string]string(nil),
-		),
-	},
-	"rdsosmetrics_memory_writeback": {
-		Name: "writeback",
-		Desc: prometheus.NewDesc(
-			"rdsosmetrics_memory_writeback",
-			"The amount of dirty pages in RAM that are still being written to the backing storage, in kilobytes.",
-			[]string{"instance", "region"},
-			map[string]string(nil),
-		),
-	},
-	"rdsosmetrics_memory_buffers": {
-		Name: "buffers",
-		Desc: prometheus.NewDesc(
-			"rdsosmetrics_memory_buffers",
-			"The amount of memory used for buffering I/O requests prior to writing to the storage device, in kilobytes.",
-			[]string{"instance", "region"},
-			map[string]string(nil),
-		),
-	},
-	"rdsosmetrics_memory_dirty": {
-		Name: "dirty",
-		Desc: prometheus.NewDesc(
-			"rdsosmetrics_memory_dirty",
-			"The amount of memory pages in RAM that have been modified but not written to their related data block in storage, in kilobytes.",
-			[]string{"instance", "region"},
-			map[string]string(nil),
-		),
-	},
-	"rdsosmetrics_memory_free": {
-		Name: "free",
-		Desc: prometheus.NewDesc(
-			"rdsosmetrics_memory_free",
-			"The amount of unassigned memory, in kilobytes.",
-			[]string{"instance", "region"},
-			map[string]string(nil),
-		),
-	},
-	"rdsosmetrics_memory_active": {
-		Name: "active",
-		Desc: prometheus.NewDesc(
-			"rdsosmetrics_memory_active",
-			"The amount of assigned memory, in kilobytes.",
-			[]string{"instance", "region"},
-			map[string]string(nil),
-		),
-	},
-	"rdsosmetrics_memory_hugePagesSurp": {
-		Name: "hugePagesSurp",
-		Desc: prometheus.NewDesc(
-			"rdsosmetrics_memory_hugePagesSurp",
-			"The number of available surplus huge pages over the total.",
-			[]string{"instance", "region"},
-			map[string]string(nil),
-		),
-	},
-	"rdsosmetrics_processList_vss": {
-		Name: "vss",
-		Desc: prometheus.NewDesc(
-			"rdsosmetrics_processList_vss",
-			"The amount of virtual memory allocated to the process, in kilobytes.",
+			"rdsosmetrics_diskIO_writeIOsPS",
+			"The number of write operations per second. This metric is not available for Amazon Aurora.",
 			[]string{"instance", "region", "id"},
 			map[string]string(nil),
 		),
 	},
-	"rdsosmetrics_processList_vmlimit": {
-		Name: "vmlimit",
+	"rdsosmetrics_diskIO_readThroughput": {
+		Name: "readThroughput",
 		Desc: prometheus.NewDesc(
-			"rdsosmetrics_processList_vmlimit",
+			"rdsosmetrics_diskIO_readThroughput",
 			"TODO",
+			[]string{"instance", "region", "id"},
+			map[string]string(nil),
+		),
+	},
+	"rdsosmetrics_diskIO_diskQueueDepth": {
+		Name: "diskQueueDepth",
+		Desc: prometheus.NewDesc(
+			"rdsosmetrics_diskIO_diskQueueDepth",
+			"TODO",
+			[]string{"instance", "region", "id"},
+			map[string]string(nil),
+		),
+	},
+	"rdsosmetrics_diskIO_avgReqSz": {
+		Name: "avgReqSz",
+		Desc: prometheus.NewDesc(
+			"rdsosmetrics_diskIO_avgReqSz",
+			"The average request size, in kilobytes. This metric is not available for Amazon Aurora.",
+			[]string{"instance", "region", "id"},
+			map[string]string(nil),
+		),
+	},
+	"rdsosmetrics_diskIO_device": {
+		Name: "device",
+		Desc: prometheus.NewDesc(
+			"rdsosmetrics_diskIO_device",
+			"The identifier of the disk device in use. This metric is not available for Amazon Aurora.",
+			[]string{"instance", "region", "id"},
+			map[string]string(nil),
+		),
+	},
+	"rdsosmetrics_diskIO_readIOsPS": {
+		Name: "readIOsPS",
+		Desc: prometheus.NewDesc(
+			"rdsosmetrics_diskIO_readIOsPS",
+			"The number of read operations per second. This metric is not available for Amazon Aurora.",
+			[]string{"instance", "region", "id"},
+			map[string]string(nil),
+		),
+	},
+	"rdsosmetrics_diskIO_util": {
+		Name: "util",
+		Desc: prometheus.NewDesc(
+			"rdsosmetrics_diskIO_util",
+			"The percentage of CPU time during which requests were issued. This metric is not available for Amazon Aurora.",
+			[]string{"instance", "region", "id"},
+			map[string]string(nil),
+		),
+	},
+	"rdsosmetrics_diskIO_wrqmPS": {
+		Name: "wrqmPS",
+		Desc: prometheus.NewDesc(
+			"rdsosmetrics_diskIO_wrqmPS",
+			"The number of merged write requests queued per second. This metric is not available for Amazon Aurora.",
+			[]string{"instance", "region", "id"},
+			map[string]string(nil),
+		),
+	},
+	"rdsosmetrics_diskIO_writeThroughput": {
+		Name: "writeThroughput",
+		Desc: prometheus.NewDesc(
+			"rdsosmetrics_diskIO_writeThroughput",
+			"TODO",
+			[]string{"instance", "region", "id"},
+			map[string]string(nil),
+		),
+	},
+	"rdsosmetrics_diskIO_await": {
+		Name: "await",
+		Desc: prometheus.NewDesc(
+			"rdsosmetrics_diskIO_await",
+			"The number of milliseconds required to respond to requests, including queue time and service time. This metric is not available for Amazon Aurora.",
+			[]string{"instance", "region", "id"},
+			map[string]string(nil),
+		),
+	},
+	"rdsosmetrics_diskIO_readKb": {
+		Name: "readKb",
+		Desc: prometheus.NewDesc(
+			"rdsosmetrics_diskIO_readKb",
+			"The total number of kilobytes read. This metric is not available for Amazon Aurora.",
+			[]string{"instance", "region", "id"},
+			map[string]string(nil),
+		),
+	},
+	"rdsosmetrics_diskIO_rrqmPS": {
+		Name: "rrqmPS",
+		Desc: prometheus.NewDesc(
+			"rdsosmetrics_diskIO_rrqmPS",
+			"The number of merged read requests queued per second. This metric is not available for Amazon Aurora.",
+			[]string{"instance", "region", "id"},
+			map[string]string(nil),
+		),
+	},
+	"rdsosmetrics_diskIO_readLatency": {
+		Name: "readLatency",
+		Desc: prometheus.NewDesc(
+			"rdsosmetrics_diskIO_readLatency",
+			"TODO",
+			[]string{"instance", "region", "id"},
+			map[string]string(nil),
+		),
+	},
+	"rdsosmetrics_diskIO_writeLatency": {
+		Name: "writeLatency",
+		Desc: prometheus.NewDesc(
+			"rdsosmetrics_diskIO_writeLatency",
+			"TODO",
+			[]string{"instance", "region", "id"},
+			map[string]string(nil),
+		),
+	},
+	"rdsosmetrics_diskIO_readKbPS": {
+		Name: "readKbPS",
+		Desc: prometheus.NewDesc(
+			"rdsosmetrics_diskIO_readKbPS",
+			"The number of kilobytes read per second. This metric is not available for Amazon Aurora.",
+			[]string{"instance", "region", "id"},
+			map[string]string(nil),
+		),
+	},
+	"rdsosmetrics_diskIO_writeKb": {
+		Name: "writeKb",
+		Desc: prometheus.NewDesc(
+			"rdsosmetrics_diskIO_writeKb",
+			"The total number of kilobytes written. This metric is not available for Amazon Aurora.",
+			[]string{"instance", "region", "id"},
+			map[string]string(nil),
+		),
+	},
+	"rdsosmetrics_diskIO_writeKbPS": {
+		Name: "writeKbPS",
+		Desc: prometheus.NewDesc(
+			"rdsosmetrics_diskIO_writeKbPS",
+			"The number of kilobytes written per second. This metric is not available for Amazon Aurora.",
+			[]string{"instance", "region", "id"},
+			map[string]string(nil),
+		),
+	},
+	"rdsosmetrics_diskIO_avgQueueLen": {
+		Name: "avgQueueLen",
+		Desc: prometheus.NewDesc(
+			"rdsosmetrics_diskIO_avgQueueLen",
+			"The number of requests waiting in the I/O device's queue. This metric is not available for Amazon Aurora.",
+			[]string{"instance", "region", "id"},
+			map[string]string(nil),
+		),
+	},
+	"rdsosmetrics_diskIO_tps": {
+		Name: "tps",
+		Desc: prometheus.NewDesc(
+			"rdsosmetrics_diskIO_tps",
+			"The number of I/O transactions per second. This metric is not available for Amazon Aurora.",
+			[]string{"instance", "region", "id"},
+			map[string]string(nil),
+		),
+	},
+	"rdsosmetrics_fileSys_usedPercent": {
+		Name: "usedPercent",
+		Desc: prometheus.NewDesc(
+			"rdsosmetrics_fileSys_usedPercent",
+			"The percentage of the file-system disk space in use.",
+			[]string{"instance", "region", "id"},
+			map[string]string(nil),
+		),
+	},
+	"rdsosmetrics_fileSys_maxFiles": {
+		Name: "maxFiles",
+		Desc: prometheus.NewDesc(
+			"rdsosmetrics_fileSys_maxFiles",
+			"The maximum number of files that can be created for the file system.",
+			[]string{"instance", "region", "id"},
+			map[string]string(nil),
+		),
+	},
+	"rdsosmetrics_fileSys_mountPoint": {
+		Name: "mountPoint",
+		Desc: prometheus.NewDesc(
+			"rdsosmetrics_fileSys_mountPoint",
+			"The path to the file system.",
+			[]string{"instance", "region", "id"},
+			map[string]string(nil),
+		),
+	},
+	"node_filesystem_avail": {
+		Name: "name",
+		Desc: prometheus.NewDesc(
+			"node_filesystem_avail",
+			"The name of the file system.",
+			[]string{"instance", "region", "id"},
+			map[string]string(nil),
+		),
+	},
+	"rdsosmetrics_fileSys_used": {
+		Name: "used",
+		Desc: prometheus.NewDesc(
+			"rdsosmetrics_fileSys_used",
+			"The amount of disk space used by files in the file system, in kilobytes.",
+			[]string{"instance", "region", "id"},
+			map[string]string(nil),
+		),
+	},
+	"node_filesystem_size": {
+		Name: "total",
+		Desc: prometheus.NewDesc(
+			"node_filesystem_size",
+			"The total number of disk space available for the file system, in kilobytes.",
+			[]string{"instance", "region", "id"},
+			map[string]string(nil),
+		),
+	},
+	"rdsosmetrics_fileSys_usedFilePercent": {
+		Name: "usedFilePercent",
+		Desc: prometheus.NewDesc(
+			"rdsosmetrics_fileSys_usedFilePercent",
+			"The percentage of available files in use.",
+			[]string{"instance", "region", "id"},
+			map[string]string(nil),
+		),
+	},
+	"rdsosmetrics_fileSys_usedFiles": {
+		Name: "usedFiles",
+		Desc: prometheus.NewDesc(
+			"rdsosmetrics_fileSys_usedFiles",
+			"The number of files in the file system.",
 			[]string{"instance", "region", "id"},
 			map[string]string(nil),
 		),
@@ -623,15 +560,6 @@ var Metrics = map[string]Metric{
 		Desc: prometheus.NewDesc(
 			"rdsosmetrics_processList_id",
 			"The identifier of the process.",
-			[]string{"instance", "region", "id"},
-			map[string]string(nil),
-		),
-	},
-	"rdsosmetrics_processList_name": {
-		Name: "name",
-		Desc: prometheus.NewDesc(
-			"rdsosmetrics_processList_name",
-			"The name of the process.",
 			[]string{"instance", "region", "id"},
 			map[string]string(nil),
 		),
@@ -663,6 +591,15 @@ var Metrics = map[string]Metric{
 			map[string]string(nil),
 		),
 	},
+	"rdsosmetrics_processList_vss": {
+		Name: "vss",
+		Desc: prometheus.NewDesc(
+			"rdsosmetrics_processList_vss",
+			"The amount of virtual memory allocated to the process, in kilobytes.",
+			[]string{"instance", "region", "id"},
+			map[string]string(nil),
+		),
+	},
 	"rdsosmetrics_processList_memoryUsedPc": {
 		Name: "memoryUsedPc",
 		Desc: prometheus.NewDesc(
@@ -672,37 +609,37 @@ var Metrics = map[string]Metric{
 			map[string]string(nil),
 		),
 	},
-	"rdsosmetrics_swap_cached": {
-		Name: "cached",
+	"rdsosmetrics_processList_name": {
+		Name: "name",
 		Desc: prometheus.NewDesc(
-			"rdsosmetrics_swap_cached",
-			"The amount of swap memory, in kilobytes, used as cache memory.",
+			"rdsosmetrics_processList_name",
+			"The name of the process.",
+			[]string{"instance", "region", "id"},
+			map[string]string(nil),
+		),
+	},
+	"rdsosmetrics_processList_vmlimit": {
+		Name: "vmlimit",
+		Desc: prometheus.NewDesc(
+			"rdsosmetrics_processList_vmlimit",
+			"TODO",
+			[]string{"instance", "region", "id"},
+			map[string]string(nil),
+		),
+	},
+	"node_procs_blocked": {
+		Name: "blocked",
+		Desc: prometheus.NewDesc(
+			"node_procs_blocked",
+			"The number of tasks that are blocked.",
 			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
 	},
-	"rdsosmetrics_swap_free": {
-		Name: "free",
-		Desc: prometheus.NewDesc(
-			"rdsosmetrics_swap_free",
-			"The total amount of swap memory free, in kilobytes.",
-			[]string{"instance", "region"},
-			map[string]string(nil),
-		),
-	},
-	"rdsosmetrics_swap_total": {
-		Name: "total",
-		Desc: prometheus.NewDesc(
-			"rdsosmetrics_swap_total",
-			"The total amount of swap memory available, in kilobytes.",
-			[]string{"instance", "region"},
-			map[string]string(nil),
-		),
-	},
-	"rdsosmetrics_tasks_running": {
+	"node_procs_running": {
 		Name: "running",
 		Desc: prometheus.NewDesc(
-			"rdsosmetrics_tasks_running",
+			"node_procs_running",
 			"The number of tasks that are running.",
 			[]string{"instance", "region"},
 			map[string]string(nil),
@@ -744,11 +681,20 @@ var Metrics = map[string]Metric{
 			map[string]string(nil),
 		),
 	},
-	"rdsosmetrics_tasks_blocked": {
-		Name: "blocked",
+	"node_disk_bytes_written": {
+		Name: "bytes_written",
 		Desc: prometheus.NewDesc(
-			"rdsosmetrics_tasks_blocked",
-			"The number of tasks that are blocked.",
+			"node_disk_bytes_written",
+			"The total number of kilobytes written. This metric is not available for Amazon Aurora.",
+			[]string{"instance", "region"},
+			map[string]string(nil),
+		),
+	},
+	"node_disk_bytes_read": {
+		Name: "bytes_read",
+		Desc: prometheus.NewDesc(
+			"node_disk_bytes_read",
+			"The total number of kilobytes read. This metric is not available for Amazon Aurora.",
 			[]string{"instance", "region"},
 			map[string]string(nil),
 		),

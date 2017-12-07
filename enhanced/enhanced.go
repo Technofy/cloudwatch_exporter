@@ -20,8 +20,8 @@ import (
 //go:generate go run generate/main.go
 
 const (
-	namespace    = "rdsosmetrics"
-	logGroupName = "RDSOSMetrics"
+	defaultNamespace = "rdsosmetrics"
+	logGroupName     = "RDSOSMetrics"
 )
 
 var (
@@ -181,28 +181,19 @@ func (e *Exporter) collectValues(ch chan<- prometheus.Metric, instance config.In
 func (e *Exporter) collectValue(ch chan<- prometheus.Metric, instance config.Instance, key string, value interface{}, l *latency.Latency) error {
 	switch v := value.(type) {
 	case float64:
-		e.sendMetric(ch, instance, "General", key, v)
+		e.sendMetric(ch, instance, defaultNamespace, "General", key, v)
 	case map[string]interface{}:
-		for kkey, vvvalue := range v {
-			switch vvvvalue := vvvalue.(type) {
-			case float64:
-				e.sendMetric(ch, instance, key, kkey, vvvvalue)
-			}
-		}
+		e.collectMapValue(ch, instance, key, v, l)
 	case []interface{}:
 		for i, u := range v {
-			switch vvvalue := u.(type) {
-			case map[string]interface{}:
-				for kkey, vvvvalue := range vvvalue {
-					switch vvvvvalue := vvvvalue.(type) {
-					case float64:
-						labels := []string{
-							strconv.Itoa(i),
-						}
-						e.sendMetric(ch, instance, key, kkey, vvvvvalue, labels...)
-					}
-				}
+			extraLabels := []string{
+				strconv.Itoa(i),
 			}
+			metrics, ok := u.(map[string]interface{})
+			if !ok {
+				return fmt.Errorf("%s: wrong value type for metrics: %T", key, metrics)
+			}
+			e.collectMapValue(ch, instance, key, metrics, l, extraLabels...)
 		}
 	case string:
 		switch key {
@@ -228,7 +219,21 @@ func (e *Exporter) collectValue(ch chan<- prometheus.Metric, instance config.Ins
 	return nil
 }
 
-func (e *Exporter) sendMetric(ch chan<- prometheus.Metric, instance config.Instance, subsystem string, name string, value float64, extraLabels ...string) {
+func (e *Exporter) collectMapValue(ch chan<- prometheus.Metric, instance config.Instance, key string, value map[string]interface{}, l *latency.Latency, labels ...string) error {
+	for metricName, v := range value {
+		metricValue, ok := v.(float64)
+		if !ok {
+			return fmt.Errorf("%s: wrong value type for metric %s: %T", key, metricName, value)
+		}
+
+		namespace, subsystem, name, labels := MapToNode(key, metricName, labels...)
+		e.sendMetric(ch, instance, namespace, subsystem, name, metricValue, labels...)
+	}
+
+	return nil
+}
+
+func (e *Exporter) sendMetric(ch chan<- prometheus.Metric, instance config.Instance, namespace, subsystem, name string, value float64, extraLabels ...string) {
 	FQName := prometheus.BuildFQName(namespace, subsystem, name)
 	metric, ok := e.Metrics[FQName]
 	if !ok {
