@@ -1,10 +1,12 @@
+dist: trusty
+sudo: required
 language: go
 
 go:
-- 1.9.x
+  - 1.9.x
 
 services:
-- docker
+  - docker
 
 script:
-- make travis
+  - make travis
