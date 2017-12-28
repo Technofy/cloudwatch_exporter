@@ -14,19 +14,18 @@ const opCancelJob = "CancelJob"
 
 // CancelJobRequest generates a "aws/request.Request" representing the
 // client's request for the CancelJob operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See CancelJob for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the CancelJob method directly
-// instead.
+// See CancelJob for more information on using the CancelJob
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the CancelJobRequest method.
 //    req, resp := client.CancelJobRequest(params)
@@ -55,10 +54,10 @@ func (c *Batch) CancelJobRequest(input *CancelJobInput) (req *request.Request, o
 
 // CancelJob API operation for AWS Batch.
 //
-// Cancels jobs in an AWS Batch job queue. Jobs that are in the SUBMITTED, PENDING,
-// or RUNNABLE state are cancelled. Jobs that have progressed to STARTING or
-// RUNNING are not cancelled (but the API operation still succeeds, even if
-// no jobs are cancelled); these jobs must be terminated with the TerminateJob
+// Cancels a job in an AWS Batch job queue. Jobs that are in the SUBMITTED,
+// PENDING, or RUNNABLE state are cancelled. Jobs that have progressed to STARTING
+// or RUNNING are not cancelled (but the API operation still succeeds, even
+// if no job is cancelled); these jobs must be terminated with the TerminateJob
 // operation.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
@@ -71,8 +70,8 @@ func (c *Batch) CancelJobRequest(input *CancelJobInput) (req *request.Request, o
 // Returned Error Codes:
 //   * ErrCodeClientException "ClientException"
 //   These errors are usually caused by a client action, such as using an action
-//   or resource on behalf of a user that doesn't have permission to use the action
-//   or resource, or specifying an identifier that is not valid.
+//   or resource on behalf of a user that doesn't have permissions to use the
+//   action or resource, or specifying an identifier that is not valid.
 //
 //   * ErrCodeServerException "ServerException"
 //   These errors are usually caused by a server issue.
@@ -103,19 +102,18 @@ const opCreateComputeEnvironment = "CreateComputeEnvironment"
 
 // CreateComputeEnvironmentRequest generates a "aws/request.Request" representing the
 // client's request for the CreateComputeEnvironment operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See CreateComputeEnvironment for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the CreateComputeEnvironment method directly
-// instead.
+// See CreateComputeEnvironment for more information on using the CreateComputeEnvironment
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the CreateComputeEnvironmentRequest method.
 //    req, resp := client.CreateComputeEnvironmentRequest(params)
@@ -149,23 +147,23 @@ func (c *Batch) CreateComputeEnvironmentRequest(input *CreateComputeEnvironmentI
 //
 // In a managed compute environment, AWS Batch manages the compute resources
 // within the environment, based on the compute resources that you specify.
-// Instances launched into a managed compute environment use the latest Amazon
-// ECS-optimized AMI. You can choose to use Amazon EC2 On-Demand instances in
-// your managed compute environment, or you can use Amazon EC2 Spot instances
-// that only launch when the Spot bid price is below a specified percentage
-// of the On-Demand price.
+// Instances launched into a managed compute environment use a recent, approved
+// version of the Amazon ECS-optimized AMI. You can choose to use Amazon EC2
+// On-Demand Instances in your managed compute environment, or you can use Amazon
+// EC2 Spot Instances that only launch when the Spot bid price is below a specified
+// percentage of the On-Demand price.
 //
 // In an unmanaged compute environment, you can manage your own compute resources.
 // This provides more compute resource configuration options, such as using
 // a custom AMI, but you must ensure that your AMI meets the Amazon ECS container
 // instance AMI specification. For more information, see Container Instance
 // AMIs (http://docs.aws.amazon.com/AmazonECS/latest/developerguide/container_instance_AMIs.html)
-// in the Amazon EC2 Container Service Developer Guide. After you have created
+// in the Amazon Elastic Container Service Developer Guide. After you have created
 // your unmanaged compute environment, you can use the DescribeComputeEnvironments
 // operation to find the Amazon ECS cluster that is associated with it and then
 // manually launch your container instances into that Amazon ECS cluster. For
 // more information, see Launching an Amazon ECS Container Instance (http://docs.aws.amazon.com/AmazonECS/latest/developerguide/launch_container_instance.html)
-// in the Amazon EC2 Container Service Developer Guide.
+// in the Amazon Elastic Container Service Developer Guide.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -177,8 +175,8 @@ func (c *Batch) CreateComputeEnvironmentRequest(input *CreateComputeEnvironmentI
 // Returned Error Codes:
 //   * ErrCodeClientException "ClientException"
 //   These errors are usually caused by a client action, such as using an action
-//   or resource on behalf of a user that doesn't have permission to use the action
-//   or resource, or specifying an identifier that is not valid.
+//   or resource on behalf of a user that doesn't have permissions to use the
+//   action or resource, or specifying an identifier that is not valid.
 //
 //   * ErrCodeServerException "ServerException"
 //   These errors are usually caused by a server issue.
@@ -209,19 +207,18 @@ const opCreateJobQueue = "CreateJobQueue"
 
 // CreateJobQueueRequest generates a "aws/request.Request" representing the
 // client's request for the CreateJobQueue operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See CreateJobQueue for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the CreateJobQueue method directly
-// instead.
+// See CreateJobQueue for more information on using the CreateJobQueue
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the CreateJobQueueRequest method.
 //    req, resp := client.CreateJobQueueRequest(params)
@@ -270,8 +267,8 @@ func (c *Batch) CreateJobQueueRequest(input *CreateJobQueueInput) (req *request.
 // Returned Error Codes:
 //   * ErrCodeClientException "ClientException"
 //   These errors are usually caused by a client action, such as using an action
-//   or resource on behalf of a user that doesn't have permission to use the action
-//   or resource, or specifying an identifier that is not valid.
+//   or resource on behalf of a user that doesn't have permissions to use the
+//   action or resource, or specifying an identifier that is not valid.
 //
 //   * ErrCodeServerException "ServerException"
 //   These errors are usually caused by a server issue.
@@ -302,19 +299,18 @@ const opDeleteComputeEnvironment = "DeleteComputeEnvironment"
 
 // DeleteComputeEnvironmentRequest generates a "aws/request.Request" representing the
 // client's request for the DeleteComputeEnvironment operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See DeleteComputeEnvironment for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the DeleteComputeEnvironment method directly
-// instead.
+// See DeleteComputeEnvironment for more information on using the DeleteComputeEnvironment
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the DeleteComputeEnvironmentRequest method.
 //    req, resp := client.DeleteComputeEnvironmentRequest(params)
@@ -359,8 +355,8 @@ func (c *Batch) DeleteComputeEnvironmentRequest(input *DeleteComputeEnvironmentI
 // Returned Error Codes:
 //   * ErrCodeClientException "ClientException"
 //   These errors are usually caused by a client action, such as using an action
-//   or resource on behalf of a user that doesn't have permission to use the action
-//   or resource, or specifying an identifier that is not valid.
+//   or resource on behalf of a user that doesn't have permissions to use the
+//   action or resource, or specifying an identifier that is not valid.
 //
 //   * ErrCodeServerException "ServerException"
 //   These errors are usually caused by a server issue.
@@ -391,19 +387,18 @@ const opDeleteJobQueue = "DeleteJobQueue"
 
 // DeleteJobQueueRequest generates a "aws/request.Request" representing the
 // client's request for the DeleteJobQueue operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See DeleteJobQueue for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the DeleteJobQueue method directly
-// instead.
+// See DeleteJobQueue for more information on using the DeleteJobQueue
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the DeleteJobQueueRequest method.
 //    req, resp := client.DeleteJobQueueRequest(params)
@@ -433,8 +428,8 @@ func (c *Batch) DeleteJobQueueRequest(input *DeleteJobQueueInput) (req *request.
 // DeleteJobQueue API operation for AWS Batch.
 //
 // Deletes the specified job queue. You must first disable submissions for a
-// queue with the UpdateJobQueue operation and terminate any jobs that have
-// not completed with the TerminateJob.
+// queue with the UpdateJobQueue operation. All jobs in the queue are terminated
+// when you delete a job queue.
 //
 // It is not necessary to disassociate compute environments from a queue before
 // submitting a DeleteJobQueue request.
@@ -449,8 +444,8 @@ func (c *Batch) DeleteJobQueueRequest(input *DeleteJobQueueInput) (req *request.
 // Returned Error Codes:
 //   * ErrCodeClientException "ClientException"
 //   These errors are usually caused by a client action, such as using an action
-//   or resource on behalf of a user that doesn't have permission to use the action
-//   or resource, or specifying an identifier that is not valid.
+//   or resource on behalf of a user that doesn't have permissions to use the
+//   action or resource, or specifying an identifier that is not valid.
 //
 //   * ErrCodeServerException "ServerException"
 //   These errors are usually caused by a server issue.
@@ -481,19 +476,18 @@ const opDeregisterJobDefinition = "DeregisterJobDefinition"
 
 // DeregisterJobDefinitionRequest generates a "aws/request.Request" representing the
 // client's request for the DeregisterJobDefinition operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See DeregisterJobDefinition for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the DeregisterJobDefinition method directly
-// instead.
+// See DeregisterJobDefinition for more information on using the DeregisterJobDefinition
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the DeregisterJobDefinitionRequest method.
 //    req, resp := client.DeregisterJobDefinitionRequest(params)
@@ -534,8 +528,8 @@ func (c *Batch) DeregisterJobDefinitionRequest(input *DeregisterJobDefinitionInp
 // Returned Error Codes:
 //   * ErrCodeClientException "ClientException"
 //   These errors are usually caused by a client action, such as using an action
-//   or resource on behalf of a user that doesn't have permission to use the action
-//   or resource, or specifying an identifier that is not valid.
+//   or resource on behalf of a user that doesn't have permissions to use the
+//   action or resource, or specifying an identifier that is not valid.
 //
 //   * ErrCodeServerException "ServerException"
 //   These errors are usually caused by a server issue.
@@ -566,19 +560,18 @@ const opDescribeComputeEnvironments = "DescribeComputeEnvironments"
 
 // DescribeComputeEnvironmentsRequest generates a "aws/request.Request" representing the
 // client's request for the DescribeComputeEnvironments operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See DescribeComputeEnvironments for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the DescribeComputeEnvironments method directly
-// instead.
+// See DescribeComputeEnvironments for more information on using the DescribeComputeEnvironments
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the DescribeComputeEnvironmentsRequest method.
 //    req, resp := client.DescribeComputeEnvironmentsRequest(params)
@@ -623,8 +616,8 @@ func (c *Batch) DescribeComputeEnvironmentsRequest(input *DescribeComputeEnviron
 // Returned Error Codes:
 //   * ErrCodeClientException "ClientException"
 //   These errors are usually caused by a client action, such as using an action
-//   or resource on behalf of a user that doesn't have permission to use the action
-//   or resource, or specifying an identifier that is not valid.
+//   or resource on behalf of a user that doesn't have permissions to use the
+//   action or resource, or specifying an identifier that is not valid.
 //
 //   * ErrCodeServerException "ServerException"
 //   These errors are usually caused by a server issue.
@@ -655,19 +648,18 @@ const opDescribeJobDefinitions = "DescribeJobDefinitions"
 
 // DescribeJobDefinitionsRequest generates a "aws/request.Request" representing the
 // client's request for the DescribeJobDefinitions operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See DescribeJobDefinitions for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the DescribeJobDefinitions method directly
-// instead.
+// See DescribeJobDefinitions for more information on using the DescribeJobDefinitions
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the DescribeJobDefinitionsRequest method.
 //    req, resp := client.DescribeJobDefinitionsRequest(params)
@@ -709,8 +701,8 @@ func (c *Batch) DescribeJobDefinitionsRequest(input *DescribeJobDefinitionsInput
 // Returned Error Codes:
 //   * ErrCodeClientException "ClientException"
 //   These errors are usually caused by a client action, such as using an action
-//   or resource on behalf of a user that doesn't have permission to use the action
-//   or resource, or specifying an identifier that is not valid.
+//   or resource on behalf of a user that doesn't have permissions to use the
+//   action or resource, or specifying an identifier that is not valid.
 //
 //   * ErrCodeServerException "ServerException"
 //   These errors are usually caused by a server issue.
@@ -741,19 +733,18 @@ const opDescribeJobQueues = "DescribeJobQueues"
 
 // DescribeJobQueuesRequest generates a "aws/request.Request" representing the
 // client's request for the DescribeJobQueues operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See DescribeJobQueues for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the DescribeJobQueues method directly
-// instead.
+// See DescribeJobQueues for more information on using the DescribeJobQueues
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the DescribeJobQueuesRequest method.
 //    req, resp := client.DescribeJobQueuesRequest(params)
@@ -794,8 +785,8 @@ func (c *Batch) DescribeJobQueuesRequest(input *DescribeJobQueuesInput) (req *re
 // Returned Error Codes:
 //   * ErrCodeClientException "ClientException"
 //   These errors are usually caused by a client action, such as using an action
-//   or resource on behalf of a user that doesn't have permission to use the action
-//   or resource, or specifying an identifier that is not valid.
+//   or resource on behalf of a user that doesn't have permissions to use the
+//   action or resource, or specifying an identifier that is not valid.
 //
 //   * ErrCodeServerException "ServerException"
 //   These errors are usually caused by a server issue.
@@ -826,19 +817,18 @@ const opDescribeJobs = "DescribeJobs"
 
 // DescribeJobsRequest generates a "aws/request.Request" representing the
 // client's request for the DescribeJobs operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See DescribeJobs for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the DescribeJobs method directly
-// instead.
+// See DescribeJobs for more information on using the DescribeJobs
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the DescribeJobsRequest method.
 //    req, resp := client.DescribeJobsRequest(params)
@@ -879,8 +869,8 @@ func (c *Batch) DescribeJobsRequest(input *DescribeJobsInput) (req *request.Requ
 // Returned Error Codes:
 //   * ErrCodeClientException "ClientException"
 //   These errors are usually caused by a client action, such as using an action
-//   or resource on behalf of a user that doesn't have permission to use the action
-//   or resource, or specifying an identifier that is not valid.
+//   or resource on behalf of a user that doesn't have permissions to use the
+//   action or resource, or specifying an identifier that is not valid.
 //
 //   * ErrCodeServerException "ServerException"
 //   These errors are usually caused by a server issue.
@@ -911,19 +901,18 @@ const opListJobs = "ListJobs"
 
 // ListJobsRequest generates a "aws/request.Request" representing the
 // client's request for the ListJobs operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See ListJobs for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the ListJobs method directly
-// instead.
+// See ListJobs for more information on using the ListJobs
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the ListJobsRequest method.
 //    req, resp := client.ListJobsRequest(params)
@@ -953,7 +942,8 @@ func (c *Batch) ListJobsRequest(input *ListJobsInput) (req *request.Request, out
 // ListJobs API operation for AWS Batch.
 //
 // Returns a list of task jobs for a specified job queue. You can filter the
-// results by job status with the jobStatus parameter.
+// results by job status with the jobStatus parameter. If you do not specify
+// a status, only RUNNING jobs are returned.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -965,8 +955,8 @@ func (c *Batch) ListJobsRequest(input *ListJobsInput) (req *request.Request, out
 // Returned Error Codes:
 //   * ErrCodeClientException "ClientException"
 //   These errors are usually caused by a client action, such as using an action
-//   or resource on behalf of a user that doesn't have permission to use the action
-//   or resource, or specifying an identifier that is not valid.
+//   or resource on behalf of a user that doesn't have permissions to use the
+//   action or resource, or specifying an identifier that is not valid.
 //
 //   * ErrCodeServerException "ServerException"
 //   These errors are usually caused by a server issue.
@@ -997,19 +987,18 @@ const opRegisterJobDefinition = "RegisterJobDefinition"
 
 // RegisterJobDefinitionRequest generates a "aws/request.Request" representing the
 // client's request for the RegisterJobDefinition operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See RegisterJobDefinition for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the RegisterJobDefinition method directly
-// instead.
+// See RegisterJobDefinition for more information on using the RegisterJobDefinition
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the RegisterJobDefinitionRequest method.
 //    req, resp := client.RegisterJobDefinitionRequest(params)
@@ -1050,8 +1039,8 @@ func (c *Batch) RegisterJobDefinitionRequest(input *RegisterJobDefinitionInput) 
 // Returned Error Codes:
 //   * ErrCodeClientException "ClientException"
 //   These errors are usually caused by a client action, such as using an action
-//   or resource on behalf of a user that doesn't have permission to use the action
-//   or resource, or specifying an identifier that is not valid.
+//   or resource on behalf of a user that doesn't have permissions to use the
+//   action or resource, or specifying an identifier that is not valid.
 //
 //   * ErrCodeServerException "ServerException"
 //   These errors are usually caused by a server issue.
@@ -1082,19 +1071,18 @@ const opSubmitJob = "SubmitJob"
 
 // SubmitJobRequest generates a "aws/request.Request" representing the
 // client's request for the SubmitJob operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See SubmitJob for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the SubmitJob method directly
-// instead.
+// See SubmitJob for more information on using the SubmitJob
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the SubmitJobRequest method.
 //    req, resp := client.SubmitJobRequest(params)
@@ -1136,8 +1124,8 @@ func (c *Batch) SubmitJobRequest(input *SubmitJobInput) (req *request.Request, o
 // Returned Error Codes:
 //   * ErrCodeClientException "ClientException"
 //   These errors are usually caused by a client action, such as using an action
-//   or resource on behalf of a user that doesn't have permission to use the action
-//   or resource, or specifying an identifier that is not valid.
+//   or resource on behalf of a user that doesn't have permissions to use the
+//   action or resource, or specifying an identifier that is not valid.
 //
 //   * ErrCodeServerException "ServerException"
 //   These errors are usually caused by a server issue.
@@ -1168,19 +1156,18 @@ const opTerminateJob = "TerminateJob"
 
 // TerminateJobRequest generates a "aws/request.Request" representing the
 // client's request for the TerminateJob operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See TerminateJob for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the TerminateJob method directly
-// instead.
+// See TerminateJob for more information on using the TerminateJob
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the TerminateJobRequest method.
 //    req, resp := client.TerminateJobRequest(params)
@@ -1209,7 +1196,7 @@ func (c *Batch) TerminateJobRequest(input *TerminateJobInput) (req *request.Requ
 
 // TerminateJob API operation for AWS Batch.
 //
-// Terminates jobs in a job queue. Jobs that are in the STARTING or RUNNING
+// Terminates a job in a job queue. Jobs that are in the STARTING or RUNNING
 // state are terminated, which causes them to transition to FAILED. Jobs that
 // have not progressed to the STARTING state are cancelled.
 //
@@ -1223,8 +1210,8 @@ func (c *Batch) TerminateJobRequest(input *TerminateJobInput) (req *request.Requ
 // Returned Error Codes:
 //   * ErrCodeClientException "ClientException"
 //   These errors are usually caused by a client action, such as using an action
-//   or resource on behalf of a user that doesn't have permission to use the action
-//   or resource, or specifying an identifier that is not valid.
+//   or resource on behalf of a user that doesn't have permissions to use the
+//   action or resource, or specifying an identifier that is not valid.
 //
 //   * ErrCodeServerException "ServerException"
 //   These errors are usually caused by a server issue.
@@ -1255,19 +1242,18 @@ const opUpdateComputeEnvironment = "UpdateComputeEnvironment"
 
 // UpdateComputeEnvironmentRequest generates a "aws/request.Request" representing the
 // client's request for the UpdateComputeEnvironment operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See UpdateComputeEnvironment for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the UpdateComputeEnvironment method directly
-// instead.
+// See UpdateComputeEnvironment for more information on using the UpdateComputeEnvironment
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the UpdateComputeEnvironmentRequest method.
 //    req, resp := client.UpdateComputeEnvironmentRequest(params)
@@ -1308,8 +1294,8 @@ func (c *Batch) UpdateComputeEnvironmentRequest(input *UpdateComputeEnvironmentI
 // Returned Error Codes:
 //   * ErrCodeClientException "ClientException"
 //   These errors are usually caused by a client action, such as using an action
-//   or resource on behalf of a user that doesn't have permission to use the action
-//   or resource, or specifying an identifier that is not valid.
+//   or resource on behalf of a user that doesn't have permissions to use the
+//   action or resource, or specifying an identifier that is not valid.
 //
 //   * ErrCodeServerException "ServerException"
 //   These errors are usually caused by a server issue.
@@ -1340,19 +1326,18 @@ const opUpdateJobQueue = "UpdateJobQueue"
 
 // UpdateJobQueueRequest generates a "aws/request.Request" representing the
 // client's request for the UpdateJobQueue operation. The "output" return
-// value can be used to capture response data after the request's "Send" method
-// is called.
+// value will be populated with the request's response once the request complets
+// successfuly.
 //
-// See UpdateJobQueue for usage and error information.
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
 //
-// Creating a request object using this method should be used when you want to inject
-// custom logic into the request's lifecycle using a custom handler, or if you want to
-// access properties on the request object before or after sending the request. If
-// you just want the service response, call the UpdateJobQueue method directly
-// instead.
+// See UpdateJobQueue for more information on using the UpdateJobQueue
+// API call, and error handling.
 //
-// Note: You must call the "Send" method on the returned request object in order
-// to execute the request.
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
 //
 //    // Example sending a request using the UpdateJobQueueRequest method.
 //    req, resp := client.UpdateJobQueueRequest(params)
@@ -1393,8 +1378,8 @@ func (c *Batch) UpdateJobQueueRequest(input *UpdateJobQueueInput) (req *request.
 // Returned Error Codes:
 //   * ErrCodeClientException "ClientException"
 //   These errors are usually caused by a client action, such as using an action
-//   or resource on behalf of a user that doesn't have permission to use the action
-//   or resource, or specifying an identifier that is not valid.
+//   or resource on behalf of a user that doesn't have permissions to use the
+//   action or resource, or specifying an identifier that is not valid.
 //
 //   * ErrCodeServerException "ServerException"
 //   These errors are usually caused by a server issue.
@@ -1421,6 +1406,111 @@ func (c *Batch) UpdateJobQueueWithContext(ctx aws.Context, input *UpdateJobQueue
 	return out, req.Send()
 }
 
+// An object representing an AWS Batch array job.
+// Please also see https://docs.aws.amazon.com/goto/WebAPI/batch-2016-08-10/ArrayProperties
+type ArrayProperties struct {
+	_ struct{} `type:"structure"`
+
+	// The size of the array job.
+	Size *int64 `locationName:"size" type:"integer"`
+}
+
+// String returns the string representation
+func (s ArrayProperties) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation
+func (s ArrayProperties) GoString() string {
+	return s.String()
+}
+
+// SetSize sets the Size field's value.
+func (s *ArrayProperties) SetSize(v int64) *ArrayProperties {
+	s.Size = &v
+	return s
+}
+
+// An object representing the array properties of a job.
+// Please also see https://docs.aws.amazon.com/goto/WebAPI/batch-2016-08-10/ArrayPropertiesDetail
+type ArrayPropertiesDetail struct {
+	_ struct{} `type:"structure"`
+
+	// The job index within the array that is associated with this job. This parameter
+	// is returned for array job children.
+	Index *int64 `locationName:"index" type:"integer"`
+
+	// The size of the array job. This parameter is returned for parent array jobs.
+	Size *int64 `locationName:"size" type:"integer"`
+
+	// A summary of the number of array job children in each available job status.
+	// This parameter is returned for parent array jobs.
+	StatusSummary map[string]*int64 `locationName:"statusSummary" type:"map"`
+}
+
+// String returns the string representation
+func (s ArrayPropertiesDetail) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation
+func (s ArrayPropertiesDetail) GoString() string {
+	return s.String()
+}
+
+// SetIndex sets the Index field's value.
+func (s *ArrayPropertiesDetail) SetIndex(v int64) *ArrayPropertiesDetail {
+	s.Index = &v
+	return s
+}
+
+// SetSize sets the Size field's value.
+func (s *ArrayPropertiesDetail) SetSize(v int64) *ArrayPropertiesDetail {
+	s.Size = &v
+	return s
+}
+
+// SetStatusSummary sets the StatusSummary field's value.
+func (s *ArrayPropertiesDetail) SetStatusSummary(v map[string]*int64) *ArrayPropertiesDetail {
+	s.StatusSummary = v
+	return s
+}
+
+// An object representing the array properties of a job.
+// Please also see https://docs.aws.amazon.com/goto/WebAPI/batch-2016-08-10/ArrayPropertiesSummary
+type ArrayPropertiesSummary struct {
+	_ struct{} `type:"structure"`
+
+	// The job index within the array that is associated with this job. This parameter
+	// is returned for children of array jobs.
+	Index *int64 `locationName:"index" type:"integer"`
+
+	// The size of the array job. This parameter is returned for parent array jobs.
+	Size *int64 `locationName:"size" type:"integer"`
+}
+
+// String returns the string representation
+func (s ArrayPropertiesSummary) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation
+func (s ArrayPropertiesSummary) GoString() string {
+	return s.String()
+}
+
+// SetIndex sets the Index field's value.
+func (s *ArrayPropertiesSummary) SetIndex(v int64) *ArrayPropertiesSummary {
+	s.Index = &v
+	return s
+}
+
+// SetSize sets the Size field's value.
+func (s *ArrayPropertiesSummary) SetSize(v int64) *ArrayPropertiesSummary {
+	s.Size = &v
+	return s
+}
+
 // An object representing the details of a container that is part of a job attempt.
 // Please also see https://docs.aws.amazon.com/goto/WebAPI/batch-2016-08-10/AttemptContainerDetail
 type AttemptContainerDetail struct {
@@ -1433,12 +1523,18 @@ type AttemptContainerDetail struct {
 	// The exit code for the job attempt. A non-zero exit code is considered a failure.
 	ExitCode *int64 `locationName:"exitCode" type:"integer"`
 
+	// The name of the CloudWatch Logs log stream associated with the container.
+	// The log group for AWS Batch jobs is /aws/batch/job. Each container attempt
+	// receives a log stream name when they reach the RUNNING status.
+	LogStreamName *string `locationName:"logStreamName" type:"string"`
+
 	// A short (255 max characters) human-readable string to provide additional
 	// details about a running or stopped container.
 	Reason *string `locationName:"reason" type:"string"`
 
 	// The Amazon Resource Name (ARN) of the Amazon ECS task that is associated
-	// with the job attempt.
+	// with the job attempt. Each container attempt receives a task ARN when they
+	// reach the STARTING status.
 	TaskArn *string `locationName:"taskArn" type:"string"`
 }
 
@@ -1464,6 +1560,12 @@ func (s *AttemptContainerDetail) SetExitCode(v int64) *AttemptContainerDetail {
 	return s
 }
 
+// SetLogStreamName sets the LogStreamName field's value.
+func (s *AttemptContainerDetail) SetLogStreamName(v string) *AttemptContainerDetail {
+	s.LogStreamName = &v
+	return s
+}
+
 // SetReason sets the Reason field's value.
 func (s *AttemptContainerDetail) SetReason(v string) *AttemptContainerDetail {
 	s.Reason = &v
@@ -1484,16 +1586,16 @@ type AttemptDetail struct {
 	// Details about the container in this job attempt.
 	Container *AttemptContainerDetail `locationName:"container" type:"structure"`
 
-	// The Unix timestamp for when the attempt was started (when the task transitioned
-	// from the PENDING state to the RUNNING state).
+	// The Unix time stamp for when the attempt was started (when the attempt transitioned
+	// from the STARTING state to the RUNNING state).
 	StartedAt *int64 `locationName:"startedAt" type:"long"`
 
 	// A short, human-readable string to provide additional details about the current
 	// status of the job attempt.
 	StatusReason *string `locationName:"statusReason" type:"string"`
 
-	// The Unix timestamp for when the attempt was stopped (when the task transitioned
-	// from the RUNNING state to the STOPPED state).
+	// The Unix time stamp for when the attempt was stopped (when the attempt transitioned
+	// from the RUNNING state to a terminal state, such as SUCCEEDED or FAILED).
 	StoppedAt *int64 `locationName:"stoppedAt" type:"long"`
 }
 
@@ -1535,12 +1637,12 @@ func (s *AttemptDetail) SetStoppedAt(v int64) *AttemptDetail {
 type CancelJobInput struct {
 	_ struct{} `type:"structure"`
 
-	// A list of up to 100 job IDs to cancel.
+	// The AWS Batch job ID of the job to cancel.
 	//
 	// JobId is a required field
 	JobId *string `locationName:"jobId" type:"string" required:"true"`
 
-	// A message to attach to the job that explains the reason for cancelling it.
+	// A message to attach to the job that explains the reason for canceling it.
 	// This message is returned by future DescribeJobs operations on the job. This
 	// message is also recorded in the AWS Batch activity logs.
 	//
@@ -1787,13 +1889,20 @@ type ComputeResource struct {
 	// environment.
 	ImageId *string `locationName:"imageId" type:"string"`
 
-	// The Amazon ECS instance role applied to Amazon EC2 instances in a compute
-	// environment.
+	// The Amazon ECS instance profile applied to Amazon EC2 instances in a compute
+	// environment. You can specify the short name or full Amazon Resource Name
+	// (ARN) of an instance profile. For example, ecsInstanceRole or arn:aws:iam::<aws_account_id>:instance-profile/ecsInstanceRole.
+	// For more information, see Amazon ECS Instance Role (http://docs.aws.amazon.com/batch/latest/userguide/instance_IAM_role.html)
+	// in the AWS Batch User Guide.
 	//
 	// InstanceRole is a required field
 	InstanceRole *string `locationName:"instanceRole" type:"string" required:"true"`
 
-	// The instances types that may launched.
+	// The instances types that may be launched. You can specify instance families
+	// to launch any instance type within those families (for example, c4 or p3),
+	// or you can specify specific sizes within a family (such as c4.8xlarge). You
+	// can also choose optimal to pick instance types (from the latest C, M, and
+	// R instance families) on the fly that match the demand of your job queues.
 	//
 	// InstanceTypes is a required field
 	InstanceTypes []*string `locationName:"instanceTypes" type:"list" required:"true"`
@@ -2009,6 +2118,9 @@ type ContainerDetail struct {
 	ContainerInstanceArn *string `locationName:"containerInstanceArn" type:"string"`
 
 	// The environment variables to pass to a container.
+	//
+	// Environment variables must not start with AWS_BATCH; this naming convention
+	// is reserved for variables that are set by the AWS Batch service.
 	Environment []*KeyValuePair `locationName:"environment" type:"list"`
 
 	// The exit code to return upon completion.
@@ -2019,6 +2131,11 @@ type ContainerDetail struct {
 
 	// The Amazon Resource Name (ARN) associated with the job upon execution.
 	JobRoleArn *string `locationName:"jobRoleArn" type:"string"`
+
+	// The name of the CloudWatch Logs log stream associated with the container.
+	// The log group for AWS Batch jobs is /aws/batch/job. Each container attempt
+	// receives a log stream name when they reach the RUNNING status.
+	LogStreamName *string `locationName:"logStreamName" type:"string"`
 
 	// The number of MiB of memory reserved for the job.
 	Memory *int64 `locationName:"memory" type:"integer"`
@@ -2039,7 +2156,8 @@ type ContainerDetail struct {
 	Reason *string `locationName:"reason" type:"string"`
 
 	// The Amazon Resource Name (ARN) of the Amazon ECS task that is associated
-	// with the container job.
+	// with the container job. Each container attempt receives a task ARN when they
+	// reach the STARTING status.
 	TaskArn *string `locationName:"taskArn" type:"string"`
 
 	// A list of ulimit values to set in the container.
@@ -2098,6 +2216,12 @@ func (s *ContainerDetail) SetImage(v string) *ContainerDetail {
 // SetJobRoleArn sets the JobRoleArn field's value.
 func (s *ContainerDetail) SetJobRoleArn(v string) *ContainerDetail {
 	s.JobRoleArn = &v
+	return s
+}
+
+// SetLogStreamName sets the LogStreamName field's value.
+func (s *ContainerDetail) SetLogStreamName(v string) *ContainerDetail {
+	s.LogStreamName = &v
 	return s
 }
 
@@ -2173,6 +2297,9 @@ type ContainerOverrides struct {
 	// The environment variables to send to the container. You can add new environment
 	// variables, which are added to the container at launch, or you can override
 	// the existing environment variables from the Docker image or the job definition.
+	//
+	// Environment variables must not start with AWS_BATCH; this naming convention
+	// is reserved for variables that are set by the AWS Batch service.
 	Environment []*KeyValuePair `locationName:"environment" type:"list"`
 
 	// The number of MiB of memory reserved for the job. This value overrides the
@@ -2237,8 +2364,11 @@ type ContainerProperties struct {
 	// section of the Docker Remote API (https://docs.docker.com/engine/reference/api/docker_remote_api_v1.23/)
 	// and the --env option to docker run (https://docs.docker.com/engine/reference/run/).
 	//
-	// We do not recommend using plain text environment variables for sensitive
-	// information, such as credential data.
+	// We do not recommend using plaintext environment variables for sensitive information,
+	// such as credential data.
+	//
+	// Environment variables must not start with AWS_BATCH; this naming convention
+	// is reserved for variables that are set by the AWS Batch service.
 	Environment []*KeyValuePair `locationName:"environment" type:"list"`
 
 	// The image used to start a container. This string is passed directly to the
@@ -2275,6 +2405,7 @@ type ContainerProperties struct {
 	// parameter maps to Memory in the Create a container (https://docs.docker.com/engine/reference/api/docker_remote_api_v1.23/#create-a-container)
 	// section of the Docker Remote API (https://docs.docker.com/engine/reference/api/docker_remote_api_v1.23/)
 	// and the --memory option to docker run (https://docs.docker.com/engine/reference/run/).
+	// You must specify at least 4 MiB of memory for a job.
 	//
 	// Memory is a required field
 	Memory *int64 `locationName:"memory" type:"integer" required:"true"`
@@ -2315,7 +2446,8 @@ type ContainerProperties struct {
 	// in the Create a container (https://docs.docker.com/engine/reference/api/docker_remote_api_v1.23/#create-a-container)
 	// section of the Docker Remote API (https://docs.docker.com/engine/reference/api/docker_remote_api_v1.23/)
 	// and the --cpu-shares option to docker run (https://docs.docker.com/engine/reference/run/).
-	// Each vCPU is equivalent to 1,024 CPU shares.
+	// Each vCPU is equivalent to 1,024 CPU shares. You must specify at least one
+	// vCPU.
 	//
 	// Vcpus is a required field
 	Vcpus *int64 `locationName:"vcpus" type:"integer" required:"true"`
@@ -2435,12 +2567,47 @@ func (s *ContainerProperties) SetVolumes(v []*Volume) *ContainerProperties {
 	return s
 }
 
+// An object representing summary details of a container within a job.
+// Please also see https://docs.aws.amazon.com/goto/WebAPI/batch-2016-08-10/ContainerSummary
+type ContainerSummary struct {
+	_ struct{} `type:"structure"`
+
+	// The exit code to return upon completion.
+	ExitCode *int64 `locationName:"exitCode" type:"integer"`
+
+	// A short (255 max characters) human-readable string to provide additional
+	// details about a running or stopped container.
+	Reason *string `locationName:"reason" type:"string"`
+}
+
+// String returns the string representation
+func (s ContainerSummary) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation
+func (s ContainerSummary) GoString() string {
+	return s.String()
+}
+
+// SetExitCode sets the ExitCode field's value.
+func (s *ContainerSummary) SetExitCode(v int64) *ContainerSummary {
+	s.ExitCode = &v
+	return s
+}
+
+// SetReason sets the Reason field's value.
+func (s *ContainerSummary) SetReason(v string) *ContainerSummary {
+	s.Reason = &v
+	return s
+}
+
 // Please also see https://docs.aws.amazon.com/goto/WebAPI/batch-2016-08-10/CreateComputeEnvironmentRequest
 type CreateComputeEnvironmentInput struct {
 	_ struct{} `type:"structure"`
 
 	// The name for your compute environment. Up to 128 letters (uppercase and lowercase),
-	// numbers, and underscores are allowed.
+	// numbers, hyphens, and underscores are allowed.
 	//
 	// ComputeEnvironmentName is a required field
 	ComputeEnvironmentName *string `locationName:"computeEnvironmentName" type:"string" required:"true"`
@@ -2451,6 +2618,16 @@ type CreateComputeEnvironmentInput struct {
 
 	// The full Amazon Resource Name (ARN) of the IAM role that allows AWS Batch
 	// to make calls to other AWS services on your behalf.
+	//
+	// If your specified role has a path other than /, then you must either specify
+	// the full role ARN (this is recommended) or prefix the role name with the
+	// path.
+	//
+	// Depending on how you created your AWS Batch service role, its ARN may contain
+	// the service-role path prefix. When you only specify the name of the service
+	// role, AWS Batch assumes that your ARN does not use the service-role path
+	// prefix. Because of this, we recommend that you specify the full ARN of your
+	// service role when you create compute environments.
 	//
 	// ServiceRole is a required field
 	ServiceRole *string `locationName:"serviceRole" type:"string" required:"true"`
@@ -2571,7 +2748,7 @@ type CreateJobQueueInput struct {
 	// to each other. The job scheduler uses this parameter to determine which compute
 	// environment should execute a given job. Compute environments must be in the
 	// VALID state before you can associate them with a job queue. You can associate
-	// up to 3 compute environments with a job queue.
+	// up to three compute environments with a job queue.
 	//
 	// ComputeEnvironmentOrder is a required field
 	ComputeEnvironmentOrder []*ComputeEnvironmentOrder `locationName:"computeEnvironmentOrder" type:"list" required:"true"`
@@ -2581,11 +2758,11 @@ type CreateJobQueueInput struct {
 	// JobQueueName is a required field
 	JobQueueName *string `locationName:"jobQueueName" type:"string" required:"true"`
 
-	// The priority of the job queue. Job queues with a higher priority (or a lower
+	// The priority of the job queue. Job queues with a higher priority (or a higher
 	// integer value for the priority parameter) are evaluated first when associated
-	// with same compute environment. Priority is determined in ascending order,
-	// for example, a job queue with a priority value of 1 is given scheduling preference
-	// over a job queue with a priority value of 10.
+	// with same compute environment. Priority is determined in descending order,
+	// for example, a job queue with a priority value of 10 is given scheduling
+	// preference over a job queue with a priority value of 1.
 	//
 	// Priority is a required field
 	Priority *int64 `locationName:"priority" type:"integer" required:"true"`
@@ -3358,6 +3535,9 @@ type JobDependency struct {
 
 	// The job ID of the AWS Batch job associated with this dependency.
 	JobId *string `locationName:"jobId" type:"string"`
+
+	// The type of the job dependency.
+	Type *string `locationName:"type" type:"string" enum:"ArrayJobDependency"`
 }
 
 // String returns the string representation
@@ -3376,10 +3556,19 @@ func (s *JobDependency) SetJobId(v string) *JobDependency {
 	return s
 }
 
+// SetType sets the Type field's value.
+func (s *JobDependency) SetType(v string) *JobDependency {
+	s.Type = &v
+	return s
+}
+
 // An object representing an AWS Batch job.
 // Please also see https://docs.aws.amazon.com/goto/WebAPI/batch-2016-08-10/JobDetail
 type JobDetail struct {
 	_ struct{} `type:"structure"`
+
+	// The array properties of the job, if it is an array job.
+	ArrayProperties *ArrayPropertiesDetail `locationName:"arrayProperties" type:"structure"`
 
 	// A list of job attempts associated with this job.
 	Attempts []*AttemptDetail `locationName:"attempts" type:"list"`
@@ -3388,8 +3577,10 @@ type JobDetail struct {
 	// the job.
 	Container *ContainerDetail `locationName:"container" type:"structure"`
 
-	// The Unix timestamp for when the job was created (when the task entered the
-	// PENDING state).
+	// The Unix time stamp for when the job was created. For non-array jobs and
+	// parent array jobs, this is when the job entered the SUBMITTED state (at the
+	// time SubmitJob was called). For array child jobs, this is when the child
+	// job was spawned by its parent and entered the PENDING state.
 	CreatedAt *int64 `locationName:"createdAt" type:"long"`
 
 	// A list of job names or IDs on which this job depends.
@@ -3423,8 +3614,8 @@ type JobDetail struct {
 	// The retry strategy to use for this job if an attempt fails.
 	RetryStrategy *RetryStrategy `locationName:"retryStrategy" type:"structure"`
 
-	// The Unix timestamp for when the job was started (when the task transitioned
-	// from the PENDING state to the RUNNING state).
+	// The Unix time stamp for when the job was started (when the job transitioned
+	// from the STARTING state to the RUNNING state).
 	//
 	// StartedAt is a required field
 	StartedAt *int64 `locationName:"startedAt" type:"long" required:"true"`
@@ -3438,8 +3629,8 @@ type JobDetail struct {
 	// status of the job.
 	StatusReason *string `locationName:"statusReason" type:"string"`
 
-	// The Unix timestamp for when the job was stopped (when the task transitioned
-	// from the RUNNING state to the STOPPED state).
+	// The Unix time stamp for when the job was stopped (when the job transitioned
+	// from the RUNNING state to a terminal state, such as SUCCEEDED or FAILED).
 	StoppedAt *int64 `locationName:"stoppedAt" type:"long"`
 }
 
@@ -3451,6 +3642,12 @@ func (s JobDetail) String() string {
 // GoString returns the string representation
 func (s JobDetail) GoString() string {
 	return s.String()
+}
+
+// SetArrayProperties sets the ArrayProperties field's value.
+func (s *JobDetail) SetArrayProperties(v *ArrayPropertiesDetail) *JobDetail {
+	s.ArrayProperties = v
+	return s
 }
 
 // SetAttempts sets the Attempts field's value.
@@ -3634,6 +3831,19 @@ func (s *JobQueueDetail) SetStatusReason(v string) *JobQueueDetail {
 type JobSummary struct {
 	_ struct{} `type:"structure"`
 
+	// The array properties of the job, if it is an array job.
+	ArrayProperties *ArrayPropertiesSummary `locationName:"arrayProperties" type:"structure"`
+
+	// An object representing the details of the container that is associated with
+	// the job.
+	Container *ContainerSummary `locationName:"container" type:"structure"`
+
+	// The Unix time stamp for when the job was created. For non-array jobs and
+	// parent array jobs, this is when the job entered the SUBMITTED state (at the
+	// time SubmitJob was called). For array child jobs, this is when the child
+	// job was spawned by its parent and entered the PENDING state.
+	CreatedAt *int64 `locationName:"createdAt" type:"long"`
+
 	// The ID of the job.
 	//
 	// JobId is a required field
@@ -3643,6 +3853,21 @@ type JobSummary struct {
 	//
 	// JobName is a required field
 	JobName *string `locationName:"jobName" type:"string" required:"true"`
+
+	// The Unix time stamp for when the job was started (when the job transitioned
+	// from the STARTING state to the RUNNING state).
+	StartedAt *int64 `locationName:"startedAt" type:"long"`
+
+	// The current status for the job.
+	Status *string `locationName:"status" type:"string" enum:"JobStatus"`
+
+	// A short, human-readable string to provide additional details about the current
+	// status of the job.
+	StatusReason *string `locationName:"statusReason" type:"string"`
+
+	// The Unix time stamp for when the job was stopped (when the job transitioned
+	// from the RUNNING state to a terminal state, such as SUCCEEDED or FAILED).
+	StoppedAt *int64 `locationName:"stoppedAt" type:"long"`
 }
 
 // String returns the string representation
@@ -3653,6 +3878,24 @@ func (s JobSummary) String() string {
 // GoString returns the string representation
 func (s JobSummary) GoString() string {
 	return s.String()
+}
+
+// SetArrayProperties sets the ArrayProperties field's value.
+func (s *JobSummary) SetArrayProperties(v *ArrayPropertiesSummary) *JobSummary {
+	s.ArrayProperties = v
+	return s
+}
+
+// SetContainer sets the Container field's value.
+func (s *JobSummary) SetContainer(v *ContainerSummary) *JobSummary {
+	s.Container = v
+	return s
+}
+
+// SetCreatedAt sets the CreatedAt field's value.
+func (s *JobSummary) SetCreatedAt(v int64) *JobSummary {
+	s.CreatedAt = &v
+	return s
 }
 
 // SetJobId sets the JobId field's value.
@@ -3667,16 +3910,40 @@ func (s *JobSummary) SetJobName(v string) *JobSummary {
 	return s
 }
 
+// SetStartedAt sets the StartedAt field's value.
+func (s *JobSummary) SetStartedAt(v int64) *JobSummary {
+	s.StartedAt = &v
+	return s
+}
+
+// SetStatus sets the Status field's value.
+func (s *JobSummary) SetStatus(v string) *JobSummary {
+	s.Status = &v
+	return s
+}
+
+// SetStatusReason sets the StatusReason field's value.
+func (s *JobSummary) SetStatusReason(v string) *JobSummary {
+	s.StatusReason = &v
+	return s
+}
+
+// SetStoppedAt sets the StoppedAt field's value.
+func (s *JobSummary) SetStoppedAt(v int64) *JobSummary {
+	s.StoppedAt = &v
+	return s
+}
+
 // A key-value pair object.
 // Please also see https://docs.aws.amazon.com/goto/WebAPI/batch-2016-08-10/KeyValuePair
 type KeyValuePair struct {
 	_ struct{} `type:"structure"`
 
-	// The name of the key value pair. For environment variables, this is the name
+	// The name of the key-value pair. For environment variables, this is the name
 	// of the environment variable.
 	Name *string `locationName:"name" type:"string"`
 
-	// The value of the key value pair. For environment variables, this is the value
+	// The value of the key-value pair. For environment variables, this is the value
 	// of the environment variable.
 	Value *string `locationName:"value" type:"string"`
 }
@@ -3707,13 +3974,16 @@ func (s *KeyValuePair) SetValue(v string) *KeyValuePair {
 type ListJobsInput struct {
 	_ struct{} `type:"structure"`
 
+	// The job ID for an array job. Specifying an array job ID with this parameter
+	// lists all child jobs from within the specified array.
+	ArrayJobId *string `locationName:"arrayJobId" type:"string"`
+
 	// The name or full Amazon Resource Name (ARN) of the job queue with which to
 	// list jobs.
-	//
-	// JobQueue is a required field
-	JobQueue *string `locationName:"jobQueue" type:"string" required:"true"`
+	JobQueue *string `locationName:"jobQueue" type:"string"`
 
-	// The job status with which to filter jobs in the specified queue.
+	// The job status with which to filter jobs in the specified queue. If you do
+	// not specify a status, only RUNNING jobs are returned.
 	JobStatus *string `locationName:"jobStatus" type:"string" enum:"JobStatus"`
 
 	// The maximum number of results returned by ListJobs in paginated output. When
@@ -3745,17 +4015,10 @@ func (s ListJobsInput) GoString() string {
 	return s.String()
 }
 
-// Validate inspects the fields of the type to determine if they are valid.
-func (s *ListJobsInput) Validate() error {
-	invalidParams := request.ErrInvalidParams{Context: "ListJobsInput"}
-	if s.JobQueue == nil {
-		invalidParams.Add(request.NewErrParamRequired("JobQueue"))
-	}
-
-	if invalidParams.Len() > 0 {
-		return invalidParams
-	}
-	return nil
+// SetArrayJobId sets the ArrayJobId field's value.
+func (s *ListJobsInput) SetArrayJobId(v string) *ListJobsInput {
+	s.ArrayJobId = &v
+	return s
 }
 
 // SetJobQueue sets the JobQueue field's value.
@@ -3873,7 +4136,8 @@ type RegisterJobDefinitionInput struct {
 	// parameter is required if the type parameter is container.
 	ContainerProperties *ContainerProperties `locationName:"containerProperties" type:"structure"`
 
-	// The name of the job definition to register.
+	// The name of the job definition to register. Up to 128 letters (uppercase
+	// and lowercase), numbers, hyphens, and underscores are allowed.
 	//
 	// JobDefinitionName is a required field
 	JobDefinitionName *string `locationName:"jobDefinitionName" type:"string" required:"true"`
@@ -4009,8 +4273,8 @@ type RetryStrategy struct {
 	_ struct{} `type:"structure"`
 
 	// The number of times to move a job to the RUNNABLE status. You may specify
-	// between 1 and 10 attempts. If attempts is greater than one, the job is retried
-	// if it fails until it has moved to RUNNABLE that many times.
+	// between 1 and 10 attempts. If the value of attempts is greater than one,
+	// the job is retried if it fails until it has moved to RUNNABLE that many times.
 	Attempts *int64 `locationName:"attempts" type:"integer"`
 }
 
@@ -4034,6 +4298,13 @@ func (s *RetryStrategy) SetAttempts(v int64) *RetryStrategy {
 type SubmitJobInput struct {
 	_ struct{} `type:"structure"`
 
+	// The array properties for the submitted job, such as the size of the array.
+	// The array size can be between 2 and 10,000. If you specify array properties
+	// for a job, it becomes an array job. For more information, see Array Jobs
+	// (http://docs.aws.amazon.com/batch/latest/userguide/array_jobs.html) in the
+	// AWS Batch User Guide.
+	ArrayProperties *ArrayProperties `locationName:"arrayProperties" type:"structure"`
+
 	// A list of container overrides in JSON format that specify the name of a container
 	// in the specified job definition and the overrides it should receive. You
 	// can override the default command for a container (that is specified in the
@@ -4043,8 +4314,12 @@ type SubmitJobInput struct {
 	// an environment override.
 	ContainerOverrides *ContainerOverrides `locationName:"containerOverrides" type:"structure"`
 
-	// A list of job IDs on which this job depends. A job can depend upon a maximum
-	// of 100 jobs.
+	// A list of dependencies for the job. A job can depend upon a maximum of 20
+	// jobs. You can specify a SEQUENTIAL type dependency without specifying a job
+	// ID for array jobs so that each child array job completes sequentially, starting
+	// at index 0. You can also specify an N_TO_N type dependency with a job ID
+	// for array jobs so that each index child of this job must wait for the corresponding
+	// index child of each dependency to complete before it can begin.
 	DependsOn []*JobDependency `locationName:"dependsOn" type:"list"`
 
 	// The job definition used by this job. This value can be either a name:revision
@@ -4053,15 +4328,15 @@ type SubmitJobInput struct {
 	// JobDefinition is a required field
 	JobDefinition *string `locationName:"jobDefinition" type:"string" required:"true"`
 
-	// The name of the job. A name must be 1 to 128 characters in length.
-	//
-	// Pattern: ^[a-zA-Z0-9_]+$
+	// The name of the job. The first character must be alphanumeric, and up to
+	// 128 letters (uppercase and lowercase), numbers, hyphens, and underscores
+	// are allowed.
 	//
 	// JobName is a required field
 	JobName *string `locationName:"jobName" type:"string" required:"true"`
 
-	// The job queue into which the job will be submitted. You can specify either
-	// the name or the Amazon Resource Name (ARN) of the queue.
+	// The job queue into which the job is submitted. You can specify either the
+	// name or the Amazon Resource Name (ARN) of the queue.
 	//
 	// JobQueue is a required field
 	JobQueue *string `locationName:"jobQueue" type:"string" required:"true"`
@@ -4105,6 +4380,12 @@ func (s *SubmitJobInput) Validate() error {
 		return invalidParams
 	}
 	return nil
+}
+
+// SetArrayProperties sets the ArrayProperties field's value.
+func (s *SubmitJobInput) SetArrayProperties(v *ArrayProperties) *SubmitJobInput {
+	s.ArrayProperties = v
+	return s
 }
 
 // SetContainerOverrides sets the ContainerOverrides field's value.
@@ -4190,12 +4471,12 @@ func (s *SubmitJobOutput) SetJobName(v string) *SubmitJobOutput {
 type TerminateJobInput struct {
 	_ struct{} `type:"structure"`
 
-	// Job IDs to be terminated. Up to 100 jobs can be specified.
+	// The AWS Batch job ID of the job to terminate.
 	//
 	// JobId is a required field
 	JobId *string `locationName:"jobId" type:"string" required:"true"`
 
-	// A message to attach to the job that explains the reason for cancelling it.
+	// A message to attach to the job that explains the reason for canceling it.
 	// This message is returned by future DescribeJobs operations on the job. This
 	// message is also recorded in the AWS Batch activity logs.
 	//
@@ -4338,8 +4619,18 @@ type UpdateComputeEnvironmentInput struct {
 	// for a managed compute environment.
 	ComputeResources *ComputeResourceUpdate `locationName:"computeResources" type:"structure"`
 
-	// The name or full Amazon Resource Name (ARN) of the IAM role that allows AWS
-	// Batch to make calls to ECS, Auto Scaling, and EC2 on your behalf.
+	// The full Amazon Resource Name (ARN) of the IAM role that allows AWS Batch
+	// to make calls to other AWS services on your behalf.
+	//
+	// If your specified role has a path other than /, then you must either specify
+	// the full role ARN (this is recommended) or prefix the role name with the
+	// path.
+	//
+	// Depending on how you created your AWS Batch service role, its ARN may contain
+	// the service-role path prefix. When you only specify the name of the service
+	// role, AWS Batch assumes that your ARN does not use the service-role path
+	// prefix. Because of this, we recommend that you specify the full ARN of your
+	// service role when you create compute environments.
 	ServiceRole *string `locationName:"serviceRole" type:"string"`
 
 	// The state of the compute environment. Compute environments in the ENABLED
@@ -4442,11 +4733,11 @@ type UpdateJobQueueInput struct {
 	// JobQueue is a required field
 	JobQueue *string `locationName:"jobQueue" type:"string" required:"true"`
 
-	// The priority of the job queue. Job queues with a higher priority (or a lower
+	// The priority of the job queue. Job queues with a higher priority (or a higher
 	// integer value for the priority parameter) are evaluated first when associated
-	// with same compute environment. Priority is determined in ascending order,
-	// for example, a job queue with a priority value of 1 is given scheduling preference
-	// over a job queue with a priority value of 10.
+	// with same compute environment. Priority is determined in descending order,
+	// for example, a job queue with a priority value of 10 is given scheduling
+	// preference over a job queue with a priority value of 1.
 	Priority *int64 `locationName:"priority" type:"integer"`
 
 	// Describes the queue's ability to accept new jobs.
@@ -4550,8 +4841,8 @@ type Volume struct {
 
 	// The contents of the host parameter determine whether your data volume persists
 	// on the host container instance and where it is stored. If the host parameter
-	// is empty, then the Docker daemon assigns a host path for your data volume,
-	// but the data is not guaranteed to persist after the containers associated
+	// is empty, then the Docker daemon assigns a host path for your data volume.
+	// However, the data is not guaranteed to persist after the containers associated
 	// with it stop running.
 	Host *Host `locationName:"host" type:"structure"`
 
@@ -4582,6 +4873,14 @@ func (s *Volume) SetName(v string) *Volume {
 	s.Name = &v
 	return s
 }
+
+const (
+	// ArrayJobDependencyNToN is a ArrayJobDependency enum value
+	ArrayJobDependencyNToN = "N_TO_N"
+
+	// ArrayJobDependencySequential is a ArrayJobDependency enum value
+	ArrayJobDependencySequential = "SEQUENTIAL"
+)
 
 const (
 	// CEStateEnabled is a CEState enum value
