@@ -6,16 +6,57 @@ import (
 	"time"
 
 	"github.com/aws/aws-sdk-go/aws"
-	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/cloudwatch"
+	"github.com/percona/rds_exporter/config"
 	"github.com/prometheus/client_golang/prometheus"
 )
 
 var (
-	PeriodSeconds = 60
-	DelaySeconds  = 600
-	RangeSeconds  = 600
+	Period = 60 * time.Second
+	Delay  = 600 * time.Second
+	Range  = 600 * time.Second
+
+	latencyDesc = prometheus.NewDesc(
+		"rds_latency",
+		"The difference between the current time and timestamp in the metric itself",
+		[]string{"instance", "region"},
+		map[string]string(nil),
+	)
 )
+
+type Scrape struct {
+	// params
+	instance  config.Instance
+	collector *Collector
+	ch        chan<- prometheus.Metric
+
+	// internal
+	svc     *cloudwatch.CloudWatch
+	labels  []string
+	latency *Latency
+}
+
+func NewScrape(instance config.Instance, collector *Collector, ch chan<- prometheus.Metric) *Scrape {
+	// Create CloudWatch client
+	sess := collector.Sessions.Get(instance)
+	svc := cloudwatch.New(sess)
+
+	// Create labels for all metrics
+	labels := []string{}
+	labels = append(labels, instance.Instance, instance.Region)
+
+	return &Scrape{
+		// params
+		instance:  instance,
+		collector: collector,
+		ch:        ch,
+
+		// internal
+		svc:     svc,
+		labels:  labels,
+		latency: &Latency{},
+	}
+}
 
 func getLatestDatapoint(datapoints []*cloudwatch.Datapoint) *cloudwatch.Datapoint {
 	var latest *cloudwatch.Datapoint = nil
@@ -29,41 +70,39 @@ func getLatestDatapoint(datapoints []*cloudwatch.Datapoint) *cloudwatch.Datapoin
 	return latest
 }
 
-// scrape makes the required calls to AWS CloudWatch by using the parameters in the Collector
+// Scrape makes the required calls to AWS CloudWatch by using the parameters in the Collector.
 // Once converted into Prometheus format, the metrics are pushed on the ch channel.
-func scrape(instance, region string, collector *Collector, ch chan<- prometheus.Metric) {
-	session := session.Must(session.NewSession(&aws.Config{
-		Region: aws.String(region),
-	}))
-
-	svc := cloudwatch.New(session)
-
-	labels := []string{}
-	labels = append(labels, instance, region)
-
+func (s *Scrape) Scrape() {
 	wg := &sync.WaitGroup{}
-	wg.Add(len(collector.Metrics))
-	for _, metric := range collector.Metrics {
+	wg.Add(len(s.collector.Metrics))
+	for _, metric := range s.collector.Metrics {
 		go func(metric Metric) {
-			err := scrapeMetric(svc, metric, instance, collector, ch, labels)
+			err := s.scrapeMetric(metric)
 			if err != nil {
 				fmt.Println(err)
 			}
+
 			wg.Done()
 		}(metric)
 	}
 	wg.Wait()
+
+	// Generate latency metric
+	if !s.latency.Timestamp.IsZero() {
+		latency := time.Since(s.latency.Timestamp).Seconds()
+		s.ch <- prometheus.MustNewConstMetric(latencyDesc, prometheus.GaugeValue, float64(latency), s.labels...)
+	}
 }
 
-func scrapeMetric(svc *cloudwatch.CloudWatch, metric Metric, instance string, collector *Collector, ch chan<- prometheus.Metric, labels []string) error {
+func (s *Scrape) scrapeMetric(metric Metric) error {
 	now := time.Now()
-	end := now.Add(time.Duration(-DelaySeconds) * time.Second)
+	end := now.Add(-Delay)
 
 	params := &cloudwatch.GetMetricStatisticsInput{
 		EndTime:   aws.Time(end),
-		StartTime: aws.Time(end.Add(time.Duration(-RangeSeconds) * time.Second)),
+		StartTime: aws.Time(end.Add(-Range)),
 
-		Period:     aws.Int64(int64(PeriodSeconds)),
+		Period:     aws.Int64(int64(Period.Seconds())),
 		MetricName: aws.String(metric.Name),
 		Namespace:  aws.String("AWS/RDS"),
 		Dimensions: []*cloudwatch.Dimension{},
@@ -73,15 +112,15 @@ func scrapeMetric(svc *cloudwatch.CloudWatch, metric Metric, instance string, co
 
 	params.Dimensions = append(params.Dimensions, &cloudwatch.Dimension{
 		Name:  aws.String("DBInstanceIdentifier"),
-		Value: aws.String(instance),
+		Value: aws.String(s.instance.Instance),
 	})
 
 	// Call CloudWatch to gather the datapoints
-	resp, err := svc.GetMetricStatistics(params)
-	collector.TotalRequests.Inc()
+	resp, err := s.svc.GetMetricStatistics(params)
+	s.collector.TotalRequests.Inc()
 
 	if err != nil {
-		collector.ErroneousRequests.Inc()
+		s.collector.ErroneousRequests.Inc()
 		return err
 	}
 
@@ -92,7 +131,33 @@ func scrapeMetric(svc *cloudwatch.CloudWatch, metric Metric, instance string, co
 
 	// Pick the latest datapoint
 	dp := getLatestDatapoint(resp.Datapoints)
-	ch <- prometheus.MustNewConstMetric(metric.Desc, prometheus.GaugeValue, aws.Float64Value(dp.Average), labels...)
+
+	// Take the oldest timestamp for latency metric
+	s.latency.TakeOldest(aws.TimeValue(dp.Timestamp))
+
+	// Get the metric.
+	v := aws.Float64Value(dp.Average)
+	switch metric.Name {
+	case "EngineUptime":
+		// "Fake EngineUptime -> node_boot_time with time.Now().Unix() - EngineUptime."
+		v = float64(time.Now().Unix() - int64(v))
+	}
+
+	// Send metric.
+	s.ch <- prometheus.MustNewConstMetric(metric.Desc, prometheus.GaugeValue, v, s.labels...)
 
 	return nil
+}
+
+type Latency struct {
+	Timestamp time.Time
+	sync.RWMutex
+}
+
+func (l *Latency) TakeOldest(t time.Time) {
+	l.Lock()
+	defer l.Unlock()
+	if l.Timestamp.IsZero() || t.Before(l.Timestamp) {
+		l.Timestamp = t
+	}
 }

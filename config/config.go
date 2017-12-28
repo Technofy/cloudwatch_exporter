@@ -8,8 +8,10 @@ import (
 )
 
 type Instance struct {
-	Instance string `yaml:"instance"`
-	Region   string `yaml:"region"`
+	Instance     string `yaml:"instance"`
+	Region       string `yaml:"region"`
+	AwsAccessKey string `yaml:"aws_access_key"`
+	AwsSecretKey string `yaml:"aws_secret_key"`
 }
 
 type Config struct {
@@ -19,6 +21,8 @@ type Config struct {
 type Settings struct {
 	config Config
 	sync.RWMutex
+	// AfterLoad is run after every Load request but before releasing Mutex
+	AfterLoad func(config Config) error
 }
 
 func (s *Settings) Load(filename string) error {
@@ -29,7 +33,13 @@ func (s *Settings) Load(filename string) error {
 
 	s.Lock()
 	defer s.Unlock()
-	return yaml.Unmarshal(content, &s.config)
+	if err := yaml.Unmarshal(content, &s.config); err != nil {
+		return err
+	}
+	if s.AfterLoad != nil {
+		return s.AfterLoad(s.config)
+	}
+	return nil
 }
 
 func (s *Settings) Config() Config {
