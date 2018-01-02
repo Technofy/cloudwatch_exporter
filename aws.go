@@ -50,6 +50,17 @@ func scrape(collector *cwCollector, ch chan<- prometheus.Metric) {
 
 		dimensions:=[]*cloudwatch.Dimension{}
 
+		//This map will hold dimensions name which has been already collected
+		valueCollected :=  map[string]bool{}
+
+		//Check the special case where the user want all the values. A bit "hacky" but will do the job for now
+		if (len(metric.ConfMetric.DimensionsSelect)==0 && len(metric.ConfMetric.DimensionsSelectRegex)==0 ){
+			for _,dimension := range metric.ConfMetric.Dimensions {
+				metric.ConfMetric.DimensionsSelectRegex=map[string]string{}
+				metric.ConfMetric.DimensionsSelectRegex[dimension]=".*"
+			}
+		}
+
 
 		for _, stat := range metric.ConfMetric.Statistics {
 			params.Statistics = append(params.Statistics, aws.String(stat))
@@ -80,22 +91,26 @@ func scrape(collector *cwCollector, ch chan<- prometheus.Metric) {
 			labels = append(labels, collector.Template.Task.Name)
 			params.Dimensions=dimensions
 			scrapeSingleDataPoint(collector,ch,params,metric,labels,svc)
+		}
+
+		//If no regex is specified, continue
+		if (len(metric.ConfMetric.DimensionsSelectRegex)==0){
 			continue
 		}
+
 
 		// Get all the metric to select the ones who'll match the regex
 		result, err := svc.ListMetrics(&cloudwatch.ListMetricsInput{
 			MetricName: aws.String(metric.ConfMetric.Name),
 			Namespace:  aws.String(metric.ConfMetric.Namespace),
 		})
+		totalRequests.Inc()
 
 		if err != nil {
 			fmt.Println(err)
 			continue
 		}
 		
-		//This map will hold dimensions name which has been already collected
-		valueCollected :=  map[string]bool{}
 
 		for dimensions := range metric.ConfMetric.DimensionsSelectRegex {
 			dimRegex := metric.ConfMetric.DimensionsSelectRegex[dimensions]
