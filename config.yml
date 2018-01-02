@@ -51,3 +51,14 @@ tasks:
       aws_metric_name: TunnelDataOut
       aws_statistics: [Average]
       range_seconds: 3600
+ - name: lambda_duration
+   default_region: eu-west-1
+   metrics:
+    - aws_namespace: "AWS/Lambda"
+      aws_dimensions: [FunctionName]
+      aws_dimensions_select_regex:
+        FunctionName: .*
+      aws_metric_name: Duration
+      aws_statistics: [Maximum]
+      range_seconds: 1728000
+      period_seconds: 3000
