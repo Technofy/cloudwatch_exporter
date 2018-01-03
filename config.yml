@@ -60,8 +60,7 @@ tasks:
         FunctionName: .*
       aws_metric_name: Duration
       aws_statistics: [Maximum]
-      range_seconds: 1728000
-      period_seconds: 3000
+      
  - name: lambda_duration_no_select
    default_region: eu-west-1
    metrics:
@@ -69,5 +68,3 @@ tasks:
       aws_dimensions: [FunctionName]
       aws_metric_name: Duration
       aws_statistics: [Maximum]
-      range_seconds: 1728000
-      period_seconds: 3000

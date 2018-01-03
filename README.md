@@ -128,8 +128,9 @@ Regarding our requirements, installing Java runtime was also a bit of an issue, 
 
 ## TODO
 
-This exporter is still in its early stages! It still lacks the `dimensions_select_regex` parameter and the DynamoDB special use-cases. Any help and/or criticism is welcome!
+This exporter is still in its early stages! It still lacks ~~the `dimensions_select_regex` parameter~~ and the DynamoDB special use-cases. Any help and/or criticism is welcome!
 
+_`dimensions_select_regex` has been added [here](https://github.com/Technofy/cloudwatch_exporter/commit/880ea50f22f23497abaf02b1d306ccdb71cc7c58)
 
 ## End Note
 
