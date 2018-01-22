@@ -10,7 +10,6 @@ tasks:
       aws_statistics: [Average]
       range_seconds: 86400
 
-tasks:
  - name: billing-per-service
    default_region: us-east-1
    metrics:
@@ -23,7 +22,6 @@ tasks:
       aws_statistics: [Average]
       range_seconds: 86400 
 
-tasks:
  - name: billing-per-service_no_dim
    default_region: us-east-1
    metrics:

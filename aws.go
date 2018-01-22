@@ -99,19 +99,36 @@ func scrape(collector *cwCollector, ch chan<- prometheus.Metric) {
 			continue
 		}
 
-
+		
 		// Get all the metric to select the ones who'll match the regex
 		result, err := svc.ListMetrics(&cloudwatch.ListMetricsInput{
 			MetricName: aws.String(metric.ConfMetric.Name),
 			Namespace:  aws.String(metric.ConfMetric.Namespace),
 		})
+		nextToken:=result.NextToken
+		metrics:=result.Metrics
 		totalRequests.Inc()
 
 		if err != nil {
 			fmt.Println(err)
 			continue
 		}
+
+		for nextToken!=nil {
+			result, err := svc.ListMetrics(&cloudwatch.ListMetricsInput{
+				MetricName: aws.String(metric.ConfMetric.Name),
+				Namespace:  aws.String(metric.ConfMetric.Namespace),
+				NextToken: nextToken,
+			})		
+			if err != nil {
+				fmt.Println(err)
+				continue
+			}
+			nextToken=result.NextToken
+			metrics=append(metrics,result.Metrics...)
+		}
 		
+		//For each metric returned by aws
 		for _,met := range result.Metrics {
 			labels := make([]string, 0, len(metric.LabelNames))
 			dimensions=[]*cloudwatch.Dimension{}
