@@ -8,6 +8,7 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 	"time"
 	"regexp"
+	"strings"
 )
 
 func getLatestDatapoint(datapoints []*cloudwatch.Datapoint) *cloudwatch.Datapoint {
@@ -55,8 +56,8 @@ func scrape(collector *cwCollector, ch chan<- prometheus.Metric) {
 
 		//Check the special case where the user want all the values. A bit "hacky" but will do the job for now
 		if (len(metric.ConfMetric.DimensionsSelect)==0 && len(metric.ConfMetric.DimensionsSelectRegex)==0 ){
+			metric.ConfMetric.DimensionsSelectRegex=map[string]string{}
 			for _,dimension := range metric.ConfMetric.Dimensions {
-				metric.ConfMetric.DimensionsSelectRegex=map[string]string{}
 				metric.ConfMetric.DimensionsSelectRegex[dimension]=".*"
 			}
 		}
@@ -111,46 +112,43 @@ func scrape(collector *cwCollector, ch chan<- prometheus.Metric) {
 			continue
 		}
 		
+		for _,met := range result.Metrics {
+			labels := make([]string, 0, len(metric.LabelNames))
+			dimensions=[]*cloudwatch.Dimension{}
 
-		for dimensions := range metric.ConfMetric.DimensionsSelectRegex {
-			dimRegex := metric.ConfMetric.DimensionsSelectRegex[dimensions]
+			//Try to match each dimensions to the regex
+			for _,dim := range met.Dimensions {
+				dimRegex:=metric.ConfMetric.DimensionsSelectRegex[*dim.Name]
+				match,_:=regexp.MatchString(dimRegex,*dim.Value)
+				if match  {
+					dimensions=append(dimensions, &cloudwatch.Dimension{
+						Name:  aws.String(*dim.Name),
+						Value: aws.String(*dim.Value),
+					})
+					labels = append(labels, *dim.Value)
 
-			// Replace $_target token by the actual URL target
-			if dimRegex == "$_target" {
-				dimRegex = collector.Target
+					
+				}
 			}
 
-			//Loop through all the dimensions for the metric given
-			for _,met := range result.Metrics {
-					for _,dim := range met.Dimensions {
+			//Cheking if all dimensions matched
+			if len(labels) ==  len(metric.ConfMetric.Dimensions) {	
 
-						//Select the one which match the regex
-						match,_:=regexp.MatchString(dimRegex,*dim.Value)
-						if _, ok := valueCollected[*dim.Value];  match && !ok  {
-							//Create the request and send it to the prometheus lib
-							labels := make([]string, 0, len(metric.LabelNames))
-							
-							params.Dimensions = []*cloudwatch.Dimension{}
-							params.Dimensions = append(params.Dimensions, &cloudwatch.Dimension{
-								Name:  aws.String(*dim.Name),
-								Value: aws.String(*dim.Value),
-							})
+				//Checking if this couple of dimensions has already been scraped
+				if _, ok := valueCollected[strings.Join(labels,";")]; ok {
+					continue
+				}
+
+				//If no, then scrape them
+				valueCollected[strings.Join(labels,";")]=true
 			
-							labels = append(labels, *dim.Value)
-	
-							labels = append(labels, collector.Template.Task.Name)	
-							scrapeSingleDataPoint(collector,ch,params,metric,labels,svc)
+				params.Dimensions = dimensions
 
-							valueCollected[*dim.Value]=true
-						}
-					}
-				
-				
+				labels = append(labels, collector.Template.Task.Name)	
+				scrapeSingleDataPoint(collector,ch,params,metric,labels,svc)
+			
 			}
 		}
-
-
-	
 	}
 }
 
