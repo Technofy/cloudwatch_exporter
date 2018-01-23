@@ -23,6 +23,8 @@ DOCKER_IMAGE_TAG        ?= $(subst /,-,$(shell git rev-parse --abbrev-ref HEAD))
 
 all: format build test
 
+travis: dependency format build test
+
 style:
 	@echo ">> checking code style"
 	@! gofmt -d $(shell find . -path ./vendor -prune -o -name '*.go' -print) | grep '^'
@@ -51,6 +53,10 @@ docker:
 	@echo ">> building docker image"
 	@docker build -t "$(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_TAG)" .
 
+dependency:
+	@echo ">> installing dependency with dep"
+	@go get -u github.com/golang/dep/cmd/dep	
+	@dep ensure
 promu:
 	@GOOS=$(shell uname -s | tr A-Z a-z) \
 	        GOARCH=$(subst x86_64,amd64,$(patsubst i%86,386,$(shell uname -m))) \
