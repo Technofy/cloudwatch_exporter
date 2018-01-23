@@ -10,6 +10,38 @@ tasks:
       aws_statistics: [Average]
       range_seconds: 86400
 
+ - name: billing-per-service-partial-dim
+   default_region: us-east-1
+   metrics:
+    - aws_namespace: "AWS/Billing"
+      aws_dimensions: [ServiceName,Currency]
+      aws_dimensions_select:
+        ServiceName: [AWSDataTransfer,AWSLambda]
+      aws_metric_name: EstimatedCharges
+      aws_statistics: [Average]
+      range_seconds: 86400
+
+ - name: billing-per-service-partial-dim-regex
+   default_region: us-east-1
+   metrics:
+    - aws_namespace: "AWS/Billing"
+      aws_dimensions: [ServiceName,Currency]
+      aws_dimensions_select_regex:
+        ServiceName: AWS.*
+      aws_metric_name: EstimatedCharges
+      aws_statistics: [Average]
+      range_seconds: 86400 
+
+ - name: billing-per-service-no-dim
+   default_region: us-east-1
+   metrics:
+    - aws_namespace: "AWS/Billing"
+      aws_dimensions: [ServiceName,Currency]
+      aws_metric_name: EstimatedCharges
+      aws_statistics: [Average]
+      range_seconds: 86400 
+
+
  - name: ec2_cloudwatch
    metrics:
     - aws_namespace: "AWS/EC2"
