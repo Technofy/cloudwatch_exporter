@@ -272,7 +272,7 @@ var Metrics = map[string]Metric{
 		Desc: prometheus.NewDesc(
 			"rdsosmetrics_fileSys_maxFiles",
 			"The maximum number of files that can be created for the file system.",
-			[]string{"instance", "region", "id"},
+			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
 	},
@@ -281,7 +281,7 @@ var Metrics = map[string]Metric{
 		Desc: prometheus.NewDesc(
 			"rdsosmetrics_fileSys_mountPoint",
 			"The path to the file system.",
-			[]string{"instance", "region", "id"},
+			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
 	},
@@ -290,7 +290,7 @@ var Metrics = map[string]Metric{
 		Desc: prometheus.NewDesc(
 			"node_filesystem_avail",
 			"The name of the file system.",
-			[]string{"instance", "region", "id"},
+			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
 	},
@@ -299,7 +299,7 @@ var Metrics = map[string]Metric{
 		Desc: prometheus.NewDesc(
 			"node_filesystem_size",
 			"The total number of disk space available for the file system, in kilobytes.",
-			[]string{"instance", "region", "id"},
+			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
 	},
@@ -308,7 +308,7 @@ var Metrics = map[string]Metric{
 		Desc: prometheus.NewDesc(
 			"rdsosmetrics_fileSys_used",
 			"The amount of disk space used by files in the file system, in kilobytes.",
-			[]string{"instance", "region", "id"},
+			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
 	},
@@ -317,7 +317,7 @@ var Metrics = map[string]Metric{
 		Desc: prometheus.NewDesc(
 			"rdsosmetrics_fileSys_usedFilePercent",
 			"The percentage of available files in use.",
-			[]string{"instance", "region", "id"},
+			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
 	},
@@ -326,7 +326,7 @@ var Metrics = map[string]Metric{
 		Desc: prometheus.NewDesc(
 			"rdsosmetrics_fileSys_usedFiles",
 			"The number of files in the file system.",
-			[]string{"instance", "region", "id"},
+			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
 	},
@@ -335,7 +335,7 @@ var Metrics = map[string]Metric{
 		Desc: prometheus.NewDesc(
 			"rdsosmetrics_fileSys_usedPercent",
 			"The percentage of the file-system disk space in use.",
-			[]string{"instance", "region", "id"},
+			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
 	},
@@ -632,6 +632,24 @@ var Metrics = map[string]Metric{
 		Desc: prometheus.NewDesc(
 			"node_memory_SwapFree",
 			"The total amount of swap memory free, in kilobytes.",
+			[]string{"instance", "region"},
+			map[string]string(nil),
+		),
+	},
+	"node_vmstat_pswpin": {
+		Name: "in",
+		Desc: prometheus.NewDesc(
+			"node_vmstat_pswpin",
+			"Number of kilobytes the system has swapped in from disk per second (disk reads).",
+			[]string{"instance", "region"},
+			map[string]string(nil),
+		),
+	},
+	"node_vmstat_pswpout": {
+		Name: "out",
+		Desc: prometheus.NewDesc(
+			"node_vmstat_pswpout",
+			"Number of kilobytes the system has swapped out to disk per second (disk writes).",
 			[]string{"instance", "region"},
 			map[string]string(nil),
 		),

@@ -219,15 +219,18 @@ func (e *Exporter) collectValue(ch chan<- prometheus.Metric, instance config.Ins
 	return nil
 }
 
-func (e *Exporter) collectMapValue(ch chan<- prometheus.Metric, instance config.Instance, key string, value map[string]interface{}, l *latency.Latency, labels ...string) error {
+func (e *Exporter) collectMapValue(ch chan<- prometheus.Metric, instance config.Instance, key string, value map[string]interface{}, l *latency.Latency, extraLabelsValues ...string) error {
 	for metricName, v := range value {
 		metricValue, ok := v.(float64)
 		if !ok {
 			return fmt.Errorf("%s: wrong value type for metric %s: %T", key, metricName, value)
 		}
 
-		namespace, subsystem, name, labels := MapToNode(key, metricName, labels...)
-		e.sendMetric(ch, instance, namespace, subsystem, name, metricValue, labels...)
+		namespace, subsystem, name, extraLabels, extraLabelsValues := MapToNode(key, metricName, extraLabelsValues...)
+		if len(extraLabels) != len(extraLabelsValues) {
+			return fmt.Errorf("%s: len(labels) != len(labelsValues) for metric %s: len(%T) != len(%T)", key, metricName, extraLabels, extraLabelsValues)
+		}
+		e.sendMetric(ch, instance, namespace, subsystem, name, metricValue, extraLabelsValues...)
 	}
 
 	return nil

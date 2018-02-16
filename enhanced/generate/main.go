@@ -26,7 +26,7 @@ type Metric struct {
 }
 
 func (m Metric) FqName() string {
-	namespace, subsystem, name, _ := enhanced.MapToNode(m.Group, m.Name)
+	namespace, subsystem, name, _, _ := enhanced.MapToNode(m.Group, m.Name)
 	switch m.Group {
 	case "disk":
 		namespace = "node"
@@ -39,17 +39,8 @@ func (m Metric) Labels() []string {
 		"instance",
 		"region",
 	}
-	switch m.Group {
-	case "cpuUtilization":
-		labels = append(labels, "mode")
-	case "processList",
-		"network",
-		"diskIO",
-		"fileSys":
-		labels = append(labels, "id")
-	}
-
-	return labels
+	_, _, _, extraLabels, _ := enhanced.MapToNode(m.Group, m.Name)
+	return append(labels, extraLabels...)
 }
 
 func (m Metric) ConstLabels() map[string]string {
@@ -174,6 +165,8 @@ var (
 			"cached": "The amount of swap memory, in kilobytes, used as cache memory.",
 			"free":   "The total amount of swap memory free, in kilobytes.",
 			"total":  "The total amount of swap memory available, in kilobytes.",
+			"in":     "Number of kilobytes the system has swapped in from disk per second (disk reads).",
+			"out":    "Number of kilobytes the system has swapped out to disk per second (disk writes).",
 		},
 		"tasks": {
 			"blocked":  "The number of tasks that are blocked.",
