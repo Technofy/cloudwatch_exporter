@@ -6,6 +6,7 @@ package main
 import (
 	"log"
 	"os"
+	"sort"
 	"text/template"
 
 	"github.com/percona/rds_exporter/enhanced"
@@ -207,13 +208,18 @@ func main() {
 			}
 			metrics = append(metrics, metric)
 		}
+		sort.SliceStable(metrics, func(i, j int) bool {
+			return metrics[i].Name < metrics[j].Name
+		})
 		group := Group{
 			Name:    groupName,
 			metrics: metrics,
 		}
 		groups = append(groups, group)
 	}
-
+	sort.SliceStable(groups, func(i, j int) bool {
+		return groups[i].Name < groups[j].Name
+	})
 	packageTemplate.Execute(f, struct {
 		Groups []Group
 	}{
