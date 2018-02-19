@@ -88,24 +88,6 @@ var Metrics = []Metric{
 		),
 	},
 	{
-		Name: "CommitLatency",
-		Desc: prometheus.NewDesc(
-			"aws_rds_commit_latency_average",
-			"CommitLatency",
-			[]string{"instance", "region"},
-			map[string]string(nil),
-		),
-	},
-	{
-		Name: "CommitThroughput",
-		Desc: prometheus.NewDesc(
-			"aws_rds_commit_throughput_average",
-			"CommitThroughput",
-			[]string{"instance", "region"},
-			map[string]string(nil),
-		),
-	},
-	{
 		Name: "CPUCreditBalance",
 		Desc: prometheus.NewDesc(
 			"aws_rds_cpu_credit_balance_average",
@@ -129,14 +111,23 @@ var Metrics = []Metric{
 			"node_cpu",
 			"The percentage of CPU utilization. Units: Percent",
 			[]string{"instance", "region"},
-			map[string]string{"mode": "idle", "cpu": "All"},
+			map[string]string{"cpu": "All", "mode": "idle"},
 		),
 	},
 	{
-		Name: "DatabaseConnections",
+		Name: "CommitLatency",
 		Desc: prometheus.NewDesc(
-			"aws_rds_database_connections_average",
-			"The number of database connections in use. Units: Count",
+			"aws_rds_commit_latency_average",
+			"CommitLatency",
+			[]string{"instance", "region"},
+			map[string]string(nil),
+		),
+	},
+	{
+		Name: "CommitThroughput",
+		Desc: prometheus.NewDesc(
+			"aws_rds_commit_throughput_average",
+			"CommitThroughput",
 			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
@@ -155,6 +146,33 @@ var Metrics = []Metric{
 		Desc: prometheus.NewDesc(
 			"aws_rds_ddl_throughput_average",
 			"DDLThroughput",
+			[]string{"instance", "region"},
+			map[string]string(nil),
+		),
+	},
+	{
+		Name: "DMLLatency",
+		Desc: prometheus.NewDesc(
+			"aws_rds_dml_latency_average",
+			"DMLLatency",
+			[]string{"instance", "region"},
+			map[string]string(nil),
+		),
+	},
+	{
+		Name: "DMLThroughput",
+		Desc: prometheus.NewDesc(
+			"aws_rds_dml_throughput_average",
+			"DMLThroughput",
+			[]string{"instance", "region"},
+			map[string]string(nil),
+		),
+	},
+	{
+		Name: "DatabaseConnections",
+		Desc: prometheus.NewDesc(
+			"aws_rds_database_connections_average",
+			"The number of database connections in use. Units: Count",
 			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
@@ -196,37 +214,10 @@ var Metrics = []Metric{
 		),
 	},
 	{
-		Name: "DMLLatency",
-		Desc: prometheus.NewDesc(
-			"aws_rds_dml_latency_average",
-			"DMLLatency",
-			[]string{"instance", "region"},
-			map[string]string(nil),
-		),
-	},
-	{
-		Name: "DMLThroughput",
-		Desc: prometheus.NewDesc(
-			"aws_rds_dml_throughput_average",
-			"DMLThroughput",
-			[]string{"instance", "region"},
-			map[string]string(nil),
-		),
-	},
-	{
 		Name: "EngineUptime",
 		Desc: prometheus.NewDesc(
 			"node_boot_time",
 			"EngineUptime",
-			[]string{"instance", "region"},
-			map[string]string(nil),
-		),
-	},
-	{
-		Name: "FreeableMemory",
-		Desc: prometheus.NewDesc(
-			"node_memory_Cached",
-			"The amount of available random access memory. Units: Bytes",
 			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
@@ -245,6 +236,15 @@ var Metrics = []Metric{
 		Desc: prometheus.NewDesc(
 			"node_filesystem_free",
 			"The amount of available storage space. Units: Bytes",
+			[]string{"instance", "region"},
+			map[string]string(nil),
+		),
+	},
+	{
+		Name: "FreeableMemory",
+		Desc: prometheus.NewDesc(
+			"node_memory_Cached",
+			"The amount of available random access memory. Units: Bytes",
 			[]string{"instance", "region"},
 			map[string]string(nil),
 		),

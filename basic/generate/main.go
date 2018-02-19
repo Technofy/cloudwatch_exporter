@@ -6,6 +6,7 @@ package main
 import (
 	"log"
 	"os"
+	"sort"
 	"text/template"
 )
 
@@ -145,6 +146,9 @@ func main() {
 	}
 	defer f.Close()
 
+	sort.SliceStable(metrics, func(i, j int) bool {
+		return metrics[i] < metrics[j]
+	})
 	packageTemplate.Execute(f, struct {
 		Metrics []Metric
 	}{

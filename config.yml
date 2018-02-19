@@ -1,9 +1,9 @@
 instances:
-- instance: mysql56
+- instance: rds-mysql56
   region: us-east-1
-- instance: mysql57
+- instance: rds-mysql57
   region: us-east-1
-- instance: aurora1
+- instance: rds-aurora1
   region: us-east-1
-- instance: aurora2
+- instance: rds-aurora2
   region: us-east-1
