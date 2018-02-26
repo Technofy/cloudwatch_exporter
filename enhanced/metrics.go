@@ -136,7 +136,7 @@ var Metrics = map[string]Metric{
 		Name: "diskQueueDepth",
 		Desc: prometheus.NewDesc(
 			"rdsosmetrics_diskIO_diskQueueDepth",
-			"TODO",
+			"The number of outstanding read/write requests waiting to access the disk.",
 			[]string{"instance", "region", "id"},
 			map[string]string(nil),
 		),
@@ -172,7 +172,7 @@ var Metrics = map[string]Metric{
 		Name: "readLatency",
 		Desc: prometheus.NewDesc(
 			"rdsosmetrics_diskIO_readLatency",
-			"TODO",
+			"The average amount of time taken per disk I/O operation.",
 			[]string{"instance", "region", "id"},
 			map[string]string(nil),
 		),
@@ -181,7 +181,7 @@ var Metrics = map[string]Metric{
 		Name: "readThroughput",
 		Desc: prometheus.NewDesc(
 			"rdsosmetrics_diskIO_readThroughput",
-			"TODO",
+			"The average number of bytes read from disk per second.",
 			[]string{"instance", "region", "id"},
 			map[string]string(nil),
 		),
@@ -244,7 +244,7 @@ var Metrics = map[string]Metric{
 		Name: "writeLatency",
 		Desc: prometheus.NewDesc(
 			"rdsosmetrics_diskIO_writeLatency",
-			"TODO",
+			"The average amount of time taken per disk I/O operation.",
 			[]string{"instance", "region", "id"},
 			map[string]string(nil),
 		),
@@ -253,7 +253,7 @@ var Metrics = map[string]Metric{
 		Name: "writeThroughput",
 		Desc: prometheus.NewDesc(
 			"rdsosmetrics_diskIO_writeThroughput",
-			"TODO",
+			"The average number of bytes written to disk per second.",
 			[]string{"instance", "region", "id"},
 			map[string]string(nil),
 		),
