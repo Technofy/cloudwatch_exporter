@@ -3,9 +3,10 @@ package enhanced
 func MapToNode(subsystem, name string, extraLabelsValues ...string) (namespaceOUT, subsystemOUT, nameOUT string, extraLabelsOUT []string, extraLabelsValuesOUT []string) {
 	switch subsystem {
 	case "cpuUtilization":
-		// map cpuUtilization to node_cpu{cpu="All"}
+		// map cpuUtilization to node_cpu_average{cpu="All"}
+		// we can't map it to node_exporter's node_cpu since it uses seconds, not percents
 
-		// Turn metric name to 'mode' label e.g. node_cpu{cpu="All", mode="nice"}
+		// Turn metric name to 'mode' label e.g. node_cpu_average{cpu="All", mode="nice"}
 		return "node", "", "cpu_average", []string{"mode"}, []string{name}
 	case "loadAverageMinute":
 		// map loadAverageMinute.one to node_load1

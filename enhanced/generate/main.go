@@ -9,9 +9,9 @@ import (
 	"sort"
 	"text/template"
 
-	"github.com/percona/rds_exporter/enhanced"
-
 	"github.com/prometheus/client_golang/prometheus"
+
+	"github.com/percona/rds_exporter/enhanced"
 )
 
 type Group struct {
@@ -60,7 +60,7 @@ func (g Group) Metrics() []Metric {
 		return []Metric{
 			{
 				Group: g.Name,
-				Name:  "cpu",
+				Name:  "cpu_average",
 				Help:  "The percentage of CPU utilization. Units: Percent",
 			},
 		}
