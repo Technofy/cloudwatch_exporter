@@ -132,47 +132,45 @@ func (e *Exporter) collectValues(ch chan<- prometheus.Metric, instance config.In
 	sess := e.Sessions.Get(instance)
 	svc := cloudwatchlogs.New(sess)
 
-	FilterLogEventsOutput, err := svc.FilterLogEvents(&cloudwatchlogs.FilterLogEventsInput{
+	values := map[string]interface{}{}
+	FilterLogEventsInput := &cloudwatchlogs.FilterLogEventsInput{
+		StartTime:     aws.Int64(aws.TimeUnixMilli(time.Now().UTC().Add(-2 * time.Minute))),
 		Limit:         aws.Int64(1),
 		LogGroupName:  aws.String(logGroupName),
 		FilterPattern: aws.String(fmt.Sprintf(`{ $.instanceID = "%s" }`, instance.Instance)),
-	})
+	}
+	var err error
+	fn := func(logs *cloudwatchlogs.FilterLogEventsOutput, lastPage bool) (cont bool) {
+		cont = !lastPage
+
+		if len(logs.Events) == 0 {
+			return
+		}
+
+		var message interface{}
+		err = json.Unmarshal([]byte(*logs.Events[0].Message), &message)
+		if err != nil {
+			return
+		}
+
+		v, ok := message.(map[string]interface{})
+		if !ok {
+			return
+		}
+		for key, value := range v {
+			values[key] = value
+		}
+		return
+	}
+	err = svc.FilterLogEventsPages(FilterLogEventsInput, fn)
 	if err != nil {
 		return fmt.Errorf("unable to get logs for instance %s: %s", instance.Instance, err)
 	}
 
-	if len(FilterLogEventsOutput.Events) == 0 {
-		return fmt.Errorf("no events in region %s for instance %s", instance.Region, instance.Instance)
-	}
-
-	var message interface{}
-	err = json.Unmarshal([]byte(*FilterLogEventsOutput.Events[0].Message), &message)
-	if err != nil {
-		return err
-	}
-
-	values, ok := message.(map[string]interface{})
-	if !ok {
-		return fmt.Errorf("unsupported message type: %T", message)
-	}
-
-	if len(values) == 0 {
-		return nil
-	}
-
-	wg := &sync.WaitGroup{}
-	defer wg.Wait()
-
-	wg.Add(len(values))
 	for key, value := range values {
-		go func(key string, value interface{}) {
-			defer wg.Done()
-
-			err := e.collectValue(ch, instance, key, value, l)
-			if err != nil {
-				log.Error(err)
-			}
-		}(key, value)
+		if err = e.collectValue(ch, instance, key, value, l); err != nil {
+			log.Error(err)
+		}
 	}
 
 	return nil
