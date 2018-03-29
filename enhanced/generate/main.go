@@ -7,6 +7,7 @@ import (
 	"log"
 	"os"
 	"sort"
+	"strings"
 	"text/template"
 
 	"github.com/prometheus/client_golang/prometheus"
@@ -52,6 +53,22 @@ func (m Metric) ConstLabels() map[string]string {
 	}
 
 	return nil
+}
+
+func (m Metric) Unit() float64 {
+	if strings.Contains(m.Help, "kilobytes") {
+		if strings.HasPrefix(m.FqName(), "node_") {
+			return 1024
+		}
+	}
+	return 1
+}
+
+func (m Metric) ParsedHelp() string {
+	if m.Unit() == 1024 {
+		return strings.Replace(m.Help, "kilobytes", "bytes", 1)
+	}
+	return m.Help
 }
 
 func (g Group) Metrics() []Metric {
@@ -130,7 +147,7 @@ var (
 		"memory": {
 			"active":         "The amount of assigned memory, in kilobytes.",
 			"buffers":        "The amount of memory used for buffering I/O requests prior to writing to the storage device, in kilobytes.",
-			"cached":         "The amount of memory used for caching file system–based I/O.",
+			"cached":         "The amount of memory used for caching file system–based I/O, in kilobytes.",
 			"dirty":          "The amount of memory pages in RAM that have been modified but not written to their related data block in storage, in kilobytes.",
 			"free":           "The amount of unassigned memory, in kilobytes.",
 			"hugePagesFree":  "The number of free huge pages.Huge pages are a feature of the Linux kernel.",
@@ -234,10 +251,11 @@ var Metrics = map[string]Metric{
 		Name: "{{.Name}}",
 		Desc: prometheus.NewDesc(
 			"{{.FqName}}",
-			"{{.Help}}",
+			"{{.ParsedHelp}}",
 			{{printf "%#v" .Labels}},
 			{{printf "%#v" .ConstLabels}},
 		),
+        Unit: {{.Unit}},
 	},
 {{- end }}
 {{- end }}
