@@ -58,7 +58,14 @@ func (m Metric) ConstLabels() map[string]string {
 func (m Metric) Unit() float64 {
 	if strings.Contains(m.Help, "kilobytes") {
 		if strings.HasPrefix(m.FqName(), "node_") {
-			return 1024
+			excluded := map[string]struct{}{
+				"in":    {},
+				"out":   {},
+				"dirty": {},
+			}
+			if _, ok := excluded[m.Name]; !ok {
+				return 1024
+			}
 		}
 	}
 	return 1

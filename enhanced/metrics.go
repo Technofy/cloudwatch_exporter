@@ -436,15 +436,15 @@ var Metrics = map[string]Metric{
 		),
 		Unit: 1024,
 	},
-	"node_memory_nr_dirty": {
+	"node_vmstat_nr_dirty": {
 		Name: "dirty",
 		Desc: prometheus.NewDesc(
-			"node_memory_nr_dirty",
-			"The amount of memory pages in RAM that have been modified but not written to their related data block in storage, in bytes.",
+			"node_vmstat_nr_dirty",
+			"The amount of memory pages in RAM that have been modified but not written to their related data block in storage, in kilobytes.",
 			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
-		Unit: 1024,
+		Unit: 1,
 	},
 	"node_memory_MemFree": {
 		Name: "free",
@@ -710,21 +710,21 @@ var Metrics = map[string]Metric{
 		Name: "in",
 		Desc: prometheus.NewDesc(
 			"node_vmstat_pswpin",
-			"Number of bytes the system has swapped in from disk per second (disk reads).",
+			"Number of kilobytes the system has swapped in from disk per second (disk reads).",
 			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
-		Unit: 1024,
+		Unit: 1,
 	},
 	"node_vmstat_pswpout": {
 		Name: "out",
 		Desc: prometheus.NewDesc(
 			"node_vmstat_pswpout",
-			"Number of bytes the system has swapped out to disk per second (disk writes).",
+			"Number of kilobytes the system has swapped out to disk per second (disk writes).",
 			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
-		Unit: 1024,
+		Unit: 1,
 	},
 	"node_memory_SwapTotal": {
 		Name: "total",
