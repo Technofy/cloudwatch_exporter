@@ -36,6 +36,7 @@ var (
 type Metric struct {
 	Name string
 	Desc *prometheus.Desc
+	Unit float64
 }
 
 type Exporter struct {
@@ -250,7 +251,7 @@ func (e *Exporter) sendMetric(ch chan<- prometheus.Metric, instance config.Insta
 	ch <- prometheus.MustNewConstMetric(
 		metric.Desc,
 		prometheus.GaugeValue,
-		value,
+		value*metric.Unit,
 		labels...,
 	)
 }

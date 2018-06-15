@@ -15,6 +15,9 @@ func MapToNode(subsystem, name string, extraLabelsValues ...string) (namespaceOU
 			return "node", "", "load1", nil, nil
 		}
 	case "memory":
+		if name == "dirty" {
+			return "node", "vmstat", "nr_dirty", nil, nil
+		}
 		names := map[string]string{
 			"buffers":    "Buffers",
 			"cached":     "Cached",
@@ -25,7 +28,6 @@ func MapToNode(subsystem, name string, extraLabelsValues ...string) (namespaceOU
 			"slab":       "Slab",
 			"mapped":     "Mapped",
 			"pageTables": "PageTables",
-			"dirty":      "nr_dirty",
 		}
 		if nodeName, ok := names[name]; ok {
 			return "node", "memory", nodeName, nil, nil

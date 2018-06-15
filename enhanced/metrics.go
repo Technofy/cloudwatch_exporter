@@ -14,6 +14,7 @@ var Metrics = map[string]Metric{
 			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
+		Unit: 1,
 	},
 	"rdsosmetrics_General_instanceID": {
 		Name: "instanceID",
@@ -23,6 +24,7 @@ var Metrics = map[string]Metric{
 			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
+		Unit: 1,
 	},
 	"rdsosmetrics_General_instanceResourceID": {
 		Name: "instanceResourceID",
@@ -32,6 +34,7 @@ var Metrics = map[string]Metric{
 			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
+		Unit: 1,
 	},
 	"rdsosmetrics_General_numVCPUs": {
 		Name: "numVCPUs",
@@ -41,6 +44,7 @@ var Metrics = map[string]Metric{
 			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
+		Unit: 1,
 	},
 	"rdsosmetrics_General_timestamp": {
 		Name: "timestamp",
@@ -50,6 +54,7 @@ var Metrics = map[string]Metric{
 			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
+		Unit: 1,
 	},
 	"rdsosmetrics_General_uptime": {
 		Name: "uptime",
@@ -59,6 +64,7 @@ var Metrics = map[string]Metric{
 			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
+		Unit: 1,
 	},
 	"rdsosmetrics_General_version": {
 		Name: "version",
@@ -68,6 +74,7 @@ var Metrics = map[string]Metric{
 			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
+		Unit: 1,
 	},
 	"node_cpu_average": {
 		Name: "cpu_average",
@@ -77,24 +84,27 @@ var Metrics = map[string]Metric{
 			[]string{"instance", "region", "mode"},
 			map[string]string{"cpu": "All"},
 		),
+		Unit: 1,
 	},
 	"node_disk_bytes_read": {
 		Name: "bytes_read",
 		Desc: prometheus.NewDesc(
 			"node_disk_bytes_read",
-			"The total number of kilobytes read. This metric is not available for Amazon Aurora.",
+			"The total number of bytes read. This metric is not available for Amazon Aurora.",
 			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
+		Unit: 1024,
 	},
 	"node_disk_bytes_written": {
 		Name: "bytes_written",
 		Desc: prometheus.NewDesc(
 			"node_disk_bytes_written",
-			"The total number of kilobytes written. This metric is not available for Amazon Aurora.",
+			"The total number of bytes written. This metric is not available for Amazon Aurora.",
 			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
+		Unit: 1024,
 	},
 	"rdsosmetrics_diskIO_avgQueueLen": {
 		Name: "avgQueueLen",
@@ -104,6 +114,7 @@ var Metrics = map[string]Metric{
 			[]string{"instance", "region", "id"},
 			map[string]string(nil),
 		),
+		Unit: 1,
 	},
 	"rdsosmetrics_diskIO_avgReqSz": {
 		Name: "avgReqSz",
@@ -113,6 +124,7 @@ var Metrics = map[string]Metric{
 			[]string{"instance", "region", "id"},
 			map[string]string(nil),
 		),
+		Unit: 1,
 	},
 	"rdsosmetrics_diskIO_await": {
 		Name: "await",
@@ -122,6 +134,7 @@ var Metrics = map[string]Metric{
 			[]string{"instance", "region", "id"},
 			map[string]string(nil),
 		),
+		Unit: 1,
 	},
 	"rdsosmetrics_diskIO_device": {
 		Name: "device",
@@ -131,6 +144,7 @@ var Metrics = map[string]Metric{
 			[]string{"instance", "region", "id"},
 			map[string]string(nil),
 		),
+		Unit: 1,
 	},
 	"rdsosmetrics_diskIO_diskQueueDepth": {
 		Name: "diskQueueDepth",
@@ -140,6 +154,7 @@ var Metrics = map[string]Metric{
 			[]string{"instance", "region", "id"},
 			map[string]string(nil),
 		),
+		Unit: 1,
 	},
 	"rdsosmetrics_diskIO_readIOsPS": {
 		Name: "readIOsPS",
@@ -149,6 +164,7 @@ var Metrics = map[string]Metric{
 			[]string{"instance", "region", "id"},
 			map[string]string(nil),
 		),
+		Unit: 1,
 	},
 	"rdsosmetrics_diskIO_readKb": {
 		Name: "readKb",
@@ -158,6 +174,7 @@ var Metrics = map[string]Metric{
 			[]string{"instance", "region", "id"},
 			map[string]string(nil),
 		),
+		Unit: 1,
 	},
 	"rdsosmetrics_diskIO_readKbPS": {
 		Name: "readKbPS",
@@ -167,6 +184,7 @@ var Metrics = map[string]Metric{
 			[]string{"instance", "region", "id"},
 			map[string]string(nil),
 		),
+		Unit: 1,
 	},
 	"rdsosmetrics_diskIO_readLatency": {
 		Name: "readLatency",
@@ -176,6 +194,7 @@ var Metrics = map[string]Metric{
 			[]string{"instance", "region", "id"},
 			map[string]string(nil),
 		),
+		Unit: 1,
 	},
 	"rdsosmetrics_diskIO_readThroughput": {
 		Name: "readThroughput",
@@ -185,6 +204,7 @@ var Metrics = map[string]Metric{
 			[]string{"instance", "region", "id"},
 			map[string]string(nil),
 		),
+		Unit: 1,
 	},
 	"rdsosmetrics_diskIO_rrqmPS": {
 		Name: "rrqmPS",
@@ -194,6 +214,7 @@ var Metrics = map[string]Metric{
 			[]string{"instance", "region", "id"},
 			map[string]string(nil),
 		),
+		Unit: 1,
 	},
 	"rdsosmetrics_diskIO_tps": {
 		Name: "tps",
@@ -203,6 +224,7 @@ var Metrics = map[string]Metric{
 			[]string{"instance", "region", "id"},
 			map[string]string(nil),
 		),
+		Unit: 1,
 	},
 	"rdsosmetrics_diskIO_util": {
 		Name: "util",
@@ -212,6 +234,7 @@ var Metrics = map[string]Metric{
 			[]string{"instance", "region", "id"},
 			map[string]string(nil),
 		),
+		Unit: 1,
 	},
 	"rdsosmetrics_diskIO_writeIOsPS": {
 		Name: "writeIOsPS",
@@ -221,6 +244,7 @@ var Metrics = map[string]Metric{
 			[]string{"instance", "region", "id"},
 			map[string]string(nil),
 		),
+		Unit: 1,
 	},
 	"rdsosmetrics_diskIO_writeKb": {
 		Name: "writeKb",
@@ -230,6 +254,7 @@ var Metrics = map[string]Metric{
 			[]string{"instance", "region", "id"},
 			map[string]string(nil),
 		),
+		Unit: 1,
 	},
 	"rdsosmetrics_diskIO_writeKbPS": {
 		Name: "writeKbPS",
@@ -239,6 +264,7 @@ var Metrics = map[string]Metric{
 			[]string{"instance", "region", "id"},
 			map[string]string(nil),
 		),
+		Unit: 1,
 	},
 	"rdsosmetrics_diskIO_writeLatency": {
 		Name: "writeLatency",
@@ -248,6 +274,7 @@ var Metrics = map[string]Metric{
 			[]string{"instance", "region", "id"},
 			map[string]string(nil),
 		),
+		Unit: 1,
 	},
 	"rdsosmetrics_diskIO_writeThroughput": {
 		Name: "writeThroughput",
@@ -257,6 +284,7 @@ var Metrics = map[string]Metric{
 			[]string{"instance", "region", "id"},
 			map[string]string(nil),
 		),
+		Unit: 1,
 	},
 	"rdsosmetrics_diskIO_wrqmPS": {
 		Name: "wrqmPS",
@@ -266,6 +294,7 @@ var Metrics = map[string]Metric{
 			[]string{"instance", "region", "id"},
 			map[string]string(nil),
 		),
+		Unit: 1,
 	},
 	"rdsosmetrics_fileSys_maxFiles": {
 		Name: "maxFiles",
@@ -275,6 +304,7 @@ var Metrics = map[string]Metric{
 			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
+		Unit: 1,
 	},
 	"rdsosmetrics_fileSys_mountPoint": {
 		Name: "mountPoint",
@@ -284,6 +314,7 @@ var Metrics = map[string]Metric{
 			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
+		Unit: 1,
 	},
 	"node_filesystem_avail": {
 		Name: "name",
@@ -293,15 +324,17 @@ var Metrics = map[string]Metric{
 			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
+		Unit: 1,
 	},
 	"node_filesystem_size": {
 		Name: "total",
 		Desc: prometheus.NewDesc(
 			"node_filesystem_size",
-			"The total number of disk space available for the file system, in kilobytes.",
+			"The total number of disk space available for the file system, in bytes.",
 			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
+		Unit: 1024,
 	},
 	"rdsosmetrics_fileSys_used": {
 		Name: "used",
@@ -311,6 +344,7 @@ var Metrics = map[string]Metric{
 			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
+		Unit: 1,
 	},
 	"rdsosmetrics_fileSys_usedFilePercent": {
 		Name: "usedFilePercent",
@@ -320,6 +354,7 @@ var Metrics = map[string]Metric{
 			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
+		Unit: 1,
 	},
 	"rdsosmetrics_fileSys_usedFiles": {
 		Name: "usedFiles",
@@ -329,6 +364,7 @@ var Metrics = map[string]Metric{
 			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
+		Unit: 1,
 	},
 	"rdsosmetrics_fileSys_usedPercent": {
 		Name: "usedPercent",
@@ -338,6 +374,7 @@ var Metrics = map[string]Metric{
 			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
+		Unit: 1,
 	},
 	"rdsosmetrics_loadAverageMinute_fifteen": {
 		Name: "fifteen",
@@ -347,6 +384,7 @@ var Metrics = map[string]Metric{
 			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
+		Unit: 1,
 	},
 	"rdsosmetrics_loadAverageMinute_five": {
 		Name: "five",
@@ -356,6 +394,7 @@ var Metrics = map[string]Metric{
 			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
+		Unit: 1,
 	},
 	"node_load1": {
 		Name: "one",
@@ -365,51 +404,57 @@ var Metrics = map[string]Metric{
 			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
+		Unit: 1,
 	},
 	"node_memory_Active": {
 		Name: "active",
 		Desc: prometheus.NewDesc(
 			"node_memory_Active",
-			"The amount of assigned memory, in kilobytes.",
+			"The amount of assigned memory, in bytes.",
 			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
+		Unit: 1024,
 	},
 	"node_memory_Buffers": {
 		Name: "buffers",
 		Desc: prometheus.NewDesc(
 			"node_memory_Buffers",
-			"The amount of memory used for buffering I/O requests prior to writing to the storage device, in kilobytes.",
+			"The amount of memory used for buffering I/O requests prior to writing to the storage device, in bytes.",
 			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
+		Unit: 1024,
 	},
 	"node_memory_Cached": {
 		Name: "cached",
 		Desc: prometheus.NewDesc(
 			"node_memory_Cached",
-			"The amount of memory used for caching file system–based I/O.",
+			"The amount of memory used for caching file system–based I/O, in bytes.",
 			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
+		Unit: 1024,
 	},
-	"node_memory_nr_dirty": {
+	"node_vmstat_nr_dirty": {
 		Name: "dirty",
 		Desc: prometheus.NewDesc(
-			"node_memory_nr_dirty",
+			"node_vmstat_nr_dirty",
 			"The amount of memory pages in RAM that have been modified but not written to their related data block in storage, in kilobytes.",
 			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
+		Unit: 1,
 	},
 	"node_memory_MemFree": {
 		Name: "free",
 		Desc: prometheus.NewDesc(
 			"node_memory_MemFree",
-			"The amount of unassigned memory, in kilobytes.",
+			"The amount of unassigned memory, in bytes.",
 			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
+		Unit: 1024,
 	},
 	"rdsosmetrics_memory_hugePagesFree": {
 		Name: "hugePagesFree",
@@ -419,6 +464,7 @@ var Metrics = map[string]Metric{
 			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
+		Unit: 1,
 	},
 	"rdsosmetrics_memory_hugePagesRsvd": {
 		Name: "hugePagesRsvd",
@@ -428,6 +474,7 @@ var Metrics = map[string]Metric{
 			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
+		Unit: 1,
 	},
 	"rdsosmetrics_memory_hugePagesSize": {
 		Name: "hugePagesSize",
@@ -437,6 +484,7 @@ var Metrics = map[string]Metric{
 			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
+		Unit: 1,
 	},
 	"rdsosmetrics_memory_hugePagesSurp": {
 		Name: "hugePagesSurp",
@@ -446,6 +494,7 @@ var Metrics = map[string]Metric{
 			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
+		Unit: 1,
 	},
 	"rdsosmetrics_memory_hugePagesTotal": {
 		Name: "hugePagesTotal",
@@ -455,51 +504,57 @@ var Metrics = map[string]Metric{
 			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
+		Unit: 1,
 	},
 	"node_memory_Inactive": {
 		Name: "inactive",
 		Desc: prometheus.NewDesc(
 			"node_memory_Inactive",
-			"The amount of least-frequently used memory pages, in kilobytes.",
+			"The amount of least-frequently used memory pages, in bytes.",
 			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
+		Unit: 1024,
 	},
 	"node_memory_Mapped": {
 		Name: "mapped",
 		Desc: prometheus.NewDesc(
 			"node_memory_Mapped",
-			"The total amount of file-system contents that is memory mapped inside a process address space, in kilobytes.",
+			"The total amount of file-system contents that is memory mapped inside a process address space, in bytes.",
 			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
+		Unit: 1024,
 	},
 	"node_memory_PageTables": {
 		Name: "pageTables",
 		Desc: prometheus.NewDesc(
 			"node_memory_PageTables",
-			"The amount of memory used by page tables, in kilobytes.",
+			"The amount of memory used by page tables, in bytes.",
 			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
+		Unit: 1024,
 	},
 	"node_memory_Slab": {
 		Name: "slab",
 		Desc: prometheus.NewDesc(
 			"node_memory_Slab",
-			"The amount of reusable kernel data structures, in kilobytes.",
+			"The amount of reusable kernel data structures, in bytes.",
 			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
+		Unit: 1024,
 	},
 	"node_memory_MemTotal": {
 		Name: "total",
 		Desc: prometheus.NewDesc(
 			"node_memory_MemTotal",
-			"The total amount of memory, in kilobytes.",
+			"The total amount of memory, in bytes.",
 			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
+		Unit: 1024,
 	},
 	"rdsosmetrics_memory_writeback": {
 		Name: "writeback",
@@ -509,6 +564,7 @@ var Metrics = map[string]Metric{
 			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
+		Unit: 1,
 	},
 	"rdsosmetrics_network_interface": {
 		Name: "interface",
@@ -518,6 +574,7 @@ var Metrics = map[string]Metric{
 			[]string{"instance", "region", "id"},
 			map[string]string(nil),
 		),
+		Unit: 1,
 	},
 	"rdsosmetrics_network_rx": {
 		Name: "rx",
@@ -527,6 +584,7 @@ var Metrics = map[string]Metric{
 			[]string{"instance", "region", "id"},
 			map[string]string(nil),
 		),
+		Unit: 1,
 	},
 	"rdsosmetrics_network_tx": {
 		Name: "tx",
@@ -536,6 +594,7 @@ var Metrics = map[string]Metric{
 			[]string{"instance", "region", "id"},
 			map[string]string(nil),
 		),
+		Unit: 1,
 	},
 	"rdsosmetrics_processList_cpuUsedPc": {
 		Name: "cpuUsedPc",
@@ -545,6 +604,7 @@ var Metrics = map[string]Metric{
 			[]string{"instance", "region", "id"},
 			map[string]string(nil),
 		),
+		Unit: 1,
 	},
 	"rdsosmetrics_processList_id": {
 		Name: "id",
@@ -554,6 +614,7 @@ var Metrics = map[string]Metric{
 			[]string{"instance", "region", "id"},
 			map[string]string(nil),
 		),
+		Unit: 1,
 	},
 	"rdsosmetrics_processList_memoryUsedPc": {
 		Name: "memoryUsedPc",
@@ -563,6 +624,7 @@ var Metrics = map[string]Metric{
 			[]string{"instance", "region", "id"},
 			map[string]string(nil),
 		),
+		Unit: 1,
 	},
 	"rdsosmetrics_processList_name": {
 		Name: "name",
@@ -572,6 +634,7 @@ var Metrics = map[string]Metric{
 			[]string{"instance", "region", "id"},
 			map[string]string(nil),
 		),
+		Unit: 1,
 	},
 	"rdsosmetrics_processList_parentID": {
 		Name: "parentID",
@@ -581,6 +644,7 @@ var Metrics = map[string]Metric{
 			[]string{"instance", "region", "id"},
 			map[string]string(nil),
 		),
+		Unit: 1,
 	},
 	"rdsosmetrics_processList_rss": {
 		Name: "rss",
@@ -590,6 +654,7 @@ var Metrics = map[string]Metric{
 			[]string{"instance", "region", "id"},
 			map[string]string(nil),
 		),
+		Unit: 1,
 	},
 	"rdsosmetrics_processList_tgid": {
 		Name: "tgid",
@@ -599,6 +664,7 @@ var Metrics = map[string]Metric{
 			[]string{"instance", "region", "id"},
 			map[string]string(nil),
 		),
+		Unit: 1,
 	},
 	"rdsosmetrics_processList_vmlimit": {
 		Name: "vmlimit",
@@ -608,6 +674,7 @@ var Metrics = map[string]Metric{
 			[]string{"instance", "region", "id"},
 			map[string]string(nil),
 		),
+		Unit: 1,
 	},
 	"rdsosmetrics_processList_vss": {
 		Name: "vss",
@@ -617,6 +684,7 @@ var Metrics = map[string]Metric{
 			[]string{"instance", "region", "id"},
 			map[string]string(nil),
 		),
+		Unit: 1,
 	},
 	"rdsosmetrics_swap_cached": {
 		Name: "cached",
@@ -626,15 +694,17 @@ var Metrics = map[string]Metric{
 			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
+		Unit: 1,
 	},
 	"node_memory_SwapFree": {
 		Name: "free",
 		Desc: prometheus.NewDesc(
 			"node_memory_SwapFree",
-			"The total amount of swap memory free, in kilobytes.",
+			"The total amount of swap memory free, in bytes.",
 			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
+		Unit: 1024,
 	},
 	"node_vmstat_pswpin": {
 		Name: "in",
@@ -644,6 +714,7 @@ var Metrics = map[string]Metric{
 			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
+		Unit: 1,
 	},
 	"node_vmstat_pswpout": {
 		Name: "out",
@@ -653,15 +724,17 @@ var Metrics = map[string]Metric{
 			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
+		Unit: 1,
 	},
 	"node_memory_SwapTotal": {
 		Name: "total",
 		Desc: prometheus.NewDesc(
 			"node_memory_SwapTotal",
-			"The total amount of swap memory available, in kilobytes.",
+			"The total amount of swap memory available, in bytes.",
 			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
+		Unit: 1024,
 	},
 	"node_procs_blocked": {
 		Name: "blocked",
@@ -671,6 +744,7 @@ var Metrics = map[string]Metric{
 			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
+		Unit: 1,
 	},
 	"node_procs_running": {
 		Name: "running",
@@ -680,6 +754,7 @@ var Metrics = map[string]Metric{
 			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
+		Unit: 1,
 	},
 	"rdsosmetrics_tasks_sleeping": {
 		Name: "sleeping",
@@ -689,6 +764,7 @@ var Metrics = map[string]Metric{
 			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
+		Unit: 1,
 	},
 	"rdsosmetrics_tasks_stopped": {
 		Name: "stopped",
@@ -698,6 +774,7 @@ var Metrics = map[string]Metric{
 			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
+		Unit: 1,
 	},
 	"rdsosmetrics_tasks_total": {
 		Name: "total",
@@ -707,6 +784,7 @@ var Metrics = map[string]Metric{
 			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
+		Unit: 1,
 	},
 	"rdsosmetrics_tasks_zombie": {
 		Name: "zombie",
@@ -716,5 +794,6 @@ var Metrics = map[string]Metric{
 			[]string{"instance", "region"},
 			map[string]string(nil),
 		),
+		Unit: 1,
 	},
 }
