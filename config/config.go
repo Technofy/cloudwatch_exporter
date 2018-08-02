@@ -4,12 +4,13 @@ import (
 	"io/ioutil"
 	"sync"
 
-	"gopkg.in/yaml.v2"
+	yaml "gopkg.in/yaml.v2"
 )
 
 type Instance struct {
 	Instance     string `yaml:"instance"`
 	Region       string `yaml:"region"`
+	Interval     int    `yaml:"interval"`
 	AwsAccessKey string `yaml:"aws_access_key"`
 	AwsSecretKey string `yaml:"aws_secret_key"`
 }
