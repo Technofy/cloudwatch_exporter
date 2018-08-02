@@ -165,7 +165,7 @@ func (e *Exporter) collectValues(ch chan<- prometheus.Metric, instance config.In
 	}
 	err = svc.FilterLogEventsPages(FilterLogEventsInput, fn)
 	if err != nil {
-		return fmt.Errorf("unable to get logs for instance %s: %s", instance.Instance, err)
+		log.Error(fmt.Errorf("unable to get logs for instance %s: %s", instance.Instance, err))
 	}
 
 	for key, value := range values {
@@ -190,7 +190,7 @@ func (e *Exporter) collectValue(ch chan<- prometheus.Metric, instance config.Ins
 			}
 			metrics, ok := u.(map[string]interface{})
 			if !ok {
-				return fmt.Errorf("%s: wrong value type for metrics: %T", key, metrics)
+				log.Error(fmt.Errorf("%s: wrong value type for metrics: %T", key, metrics))
 			}
 			e.collectMapValue(ch, instance, key, metrics, l, extraLabels...)
 		}
@@ -209,12 +209,11 @@ func (e *Exporter) collectValue(ch chan<- prometheus.Metric, instance config.Ins
 			}
 			l.TakeOldest(t)
 		default:
-			return fmt.Errorf("unsupported key '%s' when collecting value", key)
+			log.Error(fmt.Errorf("unsupported key '%s' when collecting value", key))
 		}
 	default:
-		return fmt.Errorf("unsupported value type '%T' for key '%s' when collecting value", value, key)
+		log.Error(fmt.Errorf("unsupported value type '%T' for key '%s' when collecting value", value, key))
 	}
-
 	return nil
 }
 
@@ -222,12 +221,11 @@ func (e *Exporter) collectMapValue(ch chan<- prometheus.Metric, instance config.
 	for metricName, v := range value {
 		metricValue, ok := v.(float64)
 		if !ok {
-			return fmt.Errorf("%s: wrong value type for metric %s: %T", key, metricName, value)
+			log.Error(fmt.Errorf("%s: wrong value type for metric %s: %T", key, metricName, value))
 		}
-
 		namespace, subsystem, name, extraLabels, extraLabelsValues := MapToNode(key, metricName, extraLabelsValues...)
 		if len(extraLabels) != len(extraLabelsValues) {
-			return fmt.Errorf("%s: len(labels) != len(labelsValues) for metric %s: len(%T) != len(%T)", key, metricName, extraLabels, extraLabelsValues)
+			log.Error(fmt.Errorf("%s: len(labels) != len(labelsValues) for metric %s: len(%T) != len(%T)", key, metricName, extraLabels, extraLabelsValues))
 		}
 		e.sendMetric(ch, instance, namespace, subsystem, name, metricValue, extraLabelsValues...)
 	}
