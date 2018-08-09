@@ -101,7 +101,7 @@ func (e *Exporter) collect(ch chan<- prometheus.Metric) {
 	instances := e.Settings.Config().Instances
 	wg.Add(len(instances))
 	for _, instance := range instances {
-		go func(instance config.Instance) {
+		go func(instance *config.Instance) {
 			defer wg.Done()
 
 			err := e.collectInstance(ch, instance)
@@ -112,7 +112,7 @@ func (e *Exporter) collect(ch chan<- prometheus.Metric) {
 	}
 }
 
-func (e *Exporter) collectInstance(ch chan<- prometheus.Metric, instance config.Instance) error {
+func (e *Exporter) collectInstance(ch chan<- prometheus.Metric, instance *config.Instance) error {
 	// Latency metric
 	l := &latency.Latency{}
 
@@ -129,7 +129,7 @@ func (e *Exporter) collectInstance(ch chan<- prometheus.Metric, instance config.
 	return nil
 }
 
-func (e *Exporter) collectValues(ch chan<- prometheus.Metric, instance config.Instance, l *latency.Latency) error {
+func (e *Exporter) collectValues(ch chan<- prometheus.Metric, instance *config.Instance, l *latency.Latency) error {
 	sess := e.Sessions.Get(instance)
 	svc := cloudwatchlogs.New(sess)
 
@@ -177,7 +177,7 @@ func (e *Exporter) collectValues(ch chan<- prometheus.Metric, instance config.In
 	return nil
 }
 
-func (e *Exporter) collectValue(ch chan<- prometheus.Metric, instance config.Instance, key string, value interface{}, l *latency.Latency) error {
+func (e *Exporter) collectValue(ch chan<- prometheus.Metric, instance *config.Instance, key string, value interface{}, l *latency.Latency) error {
 	switch v := value.(type) {
 	case float64:
 		e.sendMetric(ch, instance, defaultNamespace, "General", key, v)
@@ -217,7 +217,7 @@ func (e *Exporter) collectValue(ch chan<- prometheus.Metric, instance config.Ins
 	return nil
 }
 
-func (e *Exporter) collectMapValue(ch chan<- prometheus.Metric, instance config.Instance, key string, value map[string]interface{}, l *latency.Latency, extraLabelsValues ...string) error {
+func (e *Exporter) collectMapValue(ch chan<- prometheus.Metric, instance *config.Instance, key string, value map[string]interface{}, l *latency.Latency, extraLabelsValues ...string) error {
 	for metricName, v := range value {
 		metricValue, ok := v.(float64)
 		if !ok {
@@ -233,7 +233,7 @@ func (e *Exporter) collectMapValue(ch chan<- prometheus.Metric, instance config.
 	return nil
 }
 
-func (e *Exporter) sendMetric(ch chan<- prometheus.Metric, instance config.Instance, namespace, subsystem, name string, value float64, extraLabels ...string) {
+func (e *Exporter) sendMetric(ch chan<- prometheus.Metric, instance *config.Instance, namespace, subsystem, name string, value float64, extraLabels ...string) {
 	FQName := prometheus.BuildFQName(namespace, subsystem, name)
 	metric, ok := e.Metrics[FQName]
 	if !ok {
@@ -254,7 +254,7 @@ func (e *Exporter) sendMetric(ch chan<- prometheus.Metric, instance config.Insta
 	)
 }
 
-func instanceLabels(instance config.Instance) []string {
+func instanceLabels(instance *config.Instance) []string {
 	return []string{
 		instance.Instance,
 		instance.Region,

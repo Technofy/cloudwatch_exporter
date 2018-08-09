@@ -73,7 +73,7 @@ func (e *Exporter) collect(ch chan<- prometheus.Metric) {
 	instances := e.Settings.Config().Instances
 	wg.Add(len(instances))
 	for _, instance := range instances {
-		go func(instance config.Instance) {
+		go func(instance *config.Instance) {
 			NewScraper(instance, e, ch).Scrape()
 			wg.Done()
 		}(instance)

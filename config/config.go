@@ -7,6 +7,8 @@ import (
 	yaml "gopkg.in/yaml.v2"
 )
 
+var DefaultInteval = 120
+
 type Instance struct {
 	Instance     string `yaml:"instance"`
 	Region       string `yaml:"region"`
@@ -15,8 +17,12 @@ type Instance struct {
 	AwsSecretKey string `yaml:"aws_secret_key"`
 }
 
+func (i *Instance) setInverval(interval int) {
+	i.Interval = interval
+}
+
 type Config struct {
-	Instances []Instance `yaml:"instances"`
+	Instances []*Instance `yaml:"instances"`
 }
 
 type Settings struct {
@@ -37,9 +43,16 @@ func (s *Settings) Load(filename string) error {
 	if err := yaml.Unmarshal(content, &s.config); err != nil {
 		return err
 	}
+	for _, c := range s.config.Instances {
+		if c.Interval == 0 {
+			c.setInverval(DefaultInteval)
+		}
+	}
+
 	if s.AfterLoad != nil {
 		return s.AfterLoad(s.config)
 	}
+
 	return nil
 }
 
