@@ -12,25 +12,25 @@ import (
 
 // Sessions is a pool of aws *session.Sessions.
 type Sessions struct {
-	sessions map[*config.Instance]*session.Session
+	sessions map[config.Instance]*session.Session
 	sync.RWMutex
 }
 
-func (s *Sessions) Get(instance *config.Instance) *session.Session {
+func (s *Sessions) Get(instance config.Instance) *session.Session {
 	s.RLock()
 	defer s.RUnlock()
 	return s.sessions[instance]
 }
 
-func (s *Sessions) Load(instances []*config.Instance) error {
+func (s *Sessions) Load(instances []config.Instance) error {
 	s.Lock()
 	defer s.Unlock()
 	return s.load(instances)
 }
 
-func (s *Sessions) load(instances []*config.Instance) error {
+func (s *Sessions) load(instances []config.Instance) error {
 	// Destroy known sessions
-	s.sessions = map[*config.Instance]*session.Session{}
+	s.sessions = map[config.Instance]*session.Session{}
 
 	// Load new sessions
 	for _, instance := range instances {
@@ -39,7 +39,7 @@ func (s *Sessions) load(instances []*config.Instance) error {
 	return nil
 }
 
-func (s *Sessions) loadOne(instance *config.Instance) {
+func (s *Sessions) loadOne(instance config.Instance) {
 	awsConfig := &aws.Config{
 		Region: aws.String(instance.Region),
 		// LogLevel: aws.LogLevel(aws.LogDebugWithHTTPBody),

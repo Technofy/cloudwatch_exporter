@@ -17,12 +17,8 @@ type Instance struct {
 	AwsSecretKey string `yaml:"aws_secret_key"`
 }
 
-func (i *Instance) setInverval(interval int) {
-	i.Interval = interval
-}
-
 type Config struct {
-	Instances []*Instance `yaml:"instances"`
+	Instances []Instance `yaml:"instances"`
 }
 
 type Settings struct {
@@ -43,9 +39,9 @@ func (s *Settings) Load(filename string) error {
 	if err := yaml.Unmarshal(content, &s.config); err != nil {
 		return err
 	}
-	for _, c := range s.config.Instances {
-		if c.Interval == 0 {
-			c.setInverval(DefaultInteval)
+	for i := range s.config.Instances {
+		if s.config.Instances[i].Interval == 0 {
+			s.config.Instances[i].Interval = DefaultInteval
 		}
 	}
 
