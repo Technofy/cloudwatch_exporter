@@ -1,17 +1,7 @@
 instances:
-- instance: rds-mysql56
-  region: us-east-1
-  #If not set will use 120 seconds timerange of events
-  interval: 15
-- instance: rds-mysql57
-  region: us-east-1
-  #If not set will use 120 seconds timerange of events
-  interval: 15
-- instance: rds-aurora1
-  region: us-east-1
-  #If not set will use 120 seconds timerange of events
-  interval: 15
-- instance: rds-aurora2
-  region: us-east-1
-  #If not set will use 120 seconds timerange of events
-  interval: 15
+  - instance: db-prod-postgresql
+    region: us-east-1
+    interval: 20
+  - instance: db-prod-postgresql-replica
+    region: us-east-1
+    interval: 20

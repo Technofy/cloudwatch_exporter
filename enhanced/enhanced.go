@@ -222,10 +222,12 @@ func (e *Exporter) collectMapValue(ch chan<- prometheus.Metric, instance config.
 		metricValue, ok := v.(float64)
 		if !ok {
 			log.Error(fmt.Errorf("%s: wrong value type for metric %s: %T", key, metricName, value))
+			continue
 		}
 		namespace, subsystem, name, extraLabels, extraLabelsValues := MapToNode(key, metricName, extraLabelsValues...)
 		if len(extraLabels) != len(extraLabelsValues) {
 			log.Error(fmt.Errorf("%s: len(labels) != len(labelsValues) for metric %s: len(%T) != len(%T)", key, metricName, extraLabels, extraLabelsValues))
+			continue
 		}
 		e.sendMetric(ch, instance, namespace, subsystem, name, metricValue, extraLabelsValues...)
 	}
