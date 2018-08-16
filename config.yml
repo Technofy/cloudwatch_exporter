@@ -1,7 +1,13 @@
 instances:
-  - instance: db-prod-postgresql
-    region: us-east-1
-    interval: 20
-  - instance: db-prod-postgresql-replica
-    region: us-east-1
-    interval: 20
+- instance: rds-mysql56
+  region: us-east-1
+  interval: 20s
+- instance: rds-mysql57
+  region: us-east-1
+  interval: 20s
+- instance: rds-aurora1
+  region: us-east-1
+  interval: 20s
+- instance: rds-aurora2
+  region: us-east-1
+  interval: 20s

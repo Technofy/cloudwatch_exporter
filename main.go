@@ -60,6 +60,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("Can't read configuration file: %s\n", err.Error())
 	}
+
 	// Basic Metrics
 	{
 		// Create new Exporter with provided settings and session pool.

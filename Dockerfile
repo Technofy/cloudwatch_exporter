@@ -1,7 +1,7 @@
-FROM alpine:latest
+FROM        alpine:latest
 
-COPY rds_exporter /bin/
-COPY config.yml  /etc/rds_exporter/config.yml
+COPY rds_exporter  /bin/
+COPY config.yml           /etc/rds_exporter/config.yml
 
 RUN apk update && \
     apk add ca-certificates && \
