@@ -6,6 +6,7 @@ import (
 	"strconv"
 	"sync"
 	"time"
+	"bytes"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/cloudwatchlogs"
@@ -118,15 +119,12 @@ func (e *Exporter) collectInstance(ch chan<- prometheus.Metric, instance config.
 
 	// Collect all values
 	err := e.collectValues(ch, instance, l)
-	if err != nil {
-		return err
-	}
 
 	// Collect latency metric
 	if !l.IsZero() {
 		ch <- prometheus.MustNewConstMetric(latency.Desc, prometheus.GaugeValue, float64(l.Duration().Seconds()), instanceLabels(instance)...)
 	}
-	return nil
+	return err
 }
 
 func (e *Exporter) collectValues(ch chan<- prometheus.Metric, instance config.Instance, l *latency.Latency) error {
@@ -135,7 +133,7 @@ func (e *Exporter) collectValues(ch chan<- prometheus.Metric, instance config.In
 
 	values := map[string]interface{}{}
 	FilterLogEventsInput := &cloudwatchlogs.FilterLogEventsInput{
-		StartTime:     aws.Int64(aws.TimeUnixMilli(time.Now().UTC().Add(-2 * time.Minute))),
+		StartTime:     aws.Int64(aws.TimeUnixMilli(time.Now().UTC().Add(-instance.Interval))),
 		Limit:         aws.Int64(1),
 		LogGroupName:  aws.String(logGroupName),
 		FilterPattern: aws.String(fmt.Sprintf(`{ $.instanceID = "%s" }`, instance.Instance)),
@@ -168,32 +166,26 @@ func (e *Exporter) collectValues(ch chan<- prometheus.Metric, instance config.In
 		return fmt.Errorf("unable to get logs for instance %s: %s", instance.Instance, err)
 	}
 
+	var errs errs
 	for key, value := range values {
 		if err = e.collectValue(ch, instance, key, value, l); err != nil {
-			log.Error(err)
+			errs = append(errs, err)
 		}
 	}
-
+	if len(errs) > 0 {
+		return errs
+	}
 	return nil
 }
 
 func (e *Exporter) collectValue(ch chan<- prometheus.Metric, instance config.Instance, key string, value interface{}, l *latency.Latency) error {
 	switch v := value.(type) {
 	case float64:
-		e.sendMetric(ch, instance, defaultNamespace, "General", key, v)
+		return e.sendMetric(ch, instance, defaultNamespace, "General", key, v)
 	case map[string]interface{}:
-		e.collectMapValue(ch, instance, key, v, l)
+		return e.collectMapValue(ch, instance, key, v)
 	case []interface{}:
-		for i, u := range v {
-			extraLabels := []string{
-				strconv.Itoa(i),
-			}
-			metrics, ok := u.(map[string]interface{})
-			if !ok {
-				return fmt.Errorf("%s: wrong value type for metrics: %T", key, metrics)
-			}
-			e.collectMapValue(ch, instance, key, metrics, l, extraLabels...)
-		}
+		return e.collectSliceValue(ch, instance, key, v)
 	case string:
 		switch key {
 		case
@@ -214,33 +206,61 @@ func (e *Exporter) collectValue(ch chan<- prometheus.Metric, instance config.Ins
 	default:
 		return fmt.Errorf("unsupported value type '%T' for key '%s' when collecting value", value, key)
 	}
-
 	return nil
 }
 
-func (e *Exporter) collectMapValue(ch chan<- prometheus.Metric, instance config.Instance, key string, value map[string]interface{}, l *latency.Latency, extraLabelsValues ...string) error {
+func (e *Exporter) collectSliceValue(ch chan<- prometheus.Metric, instance config.Instance, key string, value []interface{}, extraLabelsValues ...string) error {
+	var errs errs
+	for i, u := range value {
+		extraLabels := []string{
+			strconv.Itoa(i),
+		}
+		metrics, ok := u.(map[string]interface{})
+		if !ok {
+			errs = append(errs, fmt.Errorf("%s: wrong value type for metrics: %T", key, u))
+			continue
+		}
+		err := e.collectMapValue(ch, instance, key, metrics, extraLabels...)
+		if err != nil {
+			errs = append(errs, err)
+			continue
+		}
+	}
+	if len(errs) > 0 {
+		return errs
+	}
+	return nil
+}
+
+func (e *Exporter) collectMapValue(ch chan<- prometheus.Metric, instance config.Instance, key string, value map[string]interface{}, extraLabelsValues ...string) error {
+	var errs errs
 	for metricName, v := range value {
 		metricValue, ok := v.(float64)
 		if !ok {
-			return fmt.Errorf("%s: wrong value type for metric %s: %T", key, metricName, value)
+			errs = append(errs, fmt.Errorf("%s: wrong value type for metric %s: %T", key, metricName, value))
+			continue
 		}
-
 		namespace, subsystem, name, extraLabels, extraLabelsValues := MapToNode(key, metricName, extraLabelsValues...)
 		if len(extraLabels) != len(extraLabelsValues) {
-			return fmt.Errorf("%s: len(labels) != len(labelsValues) for metric %s: len(%T) != len(%T)", key, metricName, extraLabels, extraLabelsValues)
+			errs = append(errs, fmt.Errorf("%s: len(labels) != len(labelsValues) for metric %s: len(%T) != len(%T)", key, metricName, extraLabels, extraLabelsValues))
+			continue
 		}
-		e.sendMetric(ch, instance, namespace, subsystem, name, metricValue, extraLabelsValues...)
+		err := e.sendMetric(ch, instance, namespace, subsystem, name, metricValue, extraLabelsValues...)
+		if err != nil {
+			errs = append(errs, err)
+		}
 	}
-
+	if len(errs) > 0 {
+		return errs
+	}
 	return nil
 }
 
-func (e *Exporter) sendMetric(ch chan<- prometheus.Metric, instance config.Instance, namespace, subsystem, name string, value float64, extraLabels ...string) {
+func (e *Exporter) sendMetric(ch chan<- prometheus.Metric, instance config.Instance, namespace, subsystem, name string, value float64, extraLabels ...string) error {
 	FQName := prometheus.BuildFQName(namespace, subsystem, name)
 	metric, ok := e.Metrics[FQName]
 	if !ok {
-		log.Errorf("unknown metric %s", FQName)
-		return
+		return fmt.Errorf("unknown metric %s", FQName)
 	}
 
 	labels := instanceLabels(instance)
@@ -254,6 +274,7 @@ func (e *Exporter) sendMetric(ch chan<- prometheus.Metric, instance config.Insta
 		value*metric.Unit,
 		labels...,
 	)
+	return nil
 }
 
 func instanceLabels(instance config.Instance) []string {
@@ -261,4 +282,17 @@ func instanceLabels(instance config.Instance) []string {
 		instance.Instance,
 		instance.Region,
 	}
+}
+
+type errs []error
+
+func (errs errs) Error() string {
+	if len(errs) == 0 {
+		return ""
+	}
+	buf := &bytes.Buffer{}
+	for _, err := range errs {
+		fmt.Fprintf(buf, "\n* %s", err)
+	}
+	return buf.String()
 }

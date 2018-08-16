@@ -39,7 +39,7 @@ func (m Metric) ConstLabels() map[string]string {
 	case "CPUUtilization":
 		return map[string]string{
 			"cpu":  "All",
-			"mode": "idle",
+			"mode": "total",
 		}
 	}
 
