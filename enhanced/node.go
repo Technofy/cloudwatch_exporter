@@ -1,6 +1,7 @@
 package enhanced
 
-func MapToNode(subsystem, name string, extraLabelsValues ...string) (namespaceOUT, subsystemOUT, nameOUT string, extraLabelsOUT []string, extraLabelsValuesOUT []string) {
+// MapToNode maps RDS Enhanced Monitoring metrics to node_exporter metrics.
+func MapToNode(namespace string, subsystem, name string, extraLabelsValues ...string) (namespaceOUT, subsystemOUT, nameOUT string, extraLabelsOUT []string, extraLabelsValuesOUT []string) {
 	switch subsystem {
 	case "cpuUtilization":
 		// map cpuUtilization to node_cpu_average{cpu="All"}
@@ -55,29 +56,28 @@ func MapToNode(subsystem, name string, extraLabelsValues ...string) (namespaceOU
 		}
 	case "fileSys":
 		names := map[string]string{
-			"name":  "avail",
+			"avail": "avail",
 			"total": "size",
 		}
 		if nodeName, ok := names[name]; ok {
-			return "node", "filesystem", nodeName, nil, nil
+			return "node", "filesystem", nodeName, []string{"id", "name", "mountPoint"}, extraLabelsValues
 		}
+		return namespace, subsystem, name, []string{"id", "name", "mountPoint"}, extraLabelsValues
 	case "diskIO":
-		// Only first device is converted to node name
-		if len(extraLabelsValues) == 1 && extraLabelsValues[0] == "0" {
-			names := map[string]string{
-				"readKb":  "bytes_read",
-				"writeKb": "bytes_written",
-			}
-			if nodeName, ok := names[name]; ok {
-				return "node", "disk", nodeName, nil, nil
-			}
+		names := map[string]string{
+			"readKb":  "bytes_read",
+			"writeKb": "bytes_written",
 		}
-		return defaultNamespace, subsystem, name, []string{"id"}, extraLabelsValues
-	case "processList",
-		"network":
-		return defaultNamespace, subsystem, name, []string{"id"}, extraLabelsValues
+		if nodeName, ok := names[name]; ok {
+			return "node", "disk", nodeName, []string{"id", "device"}, extraLabelsValues
+		}
+		return namespace, subsystem, name, []string{"id", "device"}, extraLabelsValues
+	case "processList":
+		return namespace, subsystem, name, []string{"id", "name"}, extraLabelsValues
+	case "network":
+		return namespace, subsystem, name, []string{"id", "interface"}, extraLabelsValues
 	}
 
 	// If can't be mapped to node, then return original
-	return defaultNamespace, subsystem, name, nil, nil
+	return namespace, subsystem, name, nil, nil
 }

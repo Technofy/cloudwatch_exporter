@@ -1,12 +1,12 @@
 package enhanced
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"strconv"
 	"sync"
 	"time"
-	"bytes"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/cloudwatchlogs"
@@ -152,12 +152,10 @@ func (e *Exporter) collectValues(ch chan<- prometheus.Metric, instance config.In
 			return
 		}
 
-		v, ok := message.(map[string]interface{})
+		var ok bool
+		values, ok = message.(map[string]interface{})
 		if !ok {
 			return
-		}
-		for key, value := range v {
-			values[key] = value
 		}
 		return
 	}
@@ -167,8 +165,8 @@ func (e *Exporter) collectValues(ch chan<- prometheus.Metric, instance config.In
 	}
 
 	var errs errs
-	for key, value := range values {
-		if err = e.collectValue(ch, instance, key, value, l); err != nil {
+	for metricName, value := range values {
+		if err = e.collectValue(ch, instance, l, defaultNamespace, "General", metricName, value); err != nil {
 			errs = append(errs, err)
 		}
 	}
@@ -178,20 +176,29 @@ func (e *Exporter) collectValues(ch chan<- prometheus.Metric, instance config.In
 	return nil
 }
 
-func (e *Exporter) collectValue(ch chan<- prometheus.Metric, instance config.Instance, key string, value interface{}, l *latency.Latency) error {
+func (e *Exporter) collectValue(ch chan<- prometheus.Metric, instance config.Instance, l *latency.Latency, namespace string, subsystem string, metricName string, value interface{}, extraLabelsValues ...string) error {
 	switch v := value.(type) {
 	case float64:
-		return e.sendMetric(ch, instance, defaultNamespace, "General", key, v)
+		err := e.sendMetric(ch, instance, namespace, subsystem, metricName, v, extraLabelsValues...)
+		if err != nil {
+			return fmt.Errorf("unable to parse value '%v': %s", value, err)
+		}
+		return nil
 	case map[string]interface{}:
-		return e.collectMapValue(ch, instance, key, v)
+		return e.collectMapValue(ch, instance, l, namespace, metricName, v, extraLabelsValues...)
 	case []interface{}:
-		return e.collectSliceValue(ch, instance, key, v)
+		return e.collectSliceValue(ch, instance, l, namespace, metricName, v, extraLabelsValues...)
 	case string:
-		switch key {
+		switch metricName {
 		case
 			"engine",
 			"instanceID",
 			"instanceResourceID",
+			"name",
+			"device",
+			"interface",
+			"mountPoint",
+			"vmlimit",
 			"uptime":
 			// skipping those values
 		case "timestamp":
@@ -201,26 +208,24 @@ func (e *Exporter) collectValue(ch chan<- prometheus.Metric, instance config.Ins
 			}
 			l.TakeOldest(t)
 		default:
-			return fmt.Errorf("unsupported key '%s' when collecting value", key)
+			return fmt.Errorf("unsupported metric '%s': %s", prometheus.BuildFQName(namespace, subsystem, metricName), v)
 		}
 	default:
-		return fmt.Errorf("unsupported value type '%T' for key '%s' when collecting value", value, key)
+		return fmt.Errorf("unsupported type for metric '%s': %T", prometheus.BuildFQName(namespace, subsystem, metricName), value)
 	}
 	return nil
 }
 
-func (e *Exporter) collectSliceValue(ch chan<- prometheus.Metric, instance config.Instance, key string, value []interface{}, extraLabelsValues ...string) error {
+func (e *Exporter) collectSliceValue(ch chan<- prometheus.Metric, instance config.Instance, l *latency.Latency, namespace string, subsystem string, value []interface{}, extraLabelsValuesIN ...string) error {
 	var errs errs
 	for i, u := range value {
-		extraLabels := []string{
-			strconv.Itoa(i),
-		}
+		extraLabelsValues := append(extraLabelsValuesIN, strconv.Itoa(i))
 		metrics, ok := u.(map[string]interface{})
 		if !ok {
-			errs = append(errs, fmt.Errorf("%s: wrong value type for metrics: %T", key, u))
+			errs = append(errs, fmt.Errorf("%s: wrong value type for metrics: %T", subsystem, u))
 			continue
 		}
-		err := e.collectMapValue(ch, instance, key, metrics, extraLabels...)
+		err := e.collectMapValue(ch, instance, l, namespace, subsystem, metrics, extraLabelsValues...)
 		if err != nil {
 			errs = append(errs, err)
 			continue
@@ -232,20 +237,65 @@ func (e *Exporter) collectSliceValue(ch chan<- prometheus.Metric, instance confi
 	return nil
 }
 
-func (e *Exporter) collectMapValue(ch chan<- prometheus.Metric, instance config.Instance, key string, value map[string]interface{}, extraLabelsValues ...string) error {
+func (e *Exporter) collectMapValue(ch chan<- prometheus.Metric, instance config.Instance, l *latency.Latency, namespace string, subsystem string, value map[string]interface{}, extraLabelsValuesIN ...string) error {
 	var errs errs
+	extraLabelsValues := extraLabelsValuesIN
+
+	if subsystem == "fileSys" {
+		if _, ok := value["used"]; ok {
+			if _, ok := value["total"]; ok {
+				total, _ := value["total"].(float64)
+				used, _ := value["used"].(float64)
+				value["avail"] = total - used
+			}
+		}
+
+		name := ""
+		mountPoint := ""
+		for metricName, v := range value {
+			if label, ok := v.(string); ok {
+				switch metricName {
+				case "name":
+					name = label
+				case "mountPoint":
+					mountPoint = label
+				}
+			}
+			if name != "" && mountPoint != "" {
+				break
+			}
+		}
+		extraLabelsValues = append(extraLabelsValuesIN, name, mountPoint)
+	}
+
+	if subsystem == "diskIO" {
+		device := ""
+		for metricName, v := range value {
+			if label, ok := v.(string); ok {
+				if metricName == "device" {
+					device = label
+					break
+				}
+			}
+		}
+		extraLabelsValues = append(extraLabelsValuesIN, device)
+	}
+
+	switch subsystem {
+	case "processList", "network", "diskIO":
+		for metricName, v := range value {
+			if label, ok := v.(string); ok {
+				switch {
+				case subsystem == "processList" && metricName == "name",
+					subsystem == "network" && metricName == "interface":
+					extraLabelsValues = append(extraLabelsValuesIN, label)
+				}
+			}
+		}
+	}
+
 	for metricName, v := range value {
-		metricValue, ok := v.(float64)
-		if !ok {
-			errs = append(errs, fmt.Errorf("%s: wrong value type for metric %s: %T", key, metricName, value))
-			continue
-		}
-		namespace, subsystem, name, extraLabels, extraLabelsValues := MapToNode(key, metricName, extraLabelsValues...)
-		if len(extraLabels) != len(extraLabelsValues) {
-			errs = append(errs, fmt.Errorf("%s: len(labels) != len(labelsValues) for metric %s: len(%T) != len(%T)", key, metricName, extraLabels, extraLabelsValues))
-			continue
-		}
-		err := e.sendMetric(ch, instance, namespace, subsystem, name, metricValue, extraLabelsValues...)
+		err := e.collectValue(ch, instance, l, namespace, subsystem, metricName, v, extraLabelsValues...)
 		if err != nil {
 			errs = append(errs, err)
 		}
@@ -256,16 +306,22 @@ func (e *Exporter) collectMapValue(ch chan<- prometheus.Metric, instance config.
 	return nil
 }
 
-func (e *Exporter) sendMetric(ch chan<- prometheus.Metric, instance config.Instance, namespace, subsystem, name string, value float64, extraLabels ...string) error {
+func (e *Exporter) sendMetric(ch chan<- prometheus.Metric, instance config.Instance, namespaceIN, subsystem, metricName string, value float64, extraLabelsValuesIN ...string) error {
+	namespace, subsystem, name, extraLabels, extraLabelsValues := MapToNode(namespaceIN, subsystem, metricName, extraLabelsValuesIN...)
 	FQName := prometheus.BuildFQName(namespace, subsystem, name)
+
+	if len(extraLabels) != len(extraLabelsValues) {
+		return fmt.Errorf("len(labels) != len(labelsValues) for metric '%s': len(%v) != len(%v): ", FQName, extraLabels, extraLabelsValues)
+	}
+
 	metric, ok := e.Metrics[FQName]
 	if !ok {
 		return fmt.Errorf("unknown metric %s", FQName)
 	}
 
 	labels := instanceLabels(instance)
-	if len(extraLabels) > 0 {
-		labels = append(labels, extraLabels...)
+	if len(extraLabelsValues) > 0 {
+		labels = append(labels, extraLabelsValues...)
 	}
 
 	ch <- prometheus.MustNewConstMetric(
