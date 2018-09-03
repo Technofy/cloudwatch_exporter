@@ -27,12 +27,14 @@ type Metric struct {
 }
 
 func (m Metric) FqName() string {
-	namespace, subsystem, name, _, _ := enhanced.MapToNode(m.Group, m.Name)
-	switch m.Group {
-	case "disk":
-		namespace = "node"
-	}
+	namespace, subsystem, name, _, _ := enhanced.MapToNode("rdsosmetrics", m.Group, m.Name)
 	return prometheus.BuildFQName(namespace, subsystem, name)
+}
+
+// ParsedName returns RDS Enhanced Monitoring metric name mapped to rds_exporter name.
+func (m Metric) ParsedName() string {
+	_, _, name, _, _ := enhanced.MapToNode("rdsosmetrics", m.Group, m.Name)
+	return name
 }
 
 func (m Metric) Labels() []string {
@@ -40,7 +42,7 @@ func (m Metric) Labels() []string {
 		"instance",
 		"region",
 	}
-	_, _, _, extraLabels, _ := enhanced.MapToNode(m.Group, m.Name)
+	_, _, _, extraLabels, _ := enhanced.MapToNode("rdsosmetrics", m.Group, m.Name)
 	return append(labels, extraLabels...)
 }
 
@@ -116,10 +118,11 @@ var (
 			"wait":   "The percentage of CPU unused while waiting for I/O access.",
 		},
 		"diskIO": {
-			"avgQueueLen":     "The number of requests waiting in the I/O device's queue. This metric is not available for Amazon Aurora.",
-			"avgReqSz":        "The average request size, in kilobytes. This metric is not available for Amazon Aurora.",
-			"await":           "The number of milliseconds required to respond to requests, including queue time and service time. This metric is not available for Amazon Aurora.",
-			"device":          "The identifier of the disk device in use. This metric is not available for Amazon Aurora.",
+			"avgQueueLen": "The number of requests waiting in the I/O device's queue. This metric is not available for Amazon Aurora.",
+			"avgReqSz":    "The average request size, in kilobytes. This metric is not available for Amazon Aurora.",
+			"await":       "The number of milliseconds required to respond to requests, including queue time and service time. This metric is not available for Amazon Aurora.",
+			// "device" is mapped to label
+			// "device":          "The identifier of the disk device in use. This metric is not available for Amazon Aurora.",
 			"readIOsPS":       "The number of read operations per second. This metric is not available for Amazon Aurora.",
 			"readKb":          "The total number of kilobytes read. This metric is not available for Amazon Aurora.",
 			"readKbPS":        "The number of kilobytes read per second. This metric is not available for Amazon Aurora.",
@@ -137,11 +140,15 @@ var (
 			"diskQueueDepth":  "The number of outstanding read/write requests waiting to access the disk.",
 		},
 		"fileSys": {
-			"maxFiles":        "The maximum number of files that can be created for the file system.",
-			"mountPoint":      "The path to the file system.",
-			"name":            "The name of the file system.",
-			"total":           "The total number of disk space available for the file system, in kilobytes.",
-			"used":            "The amount of disk space used by files in the file system, in kilobytes.",
+			"maxFiles": "The maximum number of files that can be created for the file system.",
+			// "mountPoint" is mapped to label
+			// "mountPoint":      "The path to the file system.",
+			// "name" is mapped to label
+			// "name":            "The name of the file system.",
+			"total": "The total number of disk space available for the file system, in kilobytes.",
+			"used":  "The amount of disk space used by files in the file system, in kilobytes.",
+			// avail = total - used
+			"avail":           "The amount of disk space available in the file system, in kilobytes.",
 			"usedFilePercent": "The percentage of available files in use.",
 			"usedFiles":       "The number of files in the file system.",
 			"usedPercent":     "The percentage of the file-system disk space in use.",
@@ -170,20 +177,22 @@ var (
 			"writeback":      "The amount of dirty pages in RAM that are still being written to the backing storage, in kilobytes.",
 		},
 		"network": {
-			"interface": "The identifier for the network interface being used for the DB instance.",
-			"rx":        "The number of bytes received per second.",
-			"tx":        "The number of bytes uploaded per second.",
+			// "interface" is mapped to label
+			// "interface": "The identifier for the network interface being used for the DB instance.",
+			"rx": "The number of bytes received per second.",
+			"tx": "The number of bytes uploaded per second.",
 		},
 		"processList": {
 			"cpuUsedPc":    "The percentage of CPU used by the process.",
 			"id":           "The identifier of the process.",
 			"memoryUsedPc": "The amount of memory used by the process, in kilobytes.",
-			"name":         "The name of the process.",
-			"parentID":     "The process identifier for the parent process of the process.",
-			"rss":          "The amount of RAM allocated to the process, in kilobytes.",
-			"tgid":         "The thread group identifier, which is a number representing the process ID to which a thread belongs.This identifier is used to group threads from the same process.",
-			"vss":          "The amount of virtual memory allocated to the process, in kilobytes.",
-			"vmlimit":      "TODO",
+			// "name" is mapped to label
+			// "name":         "The name of the process.",
+			"parentID": "The process identifier for the parent process of the process.",
+			"rss":      "The amount of RAM allocated to the process, in kilobytes.",
+			"tgid":     "The thread group identifier, which is a number representing the process ID to which a thread belongs.This identifier is used to group threads from the same process.",
+			"vss":      "The amount of virtual memory allocated to the process, in kilobytes.",
+			"vmlimit":  "TODO",
 		},
 		"swap": {
 			"cached": "The amount of swap memory, in kilobytes, used as cache memory.",
@@ -199,10 +208,6 @@ var (
 			"stopped":  "The number of tasks that are stopped.",
 			"total":    "The total number of tasks.",
 			"zombie":   "The number of child tasks that are inactive with an active parent task.",
-		},
-		"disk": {
-			"bytes_read":    "The total number of kilobytes read. This metric is not available for Amazon Aurora.",
-			"bytes_written": "The total number of kilobytes written. This metric is not available for Amazon Aurora.",
 		},
 	}
 )
@@ -255,7 +260,7 @@ var Metrics = map[string]Metric{
 {{- range .Groups }}
 {{- range .Metrics }}
 	"{{.FqName}}" : {
-		Name: "{{.Name}}",
+		Name: "{{.ParsedName}}",
 		Desc: prometheus.NewDesc(
 			"{{.FqName}}",
 			"{{.ParsedHelp}}",
