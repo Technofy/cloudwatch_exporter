@@ -5,7 +5,7 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 )
 
-var Default = Metrics{
+var Default = map[string]Metric{
 	"rdsosmetrics_General_engine": {
 		Desc: prometheus.NewDesc(
 			"rdsosmetrics_General_engine",

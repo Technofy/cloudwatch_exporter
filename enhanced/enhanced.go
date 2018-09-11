@@ -136,7 +136,7 @@ func (e *Exporter) collectValues(ch chan<- prometheus.Metric, instance config.In
 	}
 	var errs errs
 
-	mv := metrics.Value{
+	mv := metrics.Metric{
 		Namespace:    defaultNamespace,
 		Subsystem:    "General",
 		Labels:       instance.Labels(),
@@ -155,7 +155,7 @@ func (e *Exporter) collectValues(ch chan<- prometheus.Metric, instance config.In
 	return nil
 }
 
-func (e *Exporter) collectValue(ch chan<- prometheus.Metric, l *latency.Latency, mv metrics.Value, value interface{}) error {
+func (e *Exporter) collectValue(ch chan<- prometheus.Metric, l *latency.Latency, mv metrics.Metric, value interface{}) error {
 	switch v := value.(type) {
 	case float64:
 		err := mv.Send(ch, v)
@@ -197,7 +197,7 @@ func (e *Exporter) collectValue(ch chan<- prometheus.Metric, l *latency.Latency,
 	return nil
 }
 
-func (e *Exporter) collectSliceValue(ch chan<- prometheus.Metric, l *latency.Latency, mv metrics.Value, value []interface{}) error {
+func (e *Exporter) collectSliceValue(ch chan<- prometheus.Metric, l *latency.Latency, mv metrics.Metric, value []interface{}) error {
 	var errs errs
 	for i, v := range value {
 		m := mv
@@ -212,7 +212,7 @@ func (e *Exporter) collectSliceValue(ch chan<- prometheus.Metric, l *latency.Lat
 	return nil
 }
 
-func (e *Exporter) collectMapValue(ch chan<- prometheus.Metric, l *latency.Latency, mv metrics.Value, value map[string]interface{}) error {
+func (e *Exporter) collectMapValue(ch chan<- prometheus.Metric, l *latency.Latency, mv metrics.Metric, value map[string]interface{}) error {
 	var errs errs
 	switch mv.Subsystem {
 	case "fileSys":

@@ -25,7 +25,7 @@ type Metric struct {
 }
 
 func (m Metric) FqName() string {
-	mv := metrics.Value{
+	mv := metrics.Metric{
 		Namespace: "rdsosmetrics",
 		Subsystem: m.Group,
 		Name:      m.Name,
@@ -38,7 +38,7 @@ func (m Metric) Labels() []string {
 		"instance",
 		"region",
 	}
-	mv := metrics.Value{
+	mv := metrics.Metric{
 		Namespace: "rdsosmetrics",
 		Subsystem: m.Group,
 		Name:      m.Name,
@@ -256,7 +256,7 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 )
 
-var Default = Metrics {
+var Default = map[string]Metric {
 {{- range .Groups }}
 {{- range .Metrics }}
 	"{{.FqName}}" : {
