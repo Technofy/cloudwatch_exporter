@@ -9,16 +9,19 @@ import (
 	"time"
 
 	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/awserr"
+	"github.com/aws/aws-sdk-go/aws/client"
 	"github.com/aws/aws-sdk-go/service/cloudwatchlogs"
+	"github.com/aws/aws-sdk-go/service/rds"
+
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/common/log"
 
 	"github.com/percona/rds_exporter/config"
+	"github.com/percona/rds_exporter/enhanced/metrics"
 	"github.com/percona/rds_exporter/latency"
 	"github.com/percona/rds_exporter/sessions"
 )
-
-//go:generate go run generate/main.go
 
 const (
 	defaultNamespace = "rdsosmetrics"
@@ -34,18 +37,11 @@ var (
 	)
 )
 
-type Metric struct {
-	Name string
-	Desc *prometheus.Desc
-	Unit float64
-}
-
 type Exporter struct {
 	Settings *config.Settings
 	Sessions *sessions.Sessions
 
 	// Metrics
-	Metrics           map[string]Metric
 	ErroneousRequests prometheus.Counter
 	TotalRequests     prometheus.Counter
 }
@@ -54,7 +50,6 @@ func New(settings *config.Settings, sessions *sessions.Sessions) *Exporter {
 	return &Exporter{
 		Settings: settings,
 		Sessions: sessions,
-		Metrics:  Metrics,
 		ErroneousRequests: prometheus.NewCounter(prometheus.CounterOpts{
 			Name: "rds_exporter_erroneous_requests",
 			Help: "The number of erroneous API request made to CloudWatch.",
@@ -68,7 +63,7 @@ func New(settings *config.Settings, sessions *sessions.Sessions) *Exporter {
 
 func (e *Exporter) Describe(ch chan<- *prometheus.Desc) {
 	// RDS metrics
-	for _, m := range e.Metrics {
+	for _, m := range metrics.Default {
 		ch <- m.Desc
 	}
 
@@ -122,51 +117,35 @@ func (e *Exporter) collectInstance(ch chan<- prometheus.Metric, instance config.
 
 	// Collect latency metric
 	if !l.IsZero() {
-		ch <- prometheus.MustNewConstMetric(latency.Desc, prometheus.GaugeValue, float64(l.Duration().Seconds()), instanceLabels(instance)...)
+		ch <- prometheus.MustNewConstMetric(latency.Desc, prometheus.GaugeValue, float64(l.Duration().Seconds()), instance.LabelsValues()...)
 	}
 	return err
 }
 
 func (e *Exporter) collectValues(ch chan<- prometheus.Metric, instance config.Instance, l *latency.Latency) error {
 	sess := e.Sessions.Get(instance)
-	svc := cloudwatchlogs.New(sess)
 
-	values := map[string]interface{}{}
-	FilterLogEventsInput := &cloudwatchlogs.FilterLogEventsInput{
-		StartTime:     aws.Int64(aws.TimeUnixMilli(time.Now().UTC().Add(-instance.Interval))),
-		Limit:         aws.Int64(1),
-		LogGroupName:  aws.String(logGroupName),
-		FilterPattern: aws.String(fmt.Sprintf(`{ $.instanceID = "%s" }`, instance.Instance)),
-	}
-	var err error
-	fn := func(logs *cloudwatchlogs.FilterLogEventsOutput, lastPage bool) (cont bool) {
-		cont = !lastPage
-
-		if len(logs.Events) == 0 {
-			return
-		}
-
-		var message interface{}
-		err = json.Unmarshal([]byte(*logs.Events[0].Message), &message)
-		if err != nil {
-			return
-		}
-
-		var ok bool
-		values, ok = message.(map[string]interface{})
-		if !ok {
-			return
-		}
-		return
-	}
-	err = svc.FilterLogEventsPages(FilterLogEventsInput, fn)
+	logStreamName, err := dbiResourceId(sess, instance.Instance)
 	if err != nil {
-		return fmt.Errorf("unable to get logs for instance %s: %s", instance.Instance, err)
+		return err
 	}
 
+	values, err := events(sess, logStreamName, instance.Instance, instance.Interval)
+	if err != nil {
+		return err
+	}
 	var errs errs
-	for metricName, value := range values {
-		if err = e.collectValue(ch, instance, l, defaultNamespace, "General", metricName, value); err != nil {
+
+	mv := metrics.Value{
+		Namespace:    defaultNamespace,
+		Subsystem:    "General",
+		Labels:       instance.Labels(),
+		LabelsValues: instance.LabelsValues(),
+	}
+
+	for name, value := range values {
+		mv.Name = name
+		if err = e.collectValue(ch, l, mv, value); err != nil {
 			errs = append(errs, err)
 		}
 	}
@@ -176,20 +155,22 @@ func (e *Exporter) collectValues(ch chan<- prometheus.Metric, instance config.In
 	return nil
 }
 
-func (e *Exporter) collectValue(ch chan<- prometheus.Metric, instance config.Instance, l *latency.Latency, namespace string, subsystem string, metricName string, value interface{}, extraLabelsValues ...string) error {
+func (e *Exporter) collectValue(ch chan<- prometheus.Metric, l *latency.Latency, mv metrics.Value, value interface{}) error {
 	switch v := value.(type) {
 	case float64:
-		err := e.sendMetric(ch, instance, namespace, subsystem, metricName, v, extraLabelsValues...)
+		err := mv.Send(ch, v)
 		if err != nil {
-			return fmt.Errorf("unable to parse value '%v': %s", value, err)
+			return fmt.Errorf("unable to send value '%v': %s", value, err)
 		}
 		return nil
 	case map[string]interface{}:
-		return e.collectMapValue(ch, instance, l, namespace, metricName, v, extraLabelsValues...)
+		mv.Subsystem = mv.Name
+		return e.collectMapValue(ch, l, mv, v)
 	case []interface{}:
-		return e.collectSliceValue(ch, instance, l, namespace, metricName, v, extraLabelsValues...)
+		mv.Subsystem = mv.Name
+		return e.collectSliceValue(ch, l, mv, v)
 	case string:
-		switch metricName {
+		switch mv.Name {
 		case
 			"engine",
 			"instanceID",
@@ -208,27 +189,21 @@ func (e *Exporter) collectValue(ch chan<- prometheus.Metric, instance config.Ins
 			}
 			l.TakeOldest(t)
 		default:
-			return fmt.Errorf("unsupported metric '%s': %s", prometheus.BuildFQName(namespace, subsystem, metricName), v)
+			return fmt.Errorf("unsupported metric '%s': %s", mv.BuildFQName(), v)
 		}
 	default:
-		return fmt.Errorf("unsupported type for metric '%s': %T", prometheus.BuildFQName(namespace, subsystem, metricName), value)
+		return fmt.Errorf("unsupported type for metric '%s': %T", mv.BuildFQName(), value)
 	}
 	return nil
 }
 
-func (e *Exporter) collectSliceValue(ch chan<- prometheus.Metric, instance config.Instance, l *latency.Latency, namespace string, subsystem string, value []interface{}, extraLabelsValuesIN ...string) error {
+func (e *Exporter) collectSliceValue(ch chan<- prometheus.Metric, l *latency.Latency, mv metrics.Value, value []interface{}) error {
 	var errs errs
-	for i, u := range value {
-		extraLabelsValues := append(extraLabelsValuesIN, strconv.Itoa(i))
-		metrics, ok := u.(map[string]interface{})
-		if !ok {
-			errs = append(errs, fmt.Errorf("%s: wrong value type for metrics: %T", subsystem, u))
-			continue
-		}
-		err := e.collectMapValue(ch, instance, l, namespace, subsystem, metrics, extraLabelsValues...)
-		if err != nil {
+	for i, v := range value {
+		m := mv
+		m.LabelsValues = append(m.LabelsValues, strconv.Itoa(i))
+		if err := e.collectValue(ch, l, m, v); err != nil {
 			errs = append(errs, err)
-			continue
 		}
 	}
 	if len(errs) > 0 {
@@ -237,11 +212,10 @@ func (e *Exporter) collectSliceValue(ch chan<- prometheus.Metric, instance confi
 	return nil
 }
 
-func (e *Exporter) collectMapValue(ch chan<- prometheus.Metric, instance config.Instance, l *latency.Latency, namespace string, subsystem string, value map[string]interface{}, extraLabelsValuesIN ...string) error {
+func (e *Exporter) collectMapValue(ch chan<- prometheus.Metric, l *latency.Latency, mv metrics.Value, value map[string]interface{}) error {
 	var errs errs
-	extraLabelsValues := extraLabelsValuesIN
-
-	if subsystem == "fileSys" {
+	switch mv.Subsystem {
+	case "fileSys":
 		if _, ok := value["used"]; ok {
 			if _, ok := value["total"]; ok {
 				total, _ := value["total"].(float64)
@@ -265,10 +239,8 @@ func (e *Exporter) collectMapValue(ch chan<- prometheus.Metric, instance config.
 				break
 			}
 		}
-		extraLabelsValues = append(extraLabelsValuesIN, name, mountPoint)
-	}
-
-	if subsystem == "diskIO" {
+		mv.LabelsValues = append(mv.LabelsValues, name, mountPoint)
+	case "diskIO":
 		device := ""
 		for metricName, v := range value {
 			if label, ok := v.(string); ok {
@@ -278,24 +250,22 @@ func (e *Exporter) collectMapValue(ch chan<- prometheus.Metric, instance config.
 				}
 			}
 		}
-		extraLabelsValues = append(extraLabelsValuesIN, device)
-	}
-
-	switch subsystem {
-	case "processList", "network", "diskIO":
+		mv.LabelsValues = append(mv.LabelsValues, device)
+	case "processList", "network":
 		for metricName, v := range value {
 			if label, ok := v.(string); ok {
 				switch {
-				case subsystem == "processList" && metricName == "name",
-					subsystem == "network" && metricName == "interface":
-					extraLabelsValues = append(extraLabelsValuesIN, label)
+				case mv.Subsystem == "processList" && metricName == "name",
+					mv.Subsystem == "network" && metricName == "interface":
+					mv.LabelsValues = append(mv.LabelsValues, label)
 				}
 			}
 		}
 	}
 
-	for metricName, v := range value {
-		err := e.collectValue(ch, instance, l, namespace, subsystem, metricName, v, extraLabelsValues...)
+	for name, v := range value {
+		mv.Name = name
+		err := e.collectValue(ch, l, mv, v)
 		if err != nil {
 			errs = append(errs, err)
 		}
@@ -306,38 +276,89 @@ func (e *Exporter) collectMapValue(ch chan<- prometheus.Metric, instance config.
 	return nil
 }
 
-func (e *Exporter) sendMetric(ch chan<- prometheus.Metric, instance config.Instance, namespaceIN, subsystem, metricName string, value float64, extraLabelsValuesIN ...string) error {
-	namespace, subsystem, name, extraLabels, extraLabelsValues := MapToNode(namespaceIN, subsystem, metricName, extraLabelsValuesIN...)
-	FQName := prometheus.BuildFQName(namespace, subsystem, name)
+func dbiResourceId(p client.ConfigProvider, instance string) (string, error) {
+	svc := rds.New(p)
 
-	if len(extraLabels) != len(extraLabelsValues) {
-		return fmt.Errorf("len(labels) != len(labelsValues) for metric '%s': len(%v) != len(%v): ", FQName, extraLabels, extraLabelsValues)
+	input := &rds.DescribeDBInstancesInput{
+		DBInstanceIdentifier: aws.String(instance),
 	}
 
-	metric, ok := e.Metrics[FQName]
-	if !ok {
-		return fmt.Errorf("unknown metric %s", FQName)
+	result, err := svc.DescribeDBInstances(input)
+	if err != nil {
+		if err, ok := err.(awserr.Error); ok {
+			switch err.Code() {
+			case rds.ErrCodeDBInstanceNotFoundFault:
+				return "", fmt.Errorf("instance '%s' not found: %s", instance, err)
+			}
+		}
+		return "", err
 	}
 
-	labels := instanceLabels(instance)
-	if len(extraLabelsValues) > 0 {
-		labels = append(labels, extraLabelsValues...)
+	if len(result.DBInstances) != 1 {
+		return "", fmt.Errorf("got '%d' instances but expected just one", len(result.DBInstances))
 	}
 
-	ch <- prometheus.MustNewConstMetric(
-		metric.Desc,
-		prometheus.GaugeValue,
-		value*metric.Unit,
-		labels...,
-	)
-	return nil
+	return aws.StringValue(result.DBInstances[0].DbiResourceId), nil
 }
 
-func instanceLabels(instance config.Instance) []string {
-	return []string{
-		instance.Instance,
-		instance.Region,
+func events(p client.ConfigProvider, logStreamName, instance string, interval time.Duration) (events map[string]interface{}, err error) {
+	svc := cloudwatchlogs.New(p)
+
+	// PMM-2165
+	//GetLogEventsInput := &cloudwatchlogs.GetLogEventsInput{
+	//	StartTime:     aws.Int64(aws.TimeUnixMilli(time.Now().UTC().Add(-interval))),
+	//	Limit:         aws.Int64(1),
+	//	LogGroupName:  aws.String(logGroupName),
+	//	LogStreamName: aws.String(logStreamName),
+	//}
+	FilterLogEventsInput := &cloudwatchlogs.FilterLogEventsInput{
+		FilterPattern:  aws.String(fmt.Sprintf(`{ $.instanceID = "%s" }`, instance)),
+		StartTime:      aws.Int64(aws.TimeUnixMilli(time.Now().UTC().Add(-interval))),
+		Limit:          aws.Int64(1),
+		LogGroupName:   aws.String(logGroupName),
+		LogStreamNames: aws.StringSlice([]string{logStreamName}),
 	}
+
+	var errs errs
+	events = map[string]interface{}{}
+	// PMM-2165
+	//fn := func(logs *cloudwatchlogs.GetLogEventsOutput, lastPage bool) (cont bool) {
+	fn := func(logs *cloudwatchlogs.FilterLogEventsOutput, lastPage bool) (cont bool) {
+		cont = !lastPage
+
+		if len(logs.Events) == 0 {
+			return
+		}
+
+		var message interface{}
+		err := json.Unmarshal([]byte(*logs.Events[0].Message), &message)
+		if err != nil {
+			errs = append(errs, err)
+			return
+		}
+
+		var ok bool
+		events, ok = message.(map[string]interface{})
+		if !ok {
+			errs = append(errs, fmt.Errorf("expected type %T but got %T", events, message))
+			return
+		}
+
+		return
+	}
+	// PMM-2165
+	//err = svc.GetLogEventsPages(GetLogEventsInput, fn)
+	err = svc.FilterLogEventsPages(FilterLogEventsInput, fn)
+	if err != nil {
+		return nil, fmt.Errorf("unable to get logs for '%s': %s", logStreamName, err)
+	}
+
+	if len(errs) > 0 {
+		// Returning values and errors here is correct as we collect data on best effort.
+		return events, errs
+	}
+
+	return events, nil
 }
 
 type errs []error

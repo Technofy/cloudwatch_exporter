@@ -10,7 +10,7 @@ import (
 
 var (
 	// DefaultInterval defines default interval in case it is missing in yaml.
-	DefaultInterval = 2 * time.Minute
+	DefaultInterval = time.Minute
 )
 
 type Instance struct {
@@ -19,6 +19,22 @@ type Instance struct {
 	Interval     time.Duration `yaml:"interval"`
 	AwsAccessKey string        `yaml:"aws_access_key"`
 	AwsSecretKey string        `yaml:"aws_secret_key"`
+}
+
+// Labels returns slice of labels.
+func (i Instance) Labels() []string {
+	return []string{
+		"instance",
+		"region",
+	}
+}
+
+// LabelsValues returns slice of labels values.
+func (i Instance) LabelsValues() []string {
+	return []string{
+		i.Instance,
+		i.Region,
+	}
 }
 
 type Config struct {
