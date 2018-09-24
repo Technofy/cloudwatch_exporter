@@ -1,7 +1,6 @@
 package basic
 
 import (
-	"fmt"
 	"sync"
 	"time"
 
@@ -21,7 +20,7 @@ var (
 
 type Scraper struct {
 	// params
-	instance config.Instance
+	instance *config.Instance
 	exporter *Exporter
 	ch       chan<- prometheus.Metric
 
@@ -31,9 +30,9 @@ type Scraper struct {
 	latency *latency.Latency
 }
 
-func NewScraper(instance config.Instance, exporter *Exporter, ch chan<- prometheus.Metric) *Scraper {
+func NewScraper(instance *config.Instance, exporter *Exporter, ch chan<- prometheus.Metric) *Scraper {
 	// Create CloudWatch client
-	sess := exporter.Sessions.Get(instance)
+	sess := exporter.Sessions.GetSession(instance.Region, instance.Instance)
 	svc := cloudwatch.New(sess)
 
 	// Create labels for all metrics
@@ -87,7 +86,7 @@ func (s *Scraper) scrape() {
 		go func(metric Metric) {
 			err := s.scrapeMetric(metric)
 			if err != nil {
-				fmt.Println(err)
+				s.exporter.l.With("metric", metric.Name).Error(err)
 			}
 
 			wg.Done()

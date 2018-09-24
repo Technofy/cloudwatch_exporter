@@ -13,7 +13,7 @@
 
 GO    := GO15VENDOREXPERIMENT=1 go
 PROMU := $(GOPATH)/bin/promu
-pkgs   = $(shell $(GO) list ./... | grep -v /vendor/)
+pkgs   = $(shell $(GO) list ./...)
 
 PREFIX                  ?= $(shell pwd)
 BIN_DIR                 ?= $(shell pwd)
@@ -29,7 +29,11 @@ style:
 
 test:
 	@echo ">> running tests"
-	@$(GO) test -short $(pkgs)
+	@$(GO) test $(pkgs)
+
+test-race:
+	@echo ">> running tests"
+	@$(GO) test -v -race $(pkgs)
 
 format:
 	@echo ">> formatting code"
@@ -56,10 +60,10 @@ promu:
 	        GOARCH=$(subst x86_64,amd64,$(patsubst i%86,386,$(shell uname -m))) \
 	        $(GO) get -u github.com/prometheus/promu
 
-travis: build codecov tarball docker
+travis: build test-race codecov tarball docker
 
 codecov: gocoverutil
-	@gocoverutil -coverprofile=coverage.txt test -v -race $(pkgs)
+	@gocoverutil -coverprofile=coverage.txt test $(pkgs)
 	@curl -s https://codecov.io/bash | bash -s - -X fix
 
 gocoverutil:

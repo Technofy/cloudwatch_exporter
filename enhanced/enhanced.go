@@ -13,7 +13,6 @@ import (
 	"github.com/aws/aws-sdk-go/aws/client"
 	"github.com/aws/aws-sdk-go/service/cloudwatchlogs"
 	"github.com/aws/aws-sdk-go/service/rds"
-
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/common/log"
 
@@ -38,18 +37,21 @@ var (
 )
 
 type Exporter struct {
-	Settings *config.Settings
+	Config   *config.Config
 	Sessions *sessions.Sessions
 
 	// Metrics
 	ErroneousRequests prometheus.Counter
 	TotalRequests     prometheus.Counter
+
+	l log.Logger
 }
 
-func New(settings *config.Settings, sessions *sessions.Sessions) *Exporter {
+func New(config *config.Config, sessions *sessions.Sessions) *Exporter {
 	return &Exporter{
-		Settings: settings,
+		Config:   config,
 		Sessions: sessions,
+
 		ErroneousRequests: prometheus.NewCounter(prometheus.CounterOpts{
 			Name: "rds_exporter_erroneous_requests",
 			Help: "The number of erroneous API request made to CloudWatch.",
@@ -58,6 +60,8 @@ func New(settings *config.Settings, sessions *sessions.Sessions) *Exporter {
 			Name: "rds_exporter_requests_total",
 			Help: "API requests made to CloudWatch",
 		}),
+
+		l: log.With("component", "enhanced"),
 	}
 }
 
@@ -94,21 +98,22 @@ func (e *Exporter) collect(ch chan<- prometheus.Metric) {
 	wg := &sync.WaitGroup{}
 	defer wg.Wait()
 
-	instances := e.Settings.Config().Instances
+	instances := e.Config.Instances
 	wg.Add(len(instances))
 	for _, instance := range instances {
-		go func(instance config.Instance) {
+		instance := instance
+		go func() {
 			defer wg.Done()
 
-			err := e.collectInstance(ch, instance)
+			err := e.collectInstance(ch, &instance)
 			if err != nil {
-				log.Error(err)
+				e.l.With("region", instance.Region).With("instance", instance.Instance).Error(err)
 			}
-		}(instance)
+		}()
 	}
 }
 
-func (e *Exporter) collectInstance(ch chan<- prometheus.Metric, instance config.Instance) error {
+func (e *Exporter) collectInstance(ch chan<- prometheus.Metric, instance *config.Instance) error {
 	// Latency metric
 	l := &latency.Latency{}
 
@@ -117,20 +122,20 @@ func (e *Exporter) collectInstance(ch chan<- prometheus.Metric, instance config.
 
 	// Collect latency metric
 	if !l.IsZero() {
-		ch <- prometheus.MustNewConstMetric(latency.Desc, prometheus.GaugeValue, float64(l.Duration().Seconds()), instance.LabelsValues()...)
+		ch <- prometheus.MustNewConstMetric(latency.Desc, prometheus.GaugeValue, float64(l.Duration().Seconds()), instance.Instance, instance.Region)
 	}
 	return err
 }
 
-func (e *Exporter) collectValues(ch chan<- prometheus.Metric, instance config.Instance, l *latency.Latency) error {
-	sess := e.Sessions.Get(instance)
+func (e *Exporter) collectValues(ch chan<- prometheus.Metric, instance *config.Instance, l *latency.Latency) error {
+	sess := e.Sessions.GetSession(instance.Region, instance.Instance)
 
 	logStreamName, err := dbiResourceId(sess, instance.Instance)
 	if err != nil {
 		return err
 	}
 
-	values, err := events(sess, logStreamName, instance.Instance, instance.Interval)
+	values, err := events(sess, logStreamName, instance.Instance, time.Minute)
 	if err != nil {
 		return err
 	}
@@ -139,8 +144,8 @@ func (e *Exporter) collectValues(ch chan<- prometheus.Metric, instance config.In
 	mv := metrics.Metric{
 		Namespace:    defaultNamespace,
 		Subsystem:    "General",
-		Labels:       instance.Labels(),
-		LabelsValues: instance.LabelsValues(),
+		Labels:       []string{"instance", "region"},
+		LabelsValues: []string{instance.Instance, instance.Region},
 	}
 
 	for name, value := range values {
@@ -350,7 +355,7 @@ func events(p client.ConfigProvider, logStreamName, instance string, interval ti
 	//err = svc.GetLogEventsPages(GetLogEventsInput, fn)
 	err = svc.FilterLogEventsPages(FilterLogEventsInput, fn)
 	if err != nil {
-		return nil, fmt.Errorf("unable to get logs for '%s': %s", logStreamName, err)
+		return nil, fmt.Errorf("unable to get logs: %s", err)
 	}
 
 	if len(errs) > 0 {

@@ -3,80 +3,57 @@ package basic
 import (
 	"testing"
 
+	"github.com/percona/exporter_shared/helpers"
 	"github.com/prometheus/client_golang/prometheus"
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 
+	"github.com/percona/rds_exporter/client"
 	"github.com/percona/rds_exporter/config"
 	"github.com/percona/rds_exporter/sessions"
 )
 
-func TestNew(t *testing.T) {
-	t.Parallel()
+func getExporter(t *testing.T) *Exporter {
+	t.Helper()
 
-	settings := &config.Settings{}
-	sessions := &sessions.Sessions{}
-	c := New(settings, sessions)
-
-	if c == nil {
-		t.Fatal("exporter should not be nil")
-	}
-}
-
-func TestCollector_Collect(t *testing.T) {
-	t.Parallel()
-
-	settings := &config.Settings{}
-	sessions := &sessions.Sessions{}
-	c := New(settings, sessions)
-
-	if c == nil {
-		t.Fatal("exporter should not be nil")
-	}
-	ch := make(chan prometheus.Metric, 1000)
-	c.Collect(ch)
-
-	metrics := []prometheus.Metric{}
-
-	for {
-		select {
-		case m := <-ch:
-			metrics = append(metrics, m)
-			continue
-		default:
-		}
-		break
-	}
-
-	if len(metrics) == 0 {
-		t.Fatal("Collect() didn't collect any metrics")
-	}
+	cfg, err := config.Load("../config.yml")
+	require.NoError(t, err)
+	client := client.New()
+	sessions, err := sessions.New(cfg.Instances, client.HTTP(), false)
+	require.NoError(t, err)
+	return New(cfg, sessions)
 }
 
 func TestCollector_Describe(t *testing.T) {
-	t.Parallel()
+	c := getExporter(t)
+	ch := make(chan *prometheus.Desc)
+	go func() {
+		c.Describe(ch)
+		close(ch)
+	}()
 
-	settings := &config.Settings{}
-	sessions := &sessions.Sessions{}
-	c := New(settings, sessions)
-
-	if c == nil {
-		t.Fatal("exporter should not be nil")
-	}
-	ch := make(chan *prometheus.Desc, 1000)
-	c.Describe(ch)
-
-	desc := []*prometheus.Desc{}
-
-	for {
-		select {
-		case m := <-ch:
-			desc = append(desc, m)
-			continue
-		default:
-		}
-		break
+	const expected = 53
+	descs := make([]*prometheus.Desc, 0, expected)
+	for d := range ch {
+		descs = append(descs, d)
 	}
 
-	if len(desc) == 0 {
-		t.Fatal("Describe() didn't describe any metrics")
+	assert.Equal(t, expected, len(descs), "%+v", descs)
+}
+
+func TestCollector_Collect(t *testing.T) {
+	c := getExporter(t)
+	ch := make(chan prometheus.Metric)
+	go func() {
+		c.Collect(ch)
+		close(ch)
+	}()
+
+	const expected = 107
+	metrics := make([]helpers.Metric, 0, expected)
+	for m := range ch {
+		metrics = append(metrics, *helpers.ReadMetric(m))
 	}
+
+	assert.Equal(t, expected, len(metrics), "%+v", metrics)
 }

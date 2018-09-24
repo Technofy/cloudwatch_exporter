@@ -17,13 +17,13 @@ var (
 )
 
 type Latency struct {
-	t time.Time
-	sync.RWMutex
+	t  time.Time
+	rw sync.RWMutex
 }
 
 func (l *Latency) TakeOldest(t time.Time) {
-	l.Lock()
-	defer l.Unlock()
+	l.rw.Lock()
+	defer l.rw.Unlock()
 
 	if l.t.IsZero() || t.Before(l.t) {
 		l.t = t
@@ -31,15 +31,15 @@ func (l *Latency) TakeOldest(t time.Time) {
 }
 
 func (l *Latency) Duration() time.Duration {
-	l.RLock()
-	defer l.RUnlock()
+	l.rw.RLock()
+	defer l.rw.RUnlock()
 
 	return time.Since(l.t)
 }
 
 func (l *Latency) IsZero() bool {
-	l.RLock()
-	defer l.RUnlock()
+	l.rw.RLock()
+	defer l.rw.RUnlock()
 
 	return l.t.IsZero()
 }

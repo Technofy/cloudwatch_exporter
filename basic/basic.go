@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/common/log"
 
 	"github.com/percona/rds_exporter/config"
 	"github.com/percona/rds_exporter/latency"
@@ -28,21 +29,24 @@ type Metric struct {
 }
 
 type Exporter struct {
-	Settings *config.Settings
+	Config   *config.Config
 	Sessions *sessions.Sessions
 
 	// Metrics
 	Metrics           []Metric
 	ErroneousRequests prometheus.Counter
 	TotalRequests     prometheus.Counter
+
+	l log.Logger
 }
 
 // New creates a new instance of a Exporter.
-func New(settings *config.Settings, sessions *sessions.Sessions) *Exporter {
+func New(config *config.Config, sessions *sessions.Sessions) *Exporter {
 	return &Exporter{
-		Settings: settings,
+		Config:   config,
 		Sessions: sessions,
-		Metrics:  Metrics,
+
+		Metrics: Metrics,
 		ErroneousRequests: prometheus.NewCounter(prometheus.CounterOpts{
 			Name: "rds_exporter_erroneous_requests",
 			Help: "The number of erroneous API request made to CloudWatch.",
@@ -51,6 +55,8 @@ func New(settings *config.Settings, sessions *sessions.Sessions) *Exporter {
 			Name: "rds_exporter_requests_total",
 			Help: "API requests made to CloudWatch",
 		}),
+
+		l: log.With("component", "basic"),
 	}
 }
 
@@ -70,13 +76,14 @@ func (e *Exporter) collect(ch chan<- prometheus.Metric) {
 	wg := &sync.WaitGroup{}
 	defer wg.Wait()
 
-	instances := e.Settings.Config().Instances
+	instances := e.Config.Instances
 	wg.Add(len(instances))
 	for _, instance := range instances {
-		go func(instance config.Instance) {
-			NewScraper(instance, e, ch).Scrape()
+		instance := instance
+		go func() {
+			NewScraper(&instance, e, ch).Scrape()
 			wg.Done()
-		}(instance)
+		}()
 	}
 }
 
