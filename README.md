@@ -1,72 +1,69 @@
 # CloudWatch Exporter
 
-[![Build Status](https://travis-ci.org/percona/rds_exporter.svg?branch=master)](https://travis-ci.org/percona/rds_exporter)
+[![Build Status](https://travis-ci.org/percona/rds_exporter.svg)](https://travis-ci.org/percona/rds_exporter)
 [![Go Report Card](https://goreportcard.com/badge/github.com/percona/rds_exporter)](https://goreportcard.com/report/github.com/percona/rds_exporter)
 [![CLA assistant](https://cla-assistant.io/readme/badge/percona/rds_exporter)](https://cla-assistant.io/percona/rds_exporter)
 
-An [AWS CloudWatch](http://aws.amazon.com/cloudwatch/) exporter for [Prometheus](https://github.com/prometheus/prometheus) coded in Go, with multi-region and dynamic target support.
-Based on [Technofy/cloudwatch_exporter](https://github.com/Technofy/cloudwatch_exporter).
+An [AWS RDS](https://aws.amazon.com/ru/rds/) exporter for [Prometheus](https://github.com/prometheus/prometheus).
+It gets metrics from both [basic CloudWatch Metrics](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/MonitoringOverview.html)
+and [RDS Enhanced Monitoring via CloudWatch Logs](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_Monitoring.OS.html).
 
-## How to configure
-create config file
+Based on [Technofy/cloudwatch_exporter](https://github.com/Technofy/cloudwatch_exporter),
+but very little of the original code remained.
+
+## Quick start
+
+Create configration file `config.yml`:
+
 ```yaml
+---
 instances:
-- region: us-east-1
-  instance: rds-aurora1
-  type: aurora_mysql
-  aws_access_key: ACCESS-KEY-HERE
-  aws_secret_key: SECRET-KEY-HERE
-- region: us-east-1
-  instance: rds-mysql57
-  type: aurora_mysql
-  aws_access_key: ACCESS-KEY-HERE
-  aws_secret_key: SECRET-KEY-HERE
+  - instance: rds-aurora1
+    region: us-east-1
+  - instance: rds-mysql57
+    region: us-east-1
+    aws_access_key: AKIAIOSFODNN7EXAMPLE
+    aws_secret_key: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
 ```
 
-## How to run
+If `aws_access_key` and `aws_secret_key` are present, they are used for that instance.
+Otherwise, [default credential provider chain](https://docs.aws.amazon.com/sdk-for-go/v1/developer-guide/configuring-sdk.html#specifying-credentials)
+is used, which includes `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` environment variables, `~/.aws/credentials` file,
+and IAM role for EC2.
 
-```yaml
-rds_exporter --config.file=path/to/config.yml --web.listen-address=127.0.0.1:9042
+
+Start exporter by running:
+```
+rds_exporter
 ```
 
-## How to configure Prometheus
+To see all flags run:
+```
+rds_exporter --help
+```
+
+Configure Prometheus:
 
 ```yaml
-global:
-  scrape_interval: 1m
-  scrape_timeout: 10s
-  evaluation_interval: 1m
+---
 scrape_configs:
-- job_name: rds-basic
-  honor_labels: true
-  scrape_interval: 1m
-  scrape_timeout: 55s
-  metrics_path: /basic
-  static_configs:
-  - targets:
-    - 127.0.0.1:9042
-    labels:
-      aws_region: us-east-1
-      instance: rds-aurora1
-  - targets:
-    - 127.0.0.1:9042
-    labels:
-      aws_region: us-east-1
-      instance: rds-mysql57
-- job_name: rds-enhanced
-  honor_labels: true
-  scrape_interval: 10s
-  scrape_timeout: 9s
-  metrics_path: /enhanced
-  static_configs:
-  - targets:
-    - 127.0.0.1:9042
-    labels:
-      aws_region: us-east-1
-      instance: rds-aurora1
-  - targets:
-    - 127.0.0.1:9042
-    labels:
-      aws_region: us-east-1
-      instance: rds-mysql57
+  - job_name: rds-basic
+    scrape_interval: 60s
+    scrape_timeout: 55s
+    metrics_path: /basic
+    honor_labels: true
+    static_configs:
+      - targets:
+        - 127.0.0.1:9042
+
+  - job_name: rds-enhanced
+    scrape_interval: 10s
+    scrape_timeout: 9s
+    metrics_path: /enhanced
+    honor_labels: true
+    static_configs:
+      - targets:
+        - 127.0.0.1:9042
 ```
+
+`honor_labels: true` is important because exporter returns metrics with `instance` label set.

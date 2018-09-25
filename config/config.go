@@ -17,10 +17,9 @@ const (
 type Instance struct {
 	Region   string `yaml:"region"`
 	Instance string `yaml:"instance"`
-	// DBIResourceID string       `yaml:"dbi_resource_id"` // may be empty
-	// Type          InstanceType `yaml:"type"`            // may be empty
-	AWSAccessKey string `yaml:"aws_access_key"`
-	AWSSecretKey string `yaml:"aws_secret_key"`
+	// Type         InstanceType `yaml:"type"`           // may be empty for old pmm-managed
+	AWSAccessKey string `yaml:"aws_access_key"` // may be empty
+	AWSSecretKey string `yaml:"aws_secret_key"` // may be empty
 }
 
 type Config struct {
