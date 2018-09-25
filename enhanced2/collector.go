@@ -27,7 +27,7 @@ func NewCollector(sessions *sessions.Sessions) *Collector {
 
 	for session, instances := range sessions.AllSessions() {
 		s := newScraper(session, instances)
-		c.setMetrics(s.scrape())
+		c.setMetrics(s.scrape(context.TODO()))
 
 		ch := make(chan map[string][]prometheus.Metric)
 		go func() {

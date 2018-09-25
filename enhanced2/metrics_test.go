@@ -14,12 +14,17 @@ import (
 func TestParse(t *testing.T) {
 	m, err := parseOSMetrics(dataMySQL57)
 	require.NoError(t, err)
-	timestamp := time.Date(2018, 1, 8, 14, 35, 21, 0, time.UTC)
-	assert.Equal(t, timestamp, m.Timestamp)
+	assert.Equal(t, time.Date(2018, 9, 25, 8, 7, 3, 0, time.UTC), m.Timestamp)
 
 	metrics := m.originalMetrics("us-east-1")
-	assert.Len(t, metrics, expectedMetrics)
 	actual := strings.Join(helpers.Format(metrics), "\n")
+	assert.Equal(t, dataMySQL57Expected, actual, "Actual:\n%s", actual)
 
-	assert.Equal(t, dataMySQL57Expected, actual)
+	m, err = parseOSMetrics(dataAurora57)
+	require.NoError(t, err)
+	assert.Equal(t, time.Date(2018, 9, 25, 8, 16, 20, 0, time.UTC), m.Timestamp)
+
+	metrics = m.originalMetrics("us-east-1")
+	actual = strings.Join(helpers.Format(metrics), "\n")
+	assert.Equal(t, dataAurora57Expected, actual, "Actual:\n%s", actual)
 }

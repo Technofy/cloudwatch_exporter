@@ -149,16 +149,16 @@ func New(instances []config.Instance, client *http.Client, trace bool) (*Session
 	return res, nil
 }
 
-// GetSession returns session for given region and instance.
-func (s *Sessions) GetSession(region, instance string) *session.Session {
+// GetSession returns session and full instance information for given region and instance.
+func (s *Sessions) GetSession(region, instance string) (*session.Session, *Instance) {
 	for session, instances := range s.sessions {
 		for _, i := range instances {
 			if i.Region == region && i.Instance == instance {
-				return session
+				return session, &i
 			}
 		}
 	}
-	return nil
+	return nil, nil
 }
 
 // AllSessions returns all sessions and instances.

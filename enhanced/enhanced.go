@@ -128,7 +128,7 @@ func (e *Exporter) collectInstance(ch chan<- prometheus.Metric, instance *config
 }
 
 func (e *Exporter) collectValues(ch chan<- prometheus.Metric, instance *config.Instance, l *latency.Latency) error {
-	sess := e.Sessions.GetSession(instance.Region, instance.Instance)
+	sess, _ := e.Sessions.GetSession(instance.Region, instance.Instance)
 
 	logStreamName, err := dbiResourceId(sess, instance.Instance)
 	if err != nil {

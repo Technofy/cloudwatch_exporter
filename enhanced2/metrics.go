@@ -10,8 +10,6 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 )
 
-const expectedMetrics = 279
-
 // osMetrics represents available Enhanced Monitoring OS metrics from CloudWatch Logs.
 //
 // See https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_Monitoring.OS.html#USER_Monitoring.OS.CloudWatchLogs
@@ -38,22 +36,31 @@ type osMetrics struct {
 		Wait   float64 `json:"wait"   name:"wait"   help:"The percentage of CPU unused while waiting for I/O access."`
 	} `json:"cpuUtilization"`
 
-	// absent for Aurora
 	DiskIO []struct {
-		AvgQueueLen float64 `json:"avgQueueLen" name:"avgQueueLen" help:"The number of requests waiting in the I/O device's queue."`
-		AvgReqSz    float64 `json:"avgReqSz"    name:"avgReqSz"    help:"The average request size, in kilobytes."`
-		Await       float64 `json:"await"       name:"await"       help:"The number of milliseconds required to respond to requests, including queue time and service time."`
-		Device      string  `json:"device"      name:"device"      help:"The identifier of the disk device in use."`
-		ReadIOsPS   float64 `json:"readIOsPS"   name:"readIOsPS"   help:"The number of read operations per second."`
-		ReadKb      int     `json:"readKb"      name:"readKb"      help:"The total number of kilobytes read."`
-		ReadKbPS    float64 `json:"readKbPS"    name:"readKbPS"    help:"The number of kilobytes read per second."`
-		RrqmPS      float64 `json:"rrqmPS"      name:"rrqmPS"      help:"The number of merged read requests queued per second."`
-		TPS         float64 `json:"tps"         name:"tps"         help:"The number of I/O transactions per second."`
-		Util        float64 `json:"util"        name:"util"        help:"The percentage of CPU time during which requests were issued."`
-		WriteIOsPS  float64 `json:"writeIOsPS"  name:"writeIOsPS"  help:"The number of write operations per second."`
-		WriteKb     int     `json:"writeKb"     name:"writeKb"     help:"The total number of kilobytes written."`
-		WriteKbPS   float64 `json:"writeKbPS"   name:"writeKbPS"   help:"The number of kilobytes written per second."`
-		WrqmPS      float64 `json:"wrqmPS"      name:"wrqmPS"      help:"The number of merged write requests queued per second."`
+		// common
+		ReadIOsPS  float64 `json:"readIOsPS"   name:"readIOsPS"   help:"The number of read operations per second."`
+		WriteIOsPS float64 `json:"writeIOsPS"  name:"writeIOsPS"  help:"The number of write operations per second."`
+		Device     string  `json:"device"      name:"device"      help:"The identifier of the disk device in use."`
+
+		// non-Aurora
+		AvgQueueLen *float64 `json:"avgQueueLen" name:"avgQueueLen" help:"The number of requests waiting in the I/O device's queue."`
+		AvgReqSz    *float64 `json:"avgReqSz"    name:"avgReqSz"    help:"The average request size, in kilobytes."`
+		Await       *float64 `json:"await"       name:"await"       help:"The number of milliseconds required to respond to requests, including queue time and service time."`
+		ReadKb      *int     `json:"readKb"      name:"readKb"      help:"The total number of kilobytes read."`
+		ReadKbPS    *float64 `json:"readKbPS"    name:"readKbPS"    help:"The number of kilobytes read per second."`
+		RrqmPS      *float64 `json:"rrqmPS"      name:"rrqmPS"      help:"The number of merged read requests queued per second."`
+		TPS         *float64 `json:"tps"         name:"tps"         help:"The number of I/O transactions per second."`
+		Util        *float64 `json:"util"        name:"util"        help:"The percentage of CPU time during which requests were issued."`
+		WriteKb     *int     `json:"writeKb"     name:"writeKb"     help:"The total number of kilobytes written."`
+		WriteKbPS   *float64 `json:"writeKbPS"   name:"writeKbPS"   help:"The number of kilobytes written per second."`
+		WrqmPS      *float64 `json:"wrqmPS"      name:"wrqmPS"      help:"The number of merged write requests queued per second."`
+
+		// Aurora
+		DiskQueueDepth  *float64 `json:"diskQueueDepth"  name:"diskQueueDepth"  help:"The number of outstanding IOs (read/write requests) waiting to access the disk."`
+		ReadLatency     *float64 `json:"readLatency"     name:"readLatency"     help:"The average amount of time taken per disk I/O operation."`
+		ReadThroughput  *float64 `json:"readThroughput"  name:"readThroughput"  help:"The average number of bytes read from disk per second."`
+		WriteLatency    *float64 `json:"writeLatency"    name:"writeLatency"    help:"The average amount of time taken per disk I/O operation."`
+		WriteThroughput *float64 `json:"writeThroughput" name:"writeThroughput" help:"The average number of bytes written to disk per second."`
 	} `json:"diskIO"`
 
 	FileSys []struct {
@@ -135,6 +142,14 @@ func parseOSMetrics(b []byte) (*osMetrics, error) {
 }
 
 func makeMetric(desc *prometheus.Desc, labelValues []string, value reflect.Value) prometheus.Metric {
+	// skip nil fields
+	if value.Kind() == reflect.Ptr {
+		if value.IsNil() {
+			return nil
+		}
+		value = value.Elem()
+	}
+
 	var f float64
 	switch kind := value.Kind(); kind {
 	case reflect.Float64:
@@ -156,7 +171,10 @@ func makeGenericMetrics(s interface{}, namePrefix string, constLabels prometheus
 		tags := t.Field(i).Tag
 		name, help := tags.Get("name"), tags.Get("help")
 		desc := prometheus.NewDesc(namePrefix+name, help, nil, constLabels)
-		res = append(res, makeMetric(desc, nil, v.Field(i)))
+		m := makeMetric(desc, nil, v.Field(i))
+		if m != nil {
+			res = append(res, m)
+		}
 	}
 	return res
 }
@@ -176,7 +194,10 @@ func makeCPUUtilizationMetrics(s interface{}, constLabels prometheus.Labels) []p
 	for i := 0; i < t.NumField(); i++ {
 		tags := t.Field(i).Tag
 		mode := tags.Get("name")
-		res = append(res, makeMetric(desc, []string{mode}, v.Field(i)))
+		m := makeMetric(desc, []string{mode}, v.Field(i))
+		if m != nil {
+			res = append(res, m)
+		}
 	}
 	return res
 }
@@ -196,7 +217,10 @@ func makeDiskIOMetrics(s interface{}, namePrefix string, constLabels prometheus.
 			continue
 		}
 		desc := prometheus.NewDesc(namePrefix+name, help, labelKeys, constLabels)
-		res = append(res, makeMetric(desc, labelValues, v.Field(i)))
+		m := makeMetric(desc, labelValues, v.Field(i))
+		if m != nil {
+			res = append(res, m)
+		}
 	}
 	return res
 }
@@ -217,7 +241,10 @@ func makeFileSysMetrics(s interface{}, namePrefix string, constLabels prometheus
 			continue
 		}
 		desc := prometheus.NewDesc(namePrefix+name, help, labelKeys, constLabels)
-		res = append(res, makeMetric(desc, labelValues, v.Field(i)))
+		m := makeMetric(desc, labelValues, v.Field(i))
+		if m != nil {
+			res = append(res, m)
+		}
 	}
 	return res
 }
@@ -237,7 +264,10 @@ func makeNetworkMetrics(s interface{}, namePrefix string, constLabels prometheus
 			continue
 		}
 		desc := prometheus.NewDesc(namePrefix+name, help, labelKeys, constLabels)
-		res = append(res, makeMetric(desc, labelValues, v.Field(i)))
+		m := makeMetric(desc, labelValues, v.Field(i))
+		if m != nil {
+			res = append(res, m)
+		}
 	}
 	return res
 }
@@ -258,13 +288,16 @@ func makeProcessListMetrics(s interface{}, namePrefix string, constLabels promet
 			continue
 		}
 		desc := prometheus.NewDesc(namePrefix+name, help, labelKeys, constLabels)
-		res = append(res, makeMetric(desc, labelValues, v.Field(i)))
+		m := makeMetric(desc, labelValues, v.Field(i))
+		if m != nil {
+			res = append(res, m)
+		}
 	}
 	return res
 }
 
 func (m *osMetrics) originalMetrics(region string) []prometheus.Metric {
-	res := make([]prometheus.Metric, 0, expectedMetrics)
+	res := make([]prometheus.Metric, 0, 100)
 	constLabels := prometheus.Labels{
 		"instance": m.InstanceID,
 		"region":   region,

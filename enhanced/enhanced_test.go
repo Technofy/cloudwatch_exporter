@@ -19,9 +19,9 @@ func getExporter(t *testing.T) *Exporter {
 	cfg, err := config.Load("../config.yml")
 	require.NoError(t, err)
 	client := client.New()
-	sessions, err := sessions.New(cfg.Instances, client.HTTP(), false)
+	sess, err := sessions.New(cfg.Instances, client.HTTP(), false)
 	require.NoError(t, err)
-	return New(cfg, sessions)
+	return New(cfg, sess)
 }
 
 func TestCollector_Describe(t *testing.T) {

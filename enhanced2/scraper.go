@@ -50,7 +50,7 @@ func (s *scraper) start(ctx context.Context, ch chan<- map[string][]prometheus.M
 	defer func() { ticker.Stop() }() // we can redefine ticker below, so use closure
 
 	for {
-		metrics := s.scrape()
+		metrics := s.scrape(ctx)
 		ch <- metrics
 
 		if metrics == nil {
@@ -69,14 +69,14 @@ func (s *scraper) start(ctx context.Context, ch chan<- map[string][]prometheus.M
 	}
 }
 
-func (s *scraper) scrape() map[string][]prometheus.Metric {
+func (s *scraper) scrape(ctx context.Context) map[string][]prometheus.Metric {
 	input := &cloudwatchlogs.FilterLogEventsInput{
 		LogGroupName:   aws.String("RDSOSMetrics"),
 		LogStreamNames: aws.StringSlice(s.logStreamNames),
 		StartTime:      aws.Int64(aws.TimeUnixMilli(s.startTime)),
 	}
 
-	output, err := s.svc.FilterLogEvents(input)
+	output, err := s.svc.FilterLogEventsWithContext(ctx, input)
 	if err != nil {
 		s.logger.Errorf("Failed to filter log events: %s.", err)
 		return nil
@@ -104,6 +104,7 @@ func (s *scraper) scrape() map[string][]prometheus.Metric {
 			continue
 		}
 
+		// s.logger.Debugf("Message:\n%s", *event.Message)
 		osMetrics, err := parseOSMetrics([]byte(*event.Message))
 		if err != nil {
 			s.logger.Errorf("Failed to parse metrics for %s/%s (%s): %s.", instance.Region, instance.Instance, instance.ResourceID, err)

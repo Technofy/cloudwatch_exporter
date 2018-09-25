@@ -32,7 +32,7 @@ type Scraper struct {
 
 func NewScraper(instance *config.Instance, exporter *Exporter, ch chan<- prometheus.Metric) *Scraper {
 	// Create CloudWatch client
-	sess := exporter.Sessions.GetSession(instance.Region, instance.Instance)
+	sess, _ := exporter.Sessions.GetSession(instance.Region, instance.Instance)
 	svc := cloudwatch.New(sess)
 
 	// Create labels for all metrics

@@ -37,7 +37,7 @@ func main() {
 	}
 
 	client := client.New()
-	sessions, err := sessions.New(cfg.Instances, client.HTTP(), *logTraceF)
+	sess, err := sessions.New(cfg.Instances, client.HTTP(), *logTraceF)
 	if err != nil {
 		log.Fatalf("Can't create sessions: %s", err)
 	}
@@ -45,7 +45,7 @@ func main() {
 	// Basic Metrics
 	{
 		// Create new Exporter with provided settings and session pool.
-		exporter := basic.New(cfg, sessions)
+		exporter := basic.New(cfg, sess)
 		registry := prometheus.NewRegistry()
 		registry.MustRegister(exporter)
 		handler := promhttp.HandlerFor(registry, promhttp.HandlerOpts{})
@@ -56,7 +56,7 @@ func main() {
 	// Enhanced Metrics
 	{
 		// Create new Exporter with provided settings and session pool.
-		exporter := enhanced.New(cfg, sessions)
+		exporter := enhanced.New(cfg, sess)
 		registry := prometheus.NewRegistry()
 		registry.MustRegister(exporter)
 		handler := promhttp.HandlerFor(registry, promhttp.HandlerOpts{})
@@ -67,7 +67,7 @@ func main() {
 	// Enhanced 2 Metrics
 	{
 		// Create new Exporter with provided settings and session pool.
-		exporter := enhanced2.NewCollector(sessions)
+		exporter := enhanced2.NewCollector(sess)
 		registry := prometheus.NewRegistry()
 		registry.MustRegister(exporter)
 		handler := promhttp.HandlerFor(registry, promhttp.HandlerOpts{
