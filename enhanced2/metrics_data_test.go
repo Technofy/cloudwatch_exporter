@@ -329,7 +329,7 @@ var (
 	}`))
 
 	dataMySQL57Expected = strings.TrimSpace(`
-# HELP node_cpu_average The percentage of CPU utilization. Units: Percent
+# HELP node_cpu_average The percentage of CPU utilization.
 # TYPE node_cpu_average gauge
 node_cpu_average{cpu="All",instance="rds-mysql57",mode="guest",region="us-east-1"} 0
 node_cpu_average{cpu="All",instance="rds-mysql57",mode="idle",region="us-east-1"} 38.95
@@ -561,7 +561,7 @@ rdsosmetrics_tasks_zombie{instance="rds-mysql57",region="us-east-1"} 0
 	`)
 
 	dataAurora57Expected = strings.TrimSpace(`
-# HELP node_cpu_average The percentage of CPU utilization. Units: Percent
+# HELP node_cpu_average The percentage of CPU utilization.
 # TYPE node_cpu_average gauge
 node_cpu_average{cpu="All",instance="rds-aurora57",mode="guest",region="us-east-1"} 0
 node_cpu_average{cpu="All",instance="rds-aurora57",mode="idle",region="us-east-1"} 0
