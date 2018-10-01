@@ -16,6 +16,7 @@ import (
 	"github.com/percona/rds_exporter/config"
 )
 
+// Instance represents a single RDS instance information in runtime.
 type Instance struct {
 	Region                     string
 	Instance                   string
@@ -67,7 +68,7 @@ func New(instances []config.Instance, client *http.Client, trace bool) (*Session
 		if trace {
 			// fail-safe
 			if _, ok := os.LookupEnv("CI"); ok {
-				panic("Do not enable debugPrint on CI - output will contain credentials.")
+				panic("Do not enable AWS request tracing on CI - output will contain credentials.")
 			}
 
 			awsCfg.Logger = aws.LoggerFunc(logger.Debug)

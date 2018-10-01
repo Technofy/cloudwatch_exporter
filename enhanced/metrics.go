@@ -50,6 +50,7 @@ type cpuUtilization struct {
 	Wait   float64 `json:"wait"   name:"wait"   help:"The percentage of CPU unused while waiting for I/O access."`
 }
 
+//nolint:lll
 type diskIO struct {
 	// common
 	ReadIOsPS  float64 `json:"readIOsPS"   name:"readIOsPS"   help:"The number of read operations per second."`
@@ -77,6 +78,7 @@ type diskIO struct {
 	WriteThroughput *float64 `json:"writeThroughput" name:"writeThroughput" help:"The average number of bytes written to disk per second."`
 }
 
+//nolint:lll
 type fileSys struct {
 	MaxFiles        int     `json:"maxFiles"        name:"maxFiles"        help:"The maximum number of files that can be created for the file system."`
 	MountPoint      string  `json:"mountPoint"      name:"mountPoint"      help:"The path to the file system."`
@@ -94,6 +96,7 @@ type loadAverageMinute struct {
 	One     float64 `json:"one"     name:"one"     help:"The number of processes requesting CPU time over the last minute.0"`
 }
 
+//nolint:lll
 type memory struct {
 	Active         int `json:"active"         name:"active"         help:"The amount of assigned memory, in kilobytes."`
 	Buffers        int `json:"buffers"        name:"buffers"        help:"The amount of memory used for buffering I/O requests prior to writing to the storage device, in kilobytes."`
@@ -119,6 +122,7 @@ type network struct {
 	Tx        float64 `json:"tx"        name:"tx"        help:"The number of bytes uploaded per second."`
 }
 
+//nolint:lll
 type processList struct {
 	CPUUsedPC    float64 `json:"cpuUsedPc"    name:"cpuUsedPc"    help:"The percentage of CPU used by the process."`
 	ID           int     `json:"id"           name:"id"           help:"The identifier of the process."`

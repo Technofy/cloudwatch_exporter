@@ -44,10 +44,10 @@ func (t *transport) RoundTrip(req *http.Request) (*http.Response, error) {
 	resp, err := t.t.RoundTrip(req)
 	duration := time.Since(start)
 	if resp != nil {
-		t.mResponses.WithLabelValues(strconv.Itoa(resp.StatusCode)).Observe(float64(duration.Seconds()))
+		t.mResponses.WithLabelValues(strconv.Itoa(resp.StatusCode)).Observe(duration.Seconds())
 		t.l.Debugf("%s %s -> %d (%s)", req.Method, req.URL.String(), resp.StatusCode, duration)
 	} else {
-		t.mResponses.WithLabelValues("err").Observe(float64(duration.Seconds()))
+		t.mResponses.WithLabelValues("err").Observe(duration.Seconds())
 		t.l.Errorf("%s %s -> %s (%s)", req.Method, req.URL.String(), err, duration)
 	}
 	return resp, err

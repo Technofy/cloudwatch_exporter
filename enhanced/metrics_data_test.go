@@ -4,6 +4,7 @@ import (
 	"strings"
 )
 
+//nolint:lll
 var (
 	dataMySQL57 = []byte(strings.TrimSpace(`
 	{
