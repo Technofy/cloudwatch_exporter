@@ -1,4 +1,4 @@
-package enhanced2
+package enhanced
 
 import (
 	"encoding/json"

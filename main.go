@@ -13,7 +13,6 @@ import (
 	"github.com/percona/rds_exporter/client"
 	"github.com/percona/rds_exporter/config"
 	"github.com/percona/rds_exporter/enhanced"
-	"github.com/percona/rds_exporter/enhanced2"
 	"github.com/percona/rds_exporter/sessions"
 )
 
@@ -42,40 +41,25 @@ func main() {
 		log.Fatalf("Can't create sessions: %s", err)
 	}
 
-	// Basic Metrics
+	// basic metrics + exporter own metrics
 	{
-		// Create new Exporter with provided settings and session pool.
-		exporter := basic.New(cfg, sess)
 		registry := prometheus.NewRegistry()
-		registry.MustRegister(exporter)
-		handler := promhttp.HandlerFor(registry, promhttp.HandlerOpts{})
-
-		http.Handle(*basicMetricsPathF, handler)
-	}
-
-	// Enhanced Metrics
-	{
-		// Create new Exporter with provided settings and session pool.
-		exporter := enhanced.New(cfg, sess)
-		registry := prometheus.NewRegistry()
-		registry.MustRegister(exporter)
-		handler := promhttp.HandlerFor(registry, promhttp.HandlerOpts{})
-
-		http.Handle(*enhancedMetricsPathF, handler)
-	}
-
-	// Enhanced 2 Metrics
-	{
-		// Create new Exporter with provided settings and session pool.
-		exporter := enhanced2.NewCollector(sess)
-		registry := prometheus.NewRegistry()
-		registry.MustRegister(exporter)
-		handler := promhttp.HandlerFor(registry, promhttp.HandlerOpts{
+		registry.MustRegister(basic.New(cfg, sess))
+		registry.MustRegister(client)
+		http.Handle(*basicMetricsPathF, promhttp.HandlerFor(registry, promhttp.HandlerOpts{
 			ErrorLog:      log.NewErrorLogger(),
 			ErrorHandling: promhttp.ContinueOnError,
-		})
+		}))
+	}
 
-		http.Handle("/enhanced2", handler)
+	// enhanced metrics
+	{
+		registry := prometheus.NewRegistry()
+		registry.MustRegister(enhanced.NewCollector(sess))
+		http.Handle(*enhancedMetricsPathF, promhttp.HandlerFor(registry, promhttp.HandlerOpts{
+			ErrorLog:      log.NewErrorLogger(),
+			ErrorHandling: promhttp.ContinueOnError,
+		}))
 	}
 
 	// Inform user we are ready.
