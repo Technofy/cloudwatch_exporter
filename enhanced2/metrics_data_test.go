@@ -558,6 +558,9 @@ rdsosmetrics_tasks_total{instance="rds-mysql57",region="us-east-1"} 281
 # HELP rdsosmetrics_tasks_zombie The number of child tasks that are inactive with an active parent task.
 # TYPE rdsosmetrics_tasks_zombie gauge
 rdsosmetrics_tasks_zombie{instance="rds-mysql57",region="us-east-1"} 0
+# HELP rdsosmetrics_timestamp Metrics timestamp (UNIX seconds).
+# TYPE rdsosmetrics_timestamp counter
+rdsosmetrics_timestamp{instance="rds-mysql57",region="us-east-1"} 1.537862823e+09
 	`)
 
 	dataAurora57Expected = strings.TrimSpace(`
@@ -748,5 +751,8 @@ rdsosmetrics_tasks_total{instance="rds-aurora57",region="us-east-1"} 260
 # HELP rdsosmetrics_tasks_zombie The number of child tasks that are inactive with an active parent task.
 # TYPE rdsosmetrics_tasks_zombie gauge
 rdsosmetrics_tasks_zombie{instance="rds-aurora57",region="us-east-1"} 0
+# HELP rdsosmetrics_timestamp Metrics timestamp (UNIX seconds).
+# TYPE rdsosmetrics_timestamp counter
+rdsosmetrics_timestamp{instance="rds-aurora57",region="us-east-1"} 1.53786338e+09
 	`)
 )

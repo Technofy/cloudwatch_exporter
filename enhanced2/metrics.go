@@ -316,6 +316,12 @@ func (m *osMetrics) originalMetrics(region string) []prometheus.Metric {
 		"region":   region,
 	}
 
+	res = append(res, prometheus.MustNewConstMetric(
+		prometheus.NewDesc("rdsosmetrics_timestamp", "Metrics timestamp (UNIX seconds).", nil, constLabels),
+		prometheus.CounterValue,
+		float64(m.Timestamp.Unix()),
+	))
+
 	metrics := makeGenericMetrics(m.CPUUtilization, "rdsosmetrics_cpuUtilization_", constLabels)
 	res = append(res, metrics...)
 	metrics = makeNodeCPUMetrics(&m.CPUUtilization, constLabels)
