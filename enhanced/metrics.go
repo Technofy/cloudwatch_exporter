@@ -239,6 +239,18 @@ func makeDiskIOMetrics(s *diskIO, constLabels prometheus.Labels, device string) 
 			res = append(res, m)
 		}
 	}
+
+	if s.ReadKb != nil {
+		desc := prometheus.NewDesc("node_disk_bytes_read", "The total number of bytes read successfully.", labelKeys, constLabels)
+		m := prometheus.MustNewConstMetric(desc, prometheus.CounterValue, float64(*s.ReadKb*1024), labelValues...)
+		res = append(res, m)
+	}
+	if s.WriteKb != nil {
+		desc := prometheus.NewDesc("node_disk_bytes_written", "The total number of bytes written successfully.", labelKeys, constLabels)
+		m := prometheus.MustNewConstMetric(desc, prometheus.CounterValue, float64(*s.WriteKb*1024), labelValues...)
+		res = append(res, m)
+	}
+
 	return res
 }
 

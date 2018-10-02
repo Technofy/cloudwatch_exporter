@@ -341,6 +341,12 @@ node_cpu_average{cpu="All",instance="rds-mysql57",mode="system",region="us-east-
 node_cpu_average{cpu="All",instance="rds-mysql57",mode="total",region="us-east-1"} 61.04
 node_cpu_average{cpu="All",instance="rds-mysql57",mode="user",region="us-east-1"} 0.57
 node_cpu_average{cpu="All",instance="rds-mysql57",mode="wait",region="us-east-1"} 56.35
+# HELP node_disk_bytes_read The total number of bytes read successfully.
+# TYPE node_disk_bytes_read counter
+node_disk_bytes_read{device="rdsdev",instance="rds-mysql57",region="us-east-1"} 1.87744256e+08
+# HELP node_disk_bytes_written The total number of bytes written successfully.
+# TYPE node_disk_bytes_written counter
+node_disk_bytes_written{device="rdsdev",instance="rds-mysql57",region="us-east-1"} 1.02449152e+08
 # HELP node_load1 The number of processes requesting CPU time over the last minute.
 # TYPE node_load1 gauge
 node_load1{instance="rds-mysql57",region="us-east-1"} 1.61
