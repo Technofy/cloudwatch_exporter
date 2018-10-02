@@ -341,6 +341,9 @@ node_cpu_average{cpu="All",instance="rds-mysql57",mode="system",region="us-east-
 node_cpu_average{cpu="All",instance="rds-mysql57",mode="total",region="us-east-1"} 61.04
 node_cpu_average{cpu="All",instance="rds-mysql57",mode="user",region="us-east-1"} 0.57
 node_cpu_average{cpu="All",instance="rds-mysql57",mode="wait",region="us-east-1"} 56.35
+# HELP node_load1 The number of processes requesting CPU time over the last minute.
+# TYPE node_load1 gauge
+node_load1{instance="rds-mysql57",region="us-east-1"} 1.61
 # HELP rdsosmetrics_cpuUtilization_guest The percentage of CPU in use by guest programs.
 # TYPE rdsosmetrics_cpuUtilization_guest gauge
 rdsosmetrics_cpuUtilization_guest{instance="rds-mysql57",region="us-east-1"} 0
@@ -576,6 +579,9 @@ node_cpu_average{cpu="All",instance="rds-aurora57",mode="system",region="us-east
 node_cpu_average{cpu="All",instance="rds-aurora57",mode="total",region="us-east-1"} 100
 node_cpu_average{cpu="All",instance="rds-aurora57",mode="user",region="us-east-1"} 3.38
 node_cpu_average{cpu="All",instance="rds-aurora57",mode="wait",region="us-east-1"} 0
+# HELP node_load1 The number of processes requesting CPU time over the last minute.
+# TYPE node_load1 gauge
+node_load1{instance="rds-aurora57",region="us-east-1"} 3.73
 # HELP rdsosmetrics_cpuUtilization_guest The percentage of CPU in use by guest programs.
 # TYPE rdsosmetrics_cpuUtilization_guest gauge
 rdsosmetrics_cpuUtilization_guest{instance="rds-aurora57",region="us-east-1"} 0

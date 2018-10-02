@@ -266,6 +266,12 @@ func makeFileSysMetrics(s *fileSys, namePrefix string, constLabels prometheus.La
 	return res
 }
 
+func makeLoadMetrics(s *loadAverageMinute, constLabels prometheus.Labels) []prometheus.Metric {
+	desc := prometheus.NewDesc("node_load1", "The number of processes requesting CPU time over the last minute.", nil, constLabels)
+	m := prometheus.MustNewConstMetric(desc, prometheus.GaugeValue, s.One)
+	return []prometheus.Metric{m}
+}
+
 func makeNetworkMetrics(s *network, namePrefix string, constLabels prometheus.Labels, iface string) []prometheus.Metric {
 	// move interface name to label
 	labelKeys := []string{"interface"}
@@ -327,6 +333,7 @@ func (m *osMetrics) originalMetrics(region string) []prometheus.Metric {
 		float64(m.Timestamp.Unix()),
 	))
 
+	// make both generic and node_exporter-like metrics
 	metrics := makeGenericMetrics(m.CPUUtilization, "rdsosmetrics_cpuUtilization_", constLabels)
 	res = append(res, metrics...)
 	metrics = makeNodeCPUMetrics(&m.CPUUtilization, constLabels)
@@ -342,7 +349,10 @@ func (m *osMetrics) originalMetrics(region string) []prometheus.Metric {
 		res = append(res, metrics...)
 	}
 
+	// make both generic and node_exporter-like metrics
 	metrics = makeGenericMetrics(m.LoadAverageMinute, "rdsosmetrics_loadAverageMinute_", constLabels)
+	res = append(res, metrics...)
+	metrics = makeLoadMetrics(&m.LoadAverageMinute, constLabels)
 	res = append(res, metrics...)
 
 	metrics = makeGenericMetrics(m.Memory, "rdsosmetrics_memory_", constLabels)
