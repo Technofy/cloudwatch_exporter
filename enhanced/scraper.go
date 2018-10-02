@@ -2,7 +2,6 @@ package enhanced
 
 import (
 	"context"
-	"math/rand"
 	"time"
 
 	"github.com/aws/aws-sdk-go/aws"
@@ -14,6 +13,7 @@ import (
 	"github.com/percona/rds_exporter/sessions"
 )
 
+// scraper retrieves metrics from several RDS instances sharing a single session.
 type scraper struct {
 	instances      []sessions.Instance
 	logStreamNames []string
@@ -37,6 +37,7 @@ func newScraper(session *session.Session, instances []sessions.Instance) *scrape
 	}
 }
 
+// start scrapes metrics in loop and sends them to the channel until context is canceled.
 func (s *scraper) start(ctx context.Context, ch chan<- map[string][]prometheus.Metric) {
 	interval := time.Minute
 	for _, instance := range s.instances {
@@ -47,7 +48,7 @@ func (s *scraper) start(ctx context.Context, ch chan<- map[string][]prometheus.M
 	s.logger.Infof("Updating enhanced metrics every %s.", interval)
 
 	ticker := time.NewTicker(interval)
-	defer func() { ticker.Stop() }() // we can redefine ticker below, so use closure
+	defer ticker.Stop()
 
 	for {
 		select {
@@ -57,17 +58,11 @@ func (s *scraper) start(ctx context.Context, ch chan<- map[string][]prometheus.M
 			return
 		}
 
-		metrics := s.scrape(ctx)
-		ch <- metrics
-
-		if metrics == nil {
-			ticker.Stop()
-			time.Sleep(time.Second + time.Duration(rand.Intn(4*int(time.Second)))) // sleep 1-5 seconds
-			ticker = time.NewTicker(interval)
-		}
+		ch <- s.scrape(ctx)
 	}
 }
 
+// scrape performs a single scrape.
 func (s *scraper) scrape(ctx context.Context) map[string][]prometheus.Metric {
 	input := &cloudwatchlogs.FilterLogEventsInput{
 		LogGroupName:   aws.String("RDSOSMetrics"),

@@ -49,7 +49,7 @@ func (e *Exporter) Collect(ch chan<- prometheus.Metric) {
 	e.collect(ch)
 
 	// Collect scrape time
-	ch <- prometheus.MustNewConstMetric(scrapeTimeDesc, prometheus.GaugeValue, float64(time.Since(now).Seconds()))
+	ch <- prometheus.MustNewConstMetric(scrapeTimeDesc, prometheus.GaugeValue, time.Since(now).Seconds())
 }
 
 func (e *Exporter) collect(ch chan<- prometheus.Metric) {

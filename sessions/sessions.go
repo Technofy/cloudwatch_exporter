@@ -144,7 +144,7 @@ func New(instances []config.Instance, client *http.Client, trace bool) (*Session
 			fmt.Fprintf(w, "%s\t%s\t%s\t%s\n", instance.Region, instance.Instance, instance.ResourceID, instance.EnhancedMonitoringInterval)
 		}
 	}
-	w.Flush()
+	_ = w.Flush()
 
 	logger.Infof("Using %d sessions.", len(res.sessions))
 	return res, nil

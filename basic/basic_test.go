@@ -32,7 +32,7 @@ func TestCollector_Describe(t *testing.T) {
 		close(ch)
 	}()
 
-	const expected = 53
+	const expected = 50
 	descs := make([]*prometheus.Desc, 0, expected)
 	for d := range ch {
 		descs = append(descs, d)
@@ -49,7 +49,7 @@ func TestCollector_Collect(t *testing.T) {
 		close(ch)
 	}()
 
-	const expected = 107
+	const expected = 101
 	metrics := make([]helpers.Metric, 0, expected)
 	for m := range ch {
 		metrics = append(metrics, *helpers.ReadMetric(m))

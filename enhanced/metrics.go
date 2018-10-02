@@ -289,6 +289,7 @@ func makeNetworkMetrics(s *network, namePrefix string, constLabels prometheus.La
 	return res
 }
 
+//nolint:lll
 func makeProcessListMetrics(s *processList, namePrefix string, constLabels prometheus.Labels, name string, id, parentID, TGID int) []prometheus.Metric {
 	// move process name, ID, parent ID, thread ID to labels
 	labelKeys := []string{"name", "id", "parentID", "tgid"}

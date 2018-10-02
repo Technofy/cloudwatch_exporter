@@ -16,6 +16,7 @@ import (
 	"github.com/percona/rds_exporter/sessions"
 )
 
+//nolint:lll
 var (
 	listenAddressF       = kingpin.Flag("web.listen-address", "Address on which to expose metrics and web interface.").Default(":9042").String()
 	basicMetricsPathF    = kingpin.Flag("web.basic-telemetry-path", "Path under which to expose exporter's basic metrics.").Default("/basic").String()

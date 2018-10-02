@@ -10,6 +10,7 @@ import (
 	"github.com/percona/rds_exporter/sessions"
 )
 
+// Collector collects enhanced RDS metrics by utilizing several scrapers.
 type Collector struct {
 	sessions *sessions.Sessions
 	logger   log.Logger
@@ -18,6 +19,7 @@ type Collector struct {
 	metrics map[string][]prometheus.Metric
 }
 
+// NewCollector creates new collector and starts scrapers.
 func NewCollector(sessions *sessions.Sessions) *Collector {
 	c := &Collector{
 		sessions: sessions,
@@ -27,6 +29,8 @@ func NewCollector(sessions *sessions.Sessions) *Collector {
 
 	for session, instances := range sessions.AllSessions() {
 		s := newScraper(session, instances)
+
+		// perform first scrapes synchronously so returned collector has all metric descriptions
 		c.setMetrics(s.scrape(context.TODO()))
 
 		ch := make(chan map[string][]prometheus.Metric)
@@ -41,6 +45,7 @@ func NewCollector(sessions *sessions.Sessions) *Collector {
 	return c
 }
 
+// setMetrics saves latest scraped metrics.
 func (c *Collector) setMetrics(m map[string][]prometheus.Metric) {
 	c.rw.Lock()
 	for id, metrics := range m {
@@ -49,6 +54,7 @@ func (c *Collector) setMetrics(m map[string][]prometheus.Metric) {
 	c.rw.Unlock()
 }
 
+// Describe implements prometheus.Collector.
 func (c *Collector) Describe(ch chan<- *prometheus.Desc) {
 	c.rw.RLock()
 	defer c.rw.RUnlock()
@@ -60,6 +66,7 @@ func (c *Collector) Describe(ch chan<- *prometheus.Desc) {
 	}
 }
 
+// Collect implements prometheus.Collector.
 func (c *Collector) Collect(ch chan<- prometheus.Metric) {
 	c.rw.RLock()
 	defer c.rw.RUnlock()
