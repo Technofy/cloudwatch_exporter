@@ -344,6 +344,54 @@ node_cpu_average{cpu="All",instance="rds-mysql57",mode="wait",region="us-east-1"
 # HELP node_load1 The number of processes requesting CPU time over the last minute.
 # TYPE node_load1 gauge
 node_load1{instance="rds-mysql57",region="us-east-1"} 1.61
+# HELP node_memory_Active Memory information field Active.
+# TYPE node_memory_Active gauge
+node_memory_Active{instance="rds-mysql57",region="us-east-1"} 1.35714816e+09
+# HELP node_memory_Buffers Memory information field Buffers.
+# TYPE node_memory_Buffers gauge
+node_memory_Buffers{instance="rds-mysql57",region="us-east-1"} 1.36609792e+08
+# HELP node_memory_Cached Memory information field Cached.
+# TYPE node_memory_Cached gauge
+node_memory_Cached{instance="rds-mysql57",region="us-east-1"} 8.359936e+07
+# HELP node_memory_Dirty Memory information field Dirty.
+# TYPE node_memory_Dirty gauge
+node_memory_Dirty{instance="rds-mysql57",region="us-east-1"} 167936
+# HELP node_memory_HugePages_Free Memory information field HugePages_Free.
+# TYPE node_memory_HugePages_Free gauge
+node_memory_HugePages_Free{instance="rds-mysql57",region="us-east-1"} 0
+# HELP node_memory_HugePages_Rsvd Memory information field HugePages_Rsvd.
+# TYPE node_memory_HugePages_Rsvd gauge
+node_memory_HugePages_Rsvd{instance="rds-mysql57",region="us-east-1"} 0
+# HELP node_memory_HugePages_Surp Memory information field HugePages_Surp.
+# TYPE node_memory_HugePages_Surp gauge
+node_memory_HugePages_Surp{instance="rds-mysql57",region="us-east-1"} 0
+# HELP node_memory_HugePages_Total Memory information field HugePages_Total.
+# TYPE node_memory_HugePages_Total gauge
+node_memory_HugePages_Total{instance="rds-mysql57",region="us-east-1"} 0
+# HELP node_memory_Hugepagesize Memory information field Hugepagesize.
+# TYPE node_memory_Hugepagesize gauge
+node_memory_Hugepagesize{instance="rds-mysql57",region="us-east-1"} 2.097152e+06
+# HELP node_memory_Inactive Memory information field Inactive.
+# TYPE node_memory_Inactive gauge
+node_memory_Inactive{instance="rds-mysql57",region="us-east-1"} 4.87530496e+08
+# HELP node_memory_Mapped Memory information field Mapped.
+# TYPE node_memory_Mapped gauge
+node_memory_Mapped{instance="rds-mysql57",region="us-east-1"} 1.8120704e+07
+# HELP node_memory_MemFree Memory information field MemFree.
+# TYPE node_memory_MemFree gauge
+node_memory_MemFree{instance="rds-mysql57",region="us-east-1"} 1.30084864e+08
+# HELP node_memory_MemTotal Memory information field MemTotal.
+# TYPE node_memory_MemTotal gauge
+node_memory_MemTotal{instance="rds-mysql57",region="us-east-1"} 2.10075648e+09
+# HELP node_memory_PageTables Memory information field PageTables.
+# TYPE node_memory_PageTables gauge
+node_memory_PageTables{instance="rds-mysql57",region="us-east-1"} 9.15456e+06
+# HELP node_memory_Slab Memory information field Slab.
+# TYPE node_memory_Slab gauge
+node_memory_Slab{instance="rds-mysql57",region="us-east-1"} 5.5218176e+07
+# HELP node_memory_Writeback Memory information field Writeback.
+# TYPE node_memory_Writeback gauge
+node_memory_Writeback{instance="rds-mysql57",region="us-east-1"} 0
 # HELP rdsosmetrics_cpuUtilization_guest The percentage of CPU in use by guest programs.
 # TYPE rdsosmetrics_cpuUtilization_guest gauge
 rdsosmetrics_cpuUtilization_guest{instance="rds-mysql57",region="us-east-1"} 0
@@ -434,7 +482,7 @@ rdsosmetrics_loadAverageMinute_fifteen{instance="rds-mysql57",region="us-east-1"
 # HELP rdsosmetrics_loadAverageMinute_five The number of processes requesting CPU time over the last 5 minutes.
 # TYPE rdsosmetrics_loadAverageMinute_five gauge
 rdsosmetrics_loadAverageMinute_five{instance="rds-mysql57",region="us-east-1"} 1.66
-# HELP rdsosmetrics_loadAverageMinute_one The number of processes requesting CPU time over the last minute.0
+# HELP rdsosmetrics_loadAverageMinute_one The number of processes requesting CPU time over the last minute.
 # TYPE rdsosmetrics_loadAverageMinute_one gauge
 rdsosmetrics_loadAverageMinute_one{instance="rds-mysql57",region="us-east-1"} 1.61
 # HELP rdsosmetrics_memory_active The amount of assigned memory, in kilobytes.
@@ -582,6 +630,54 @@ node_cpu_average{cpu="All",instance="rds-aurora57",mode="wait",region="us-east-1
 # HELP node_load1 The number of processes requesting CPU time over the last minute.
 # TYPE node_load1 gauge
 node_load1{instance="rds-aurora57",region="us-east-1"} 3.73
+# HELP node_memory_Active Memory information field Active.
+# TYPE node_memory_Active gauge
+node_memory_Active{instance="rds-aurora57",region="us-east-1"} 1.058082816e+09
+# HELP node_memory_Buffers Memory information field Buffers.
+# TYPE node_memory_Buffers gauge
+node_memory_Buffers{instance="rds-aurora57",region="us-east-1"} 9.1144192e+07
+# HELP node_memory_Cached Memory information field Cached.
+# TYPE node_memory_Cached gauge
+node_memory_Cached{instance="rds-aurora57",region="us-east-1"} 1.42553088e+08
+# HELP node_memory_Dirty Memory information field Dirty.
+# TYPE node_memory_Dirty gauge
+node_memory_Dirty{instance="rds-aurora57",region="us-east-1"} 315392
+# HELP node_memory_HugePages_Free Memory information field HugePages_Free.
+# TYPE node_memory_HugePages_Free gauge
+node_memory_HugePages_Free{instance="rds-aurora57",region="us-east-1"} 2048
+# HELP node_memory_HugePages_Rsvd Memory information field HugePages_Rsvd.
+# TYPE node_memory_HugePages_Rsvd gauge
+node_memory_HugePages_Rsvd{instance="rds-aurora57",region="us-east-1"} 0
+# HELP node_memory_HugePages_Surp Memory information field HugePages_Surp.
+# TYPE node_memory_HugePages_Surp gauge
+node_memory_HugePages_Surp{instance="rds-aurora57",region="us-east-1"} 0
+# HELP node_memory_HugePages_Total Memory information field HugePages_Total.
+# TYPE node_memory_HugePages_Total gauge
+node_memory_HugePages_Total{instance="rds-aurora57",region="us-east-1"} 737280
+# HELP node_memory_Hugepagesize Memory information field Hugepagesize.
+# TYPE node_memory_Hugepagesize gauge
+node_memory_Hugepagesize{instance="rds-aurora57",region="us-east-1"} 2.097152e+06
+# HELP node_memory_Inactive Memory information field Inactive.
+# TYPE node_memory_Inactive gauge
+node_memory_Inactive{instance="rds-aurora57",region="us-east-1"} 1.01310464e+08
+# HELP node_memory_Mapped Memory information field Mapped.
+# TYPE node_memory_Mapped gauge
+node_memory_Mapped{instance="rds-aurora57",region="us-east-1"} 4.0566784e+07
+# HELP node_memory_MemFree Memory information field MemFree.
+# TYPE node_memory_MemFree gauge
+node_memory_MemFree{instance="rds-aurora57",region="us-east-1"} 1.12713728e+08
+# HELP node_memory_MemTotal Memory information field MemTotal.
+# TYPE node_memory_MemTotal gauge
+node_memory_MemTotal{instance="rds-aurora57",region="us-east-1"} 2.100760576e+09
+# HELP node_memory_PageTables Memory information field PageTables.
+# TYPE node_memory_PageTables gauge
+node_memory_PageTables{instance="rds-aurora57",region="us-east-1"} 6.51264e+06
+# HELP node_memory_Slab Memory information field Slab.
+# TYPE node_memory_Slab gauge
+node_memory_Slab{instance="rds-aurora57",region="us-east-1"} 3.9079936e+07
+# HELP node_memory_Writeback Memory information field Writeback.
+# TYPE node_memory_Writeback gauge
+node_memory_Writeback{instance="rds-aurora57",region="us-east-1"} 0
 # HELP rdsosmetrics_cpuUtilization_guest The percentage of CPU in use by guest programs.
 # TYPE rdsosmetrics_cpuUtilization_guest gauge
 rdsosmetrics_cpuUtilization_guest{instance="rds-aurora57",region="us-east-1"} 0
@@ -654,7 +750,7 @@ rdsosmetrics_loadAverageMinute_fifteen{instance="rds-aurora57",region="us-east-1
 # HELP rdsosmetrics_loadAverageMinute_five The number of processes requesting CPU time over the last 5 minutes.
 # TYPE rdsosmetrics_loadAverageMinute_five gauge
 rdsosmetrics_loadAverageMinute_five{instance="rds-aurora57",region="us-east-1"} 3.84
-# HELP rdsosmetrics_loadAverageMinute_one The number of processes requesting CPU time over the last minute.0
+# HELP rdsosmetrics_loadAverageMinute_one The number of processes requesting CPU time over the last minute.
 # TYPE rdsosmetrics_loadAverageMinute_one gauge
 rdsosmetrics_loadAverageMinute_one{instance="rds-aurora57",region="us-east-1"} 3.73
 # HELP rdsosmetrics_memory_active The amount of assigned memory, in kilobytes.
