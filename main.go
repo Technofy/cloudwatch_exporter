@@ -42,12 +42,11 @@ func main() {
 		log.Fatalf("Can't create sessions: %s", err)
 	}
 
-	// basic metrics + exporter own metrics
+	// basic metrics + client metrics + exporter own metrics (ProcessCollector and GoCollector)
 	{
-		registry := prometheus.NewRegistry()
-		registry.MustRegister(basic.New(cfg, sess))
-		registry.MustRegister(client)
-		http.Handle(*basicMetricsPathF, promhttp.HandlerFor(registry, promhttp.HandlerOpts{
+		prometheus.MustRegister(basic.New(cfg, sess))
+		prometheus.MustRegister(client)
+		http.Handle(*basicMetricsPathF, promhttp.HandlerFor(prometheus.DefaultGatherer, promhttp.HandlerOpts{
 			ErrorLog:      log.NewErrorLogger(),
 			ErrorHandling: promhttp.ContinueOnError,
 		}))
