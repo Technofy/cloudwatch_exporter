@@ -134,10 +134,13 @@ type processList struct {
 	VSS          int     `json:"vss"          help:"The amount of virtual memory allocated to the process, in kilobytes."`
 }
 
+//nolint:lll
 type swap struct {
-	Cached int `json:"cached" node:"SwapCached" help:"The amount of swap memory, in kilobytes, used as cache memory."`
-	Free   int `json:"free"   node:"SwapFree"   help:"The total amount of swap memory free, in kilobytes."`
-	Total  int `json:"total"  node:"SwapTotal"  help:"The total amount of swap memory available, in kilobytes."`
+	Cached float64 `json:"cached" node:"node_memory_SwapCached" help:"The amount of swap memory, in kilobytes, used as cache memory."  nodehelp:"Memory information field SwapCached."`
+	Free   float64 `json:"free"   node:"node_memory_SwapFree"   help:"The total amount of swap memory free, in kilobytes."             nodehelp:"Memory information field SwapFree."`
+	Total  float64 `json:"total"  node:"node_memory_SwapTotal"  help:"The total amount of swap memory available, in kilobytes."        nodehelp:"Memory information field SwapTotal."`
+	In     float64 `json:"in"     node:"node_vmstat_pswpin"     help:"The total amount of memory, in kilobytes, swapped in from disk." nodehelp:"/proc/vmstat information field pswpin"`
+	Out    float64 `json:"out"    node:"node_vmstat_pswpout"    help:"The total amount of memory, in kilobytes, swapped out to disk."  nodehelp:"/proc/vmstat information field pswpout"`
 }
 
 type tasks struct {
@@ -376,9 +379,9 @@ func makeNodeSwapMetrics(s *swap, constLabels prometheus.Labels) []prometheus.Me
 	res := make([]prometheus.Metric, 0, t.NumField())
 	for i := 0; i < t.NumField(); i++ {
 		tags := t.Field(i).Tag
-		suffix := tags.Get("node")
-		desc := prometheus.NewDesc("node_memory_"+suffix, "Memory information field "+suffix+".", nil, constLabels)
-		m := makeMetric(desc, nil, reflect.ValueOf(v.Field(i).Int()*1024))
+		name, help := tags.Get("node"), tags.Get("nodehelp")
+		desc := prometheus.NewDesc(name, help, nil, constLabels)
+		m := makeMetric(desc, nil, reflect.ValueOf(v.Field(i).Float()*1024))
 		if m != nil {
 			res = append(res, m)
 		}

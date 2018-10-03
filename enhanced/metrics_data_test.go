@@ -422,6 +422,12 @@ node_memory_SwapTotal{instance="rds-mysql57",region="us-east-1"} 4.194299904e+09
 # HELP node_memory_Writeback Memory information field Writeback.
 # TYPE node_memory_Writeback gauge
 node_memory_Writeback{instance="rds-mysql57",region="us-east-1"} 0
+# HELP node_vmstat_pswpin /proc/vmstat information field pswpin
+# TYPE node_vmstat_pswpin gauge
+node_vmstat_pswpin{instance="rds-mysql57",region="us-east-1"} 0
+# HELP node_vmstat_pswpout /proc/vmstat information field pswpout
+# TYPE node_vmstat_pswpout gauge
+node_vmstat_pswpout{instance="rds-mysql57",region="us-east-1"} 0
 # HELP rdsosmetrics_cpuUtilization_guest The percentage of CPU in use by guest programs.
 # TYPE rdsosmetrics_cpuUtilization_guest gauge
 rdsosmetrics_cpuUtilization_guest{instance="rds-mysql57",region="us-east-1"} 0
@@ -619,6 +625,12 @@ rdsosmetrics_swap_cached{instance="rds-mysql57",region="us-east-1"} 4656
 # HELP rdsosmetrics_swap_free The total amount of swap memory free, in kilobytes.
 # TYPE rdsosmetrics_swap_free gauge
 rdsosmetrics_swap_free{instance="rds-mysql57",region="us-east-1"} 3.755528e+06
+# HELP rdsosmetrics_swap_in The total amount of memory, in kilobytes, swapped in from disk.
+# TYPE rdsosmetrics_swap_in gauge
+rdsosmetrics_swap_in{instance="rds-mysql57",region="us-east-1"} 0
+# HELP rdsosmetrics_swap_out The total amount of memory, in kilobytes, swapped out to disk.
+# TYPE rdsosmetrics_swap_out gauge
+rdsosmetrics_swap_out{instance="rds-mysql57",region="us-east-1"} 0
 # HELP rdsosmetrics_swap_total The total amount of swap memory available, in kilobytes.
 # TYPE rdsosmetrics_swap_total gauge
 rdsosmetrics_swap_total{instance="rds-mysql57",region="us-east-1"} 4.095996e+06
@@ -732,6 +744,12 @@ node_memory_SwapTotal{instance="rds-aurora57",region="us-east-1"} 0
 # HELP node_memory_Writeback Memory information field Writeback.
 # TYPE node_memory_Writeback gauge
 node_memory_Writeback{instance="rds-aurora57",region="us-east-1"} 0
+# HELP node_vmstat_pswpin /proc/vmstat information field pswpin
+# TYPE node_vmstat_pswpin gauge
+node_vmstat_pswpin{instance="rds-aurora57",region="us-east-1"} 0
+# HELP node_vmstat_pswpout /proc/vmstat information field pswpout
+# TYPE node_vmstat_pswpout gauge
+node_vmstat_pswpout{instance="rds-aurora57",region="us-east-1"} 0
 # HELP rdsosmetrics_cpuUtilization_guest The percentage of CPU in use by guest programs.
 # TYPE rdsosmetrics_cpuUtilization_guest gauge
 rdsosmetrics_cpuUtilization_guest{instance="rds-aurora57",region="us-east-1"} 0
@@ -887,6 +905,12 @@ rdsosmetrics_swap_cached{instance="rds-aurora57",region="us-east-1"} 0
 # HELP rdsosmetrics_swap_free The total amount of swap memory free, in kilobytes.
 # TYPE rdsosmetrics_swap_free gauge
 rdsosmetrics_swap_free{instance="rds-aurora57",region="us-east-1"} 0
+# HELP rdsosmetrics_swap_in The total amount of memory, in kilobytes, swapped in from disk.
+# TYPE rdsosmetrics_swap_in gauge
+rdsosmetrics_swap_in{instance="rds-aurora57",region="us-east-1"} 0
+# HELP rdsosmetrics_swap_out The total amount of memory, in kilobytes, swapped out to disk.
+# TYPE rdsosmetrics_swap_out gauge
+rdsosmetrics_swap_out{instance="rds-aurora57",region="us-east-1"} 0
 # HELP rdsosmetrics_swap_total The total amount of swap memory available, in kilobytes.
 # TYPE rdsosmetrics_swap_total gauge
 rdsosmetrics_swap_total{instance="rds-aurora57",region="us-east-1"} 0
