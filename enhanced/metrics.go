@@ -136,11 +136,13 @@ type processList struct {
 
 //nolint:lll
 type swap struct {
-	Cached float64 `json:"cached" node:"node_memory_SwapCached" help:"The amount of swap memory, in kilobytes, used as cache memory."  nodehelp:"Memory information field SwapCached."`
-	Free   float64 `json:"free"   node:"node_memory_SwapFree"   help:"The total amount of swap memory free, in kilobytes."             nodehelp:"Memory information field SwapFree."`
-	Total  float64 `json:"total"  node:"node_memory_SwapTotal"  help:"The total amount of swap memory available, in kilobytes."        nodehelp:"Memory information field SwapTotal."`
-	In     float64 `json:"in"     node:"node_vmstat_pswpin"     help:"The total amount of memory, in kilobytes, swapped in from disk." nodehelp:"/proc/vmstat information field pswpin"`
-	Out    float64 `json:"out"    node:"node_vmstat_pswpout"    help:"The total amount of memory, in kilobytes, swapped out to disk."  nodehelp:"/proc/vmstat information field pswpout"`
+	Cached float64 `json:"cached" node:"node_memory_SwapCached" m:"1024" help:"The amount of swap memory, in kilobytes, used as cache memory."  nodehelp:"Memory information field SwapCached."`
+	Free   float64 `json:"free"   node:"node_memory_SwapFree"   m:"1024" help:"The total amount of swap memory free, in kilobytes."             nodehelp:"Memory information field SwapFree."`
+	Total  float64 `json:"total"  node:"node_memory_SwapTotal"  m:"1024" help:"The total amount of swap memory available, in kilobytes."        nodehelp:"Memory information field SwapTotal."`
+
+	// we use multiplier 0.25 to convert a number of kilobytes to a number of 4k pages (what our dashboards assume)
+	In  float64 `json:"in"  node:"node_vmstat_pswpin"  m:"0.25" help:"The total amount of memory, in kilobytes, swapped in from disk." nodehelp:"/proc/vmstat information field pswpin"`
+	Out float64 `json:"out" node:"node_vmstat_pswpout" m:"0.25" help:"The total amount of memory, in kilobytes, swapped out to disk."  nodehelp:"/proc/vmstat information field pswpout"`
 }
 
 type tasks struct {
@@ -379,9 +381,13 @@ func makeNodeSwapMetrics(s *swap, constLabels prometheus.Labels) []prometheus.Me
 	res := make([]prometheus.Metric, 0, t.NumField())
 	for i := 0; i < t.NumField(); i++ {
 		tags := t.Field(i).Tag
-		name, help := tags.Get("node"), tags.Get("nodehelp")
+		name, multiplierS, help := tags.Get("node"), tags.Get("m"), tags.Get("nodehelp")
+		multiplier, err := strconv.ParseFloat(multiplierS, 64)
+		if err != nil {
+			panic(err)
+		}
 		desc := prometheus.NewDesc(name, help, nil, constLabels)
-		m := makeMetric(desc, nil, reflect.ValueOf(v.Field(i).Float()*1024))
+		m := makeMetric(desc, nil, reflect.ValueOf(v.Field(i).Float()*multiplier))
 		if m != nil {
 			res = append(res, m)
 		}
