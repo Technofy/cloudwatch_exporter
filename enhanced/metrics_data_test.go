@@ -643,6 +643,9 @@ node_vmstat_pswpin{instance="rds-mysql56",region="us-east-1"} -0.2
 # HELP node_vmstat_pswpout /proc/vmstat information field pswpout
 # TYPE node_vmstat_pswpout gauge
 node_vmstat_pswpout{instance="rds-mysql56",region="us-east-1"} 0.5675
+# HELP rdsosmetrics_General_numVCPUs The number of virtual CPUs for the DB instance.
+# TYPE rdsosmetrics_General_numVCPUs gauge
+rdsosmetrics_General_numVCPUs{instance="rds-mysql56",region="us-east-1"} 1
 # HELP rdsosmetrics_cpuUtilization_guest The percentage of CPU in use by guest programs.
 # TYPE rdsosmetrics_cpuUtilization_guest gauge
 rdsosmetrics_cpuUtilization_guest{instance="rds-mysql56",region="us-east-1"} 0
@@ -981,6 +984,9 @@ node_vmstat_pswpin{instance="rds-mysql57",region="us-east-1"} 0
 # HELP node_vmstat_pswpout /proc/vmstat information field pswpout
 # TYPE node_vmstat_pswpout gauge
 node_vmstat_pswpout{instance="rds-mysql57",region="us-east-1"} 0
+# HELP rdsosmetrics_General_numVCPUs The number of virtual CPUs for the DB instance.
+# TYPE rdsosmetrics_General_numVCPUs gauge
+rdsosmetrics_General_numVCPUs{instance="rds-mysql57",region="us-east-1"} 1
 # HELP rdsosmetrics_cpuUtilization_guest The percentage of CPU in use by guest programs.
 # TYPE rdsosmetrics_cpuUtilization_guest gauge
 rdsosmetrics_cpuUtilization_guest{instance="rds-mysql57",region="us-east-1"} 0
@@ -1309,6 +1315,9 @@ node_vmstat_pswpin{instance="rds-aurora57",region="us-east-1"} 0
 # HELP node_vmstat_pswpout /proc/vmstat information field pswpout
 # TYPE node_vmstat_pswpout gauge
 node_vmstat_pswpout{instance="rds-aurora57",region="us-east-1"} 0
+# HELP rdsosmetrics_General_numVCPUs The number of virtual CPUs for the DB instance.
+# TYPE rdsosmetrics_General_numVCPUs gauge
+rdsosmetrics_General_numVCPUs{instance="rds-aurora57",region="us-east-1"} 1
 # HELP rdsosmetrics_cpuUtilization_guest The percentage of CPU in use by guest programs.
 # TYPE rdsosmetrics_cpuUtilization_guest gauge
 rdsosmetrics_cpuUtilization_guest{instance="rds-aurora57",region="us-east-1"} 0

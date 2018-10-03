@@ -442,6 +442,12 @@ func (m *osMetrics) makePrometheusMetrics(region string) []prometheus.Metric {
 		float64(m.Timestamp.Unix()),
 	))
 
+	res = append(res, prometheus.MustNewConstMetric(
+		prometheus.NewDesc("rdsosmetrics_General_numVCPUs", "The number of virtual CPUs for the DB instance.", nil, constLabels),
+		prometheus.GaugeValue,
+		float64(m.NumVCPUs)),
+	)
+
 	// always make both generic and node_exporter-like metrics
 
 	metrics := makeGenericMetrics(m.CPUUtilization, "rdsosmetrics_cpuUtilization_", constLabels)
