@@ -104,7 +104,7 @@ func (s *scraper) scrape(ctx context.Context) map[string][]prometheus.Metric {
 				allMetrics[instance.ResourceID] = make(map[time.Time][]prometheus.Metric)
 			}
 			timestamp := aws.MillisecondsTimeValue(event.Timestamp)
-			metrics := osMetrics.originalMetrics(instance.Region)
+			metrics := osMetrics.makePrometheusMetrics(instance.Region)
 			allMetrics[instance.ResourceID][timestamp] = metrics
 			l.Debugf("Timestamp from Message: %s.", osMetrics.Timestamp.UTC())
 		}
