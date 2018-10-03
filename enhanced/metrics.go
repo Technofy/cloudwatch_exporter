@@ -276,7 +276,9 @@ func makeFileSysMetrics(s *fileSys, constLabels prometheus.Labels, name, mountPo
 		}
 	}
 
-	labelKeys = []string{"device", "mountpoint"}
+	// all labels are used by our dashboards, so fill both device and fstype with the same value
+	labelKeys = []string{"device", "fstype", "mountpoint"}
+	labelValues = []string{name, name, mountPoint}
 
 	desc := prometheus.NewDesc("node_filesystem_files", "Filesystem total file nodes.", labelKeys, constLabels)
 	res = append(res, prometheus.MustNewConstMetric(desc, prometheus.GaugeValue, float64(s.MaxFiles*1024), labelValues...))
