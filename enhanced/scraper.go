@@ -38,15 +38,7 @@ func newScraper(session *session.Session, instances []sessions.Instance) *scrape
 }
 
 // start scrapes metrics in loop and sends them to the channel until context is canceled.
-func (s *scraper) start(ctx context.Context, ch chan<- map[string][]prometheus.Metric) {
-	interval := time.Minute
-	for _, instance := range s.instances {
-		if instance.EnhancedMonitoringInterval > 0 && instance.EnhancedMonitoringInterval < interval {
-			interval = instance.EnhancedMonitoringInterval
-		}
-	}
-	s.logger.Infof("Updating enhanced metrics every %s.", interval)
-
+func (s *scraper) start(ctx context.Context, interval time.Duration, ch chan<- map[string][]prometheus.Metric) {
 	ticker := time.NewTicker(interval)
 	defer ticker.Stop()
 
@@ -58,7 +50,9 @@ func (s *scraper) start(ctx context.Context, ch chan<- map[string][]prometheus.M
 			return
 		}
 
-		ch <- s.scrape(ctx)
+		scrapeCtx, cancel := context.WithTimeout(ctx, interval)
+		ch <- s.scrape(scrapeCtx)
+		cancel()
 	}
 }
 
@@ -69,7 +63,7 @@ func (s *scraper) scrape(ctx context.Context) map[string][]prometheus.Metric {
 		LogStreamNames: aws.StringSlice(s.logStreamNames),
 		StartTime:      aws.Int64(aws.TimeUnixMilli(s.nextStartTime)),
 	}
-	s.logger.Debugf("Requesting metrics since %s (last %s).", s.nextStartTime, time.Since(s.nextStartTime))
+	s.logger.Debugf("Requesting metrics since %s (last %s).", s.nextStartTime.UTC(), time.Since(s.nextStartTime))
 
 	// collect all returned events and metrics
 	allMetrics := make(map[string]map[time.Time][]prometheus.Metric) // ResourceID -> event timestamp -> metrics

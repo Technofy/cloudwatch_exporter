@@ -3,6 +3,7 @@ package enhanced
 import (
 	"context"
 	"sync"
+	"time"
 
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/common/log"
@@ -19,6 +20,12 @@ type Collector struct {
 	metrics map[string][]prometheus.Metric
 }
 
+// Maximal and minimal metrics update interval.
+const (
+	maxInterval = 10 * time.Second
+	minInterval = 2 * time.Second
+)
+
 // NewCollector creates new collector and starts scrapers.
 func NewCollector(sessions *sessions.Sessions) *Collector {
 	c := &Collector{
@@ -30,6 +37,17 @@ func NewCollector(sessions *sessions.Sessions) *Collector {
 	for session, instances := range sessions.AllSessions() {
 		s := newScraper(session, instances)
 
+		interval := maxInterval
+		for _, instance := range instances {
+			if instance.EnhancedMonitoringInterval > 0 && instance.EnhancedMonitoringInterval < interval {
+				interval = instance.EnhancedMonitoringInterval
+			}
+		}
+		if interval < minInterval {
+			interval = minInterval
+		}
+		s.logger.Infof("Updating enhanced metrics every %s.", interval)
+
 		// perform first scrapes synchronously so returned collector has all metric descriptions
 		c.setMetrics(s.scrape(context.TODO()))
 
@@ -39,7 +57,7 @@ func NewCollector(sessions *sessions.Sessions) *Collector {
 				c.setMetrics(m)
 			}
 		}()
-		go s.start(context.TODO(), ch)
+		go s.start(context.TODO(), interval, ch)
 	}
 
 	return c
