@@ -389,6 +389,15 @@ func makeNodeSwapMetrics(s *swap, constLabels prometheus.Labels) []prometheus.Me
 	return res
 }
 
+func makeNodeProcsMetrics(s *tasks, constLabels prometheus.Labels) []prometheus.Metric {
+	res := make([]prometheus.Metric, 0, 2)
+	desc := prometheus.NewDesc("node_procs_blocked", "Number of processes blocked waiting for I/O to complete.", nil, constLabels)
+	res = append(res, prometheus.MustNewConstMetric(desc, prometheus.GaugeValue, float64(s.Blocked)))
+	desc = prometheus.NewDesc("node_procs_running", "Number of processes in runnable state.", nil, constLabels)
+	res = append(res, prometheus.MustNewConstMetric(desc, prometheus.GaugeValue, float64(s.Running)))
+	return res
+}
+
 func (m *osMetrics) originalMetrics(region string) []prometheus.Metric {
 	res := make([]prometheus.Metric, 0, 100)
 	constLabels := prometheus.Labels{
@@ -446,7 +455,10 @@ func (m *osMetrics) originalMetrics(region string) []prometheus.Metric {
 	metrics = makeNodeSwapMetrics(&m.Swap, constLabels)
 	res = append(res, metrics...)
 
+	// make both generic and node_exporter-like metrics
 	metrics = makeGenericMetrics(m.Tasks, "rdsosmetrics_tasks_", constLabels)
+	res = append(res, metrics...)
+	metrics = makeNodeProcsMetrics(&m.Tasks, constLabels)
 	res = append(res, metrics...)
 
 	return res

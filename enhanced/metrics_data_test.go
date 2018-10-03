@@ -422,6 +422,12 @@ node_memory_SwapTotal{instance="rds-mysql57",region="us-east-1"} 4.194299904e+09
 # HELP node_memory_Writeback Memory information field Writeback.
 # TYPE node_memory_Writeback gauge
 node_memory_Writeback{instance="rds-mysql57",region="us-east-1"} 0
+# HELP node_procs_blocked Number of processes blocked waiting for I/O to complete.
+# TYPE node_procs_blocked gauge
+node_procs_blocked{instance="rds-mysql57",region="us-east-1"} 0
+# HELP node_procs_running Number of processes in runnable state.
+# TYPE node_procs_running gauge
+node_procs_running{instance="rds-mysql57",region="us-east-1"} 3
 # HELP node_vmstat_pswpin /proc/vmstat information field pswpin
 # TYPE node_vmstat_pswpin gauge
 node_vmstat_pswpin{instance="rds-mysql57",region="us-east-1"} 0
@@ -744,6 +750,12 @@ node_memory_SwapTotal{instance="rds-aurora57",region="us-east-1"} 0
 # HELP node_memory_Writeback Memory information field Writeback.
 # TYPE node_memory_Writeback gauge
 node_memory_Writeback{instance="rds-aurora57",region="us-east-1"} 0
+# HELP node_procs_blocked Number of processes blocked waiting for I/O to complete.
+# TYPE node_procs_blocked gauge
+node_procs_blocked{instance="rds-aurora57",region="us-east-1"} 0
+# HELP node_procs_running Number of processes in runnable state.
+# TYPE node_procs_running gauge
+node_procs_running{instance="rds-aurora57",region="us-east-1"} 6
 # HELP node_vmstat_pswpin /proc/vmstat information field pswpin
 # TYPE node_vmstat_pswpin gauge
 node_vmstat_pswpin{instance="rds-aurora57",region="us-east-1"} 0
