@@ -135,9 +135,9 @@ type processList struct {
 }
 
 type swap struct {
-	Cached int `json:"cached" help:"The amount of swap memory, in kilobytes, used as cache memory."`
-	Free   int `json:"free"   help:"The total amount of swap memory free, in kilobytes."`
-	Total  int `json:"total"  help:"The total amount of swap memory available, in kilobytes."`
+	Cached int `json:"cached" node:"SwapCached" help:"The amount of swap memory, in kilobytes, used as cache memory."`
+	Free   int `json:"free"   node:"SwapFree"   help:"The total amount of swap memory free, in kilobytes."`
+	Total  int `json:"total"  node:"SwapTotal"  help:"The total amount of swap memory available, in kilobytes."`
 }
 
 type tasks struct {
@@ -365,6 +365,22 @@ func makeProcessListMetrics(s *processList, constLabels prometheus.Labels, name 
 	return res
 }
 
+func makeNodeSwapMetrics(s *swap, constLabels prometheus.Labels) []prometheus.Metric {
+	t := reflect.TypeOf(*s)
+	v := reflect.ValueOf(*s)
+	res := make([]prometheus.Metric, 0, t.NumField())
+	for i := 0; i < t.NumField(); i++ {
+		tags := t.Field(i).Tag
+		suffix := tags.Get("node")
+		desc := prometheus.NewDesc("node_memory_"+suffix, "Memory information field "+suffix+".", nil, constLabels)
+		m := makeMetric(desc, nil, reflect.ValueOf(v.Field(i).Int()*1024))
+		if m != nil {
+			res = append(res, m)
+		}
+	}
+	return res
+}
+
 func (m *osMetrics) originalMetrics(region string) []prometheus.Metric {
 	res := make([]prometheus.Metric, 0, 100)
 	constLabels := prometheus.Labels{
@@ -416,7 +432,10 @@ func (m *osMetrics) originalMetrics(region string) []prometheus.Metric {
 		res = append(res, metrics...)
 	}
 
+	// make both generic and node_exporter-like metrics
 	metrics = makeGenericMetrics(m.Swap, "rdsosmetrics_swap_", constLabels)
+	res = append(res, metrics...)
+	metrics = makeNodeSwapMetrics(&m.Swap, constLabels)
 	res = append(res, metrics...)
 
 	metrics = makeGenericMetrics(m.Tasks, "rdsosmetrics_tasks_", constLabels)

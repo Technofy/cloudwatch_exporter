@@ -407,6 +407,15 @@ node_memory_PageTables{instance="rds-mysql57",region="us-east-1"} 9.15456e+06
 # HELP node_memory_Slab Memory information field Slab.
 # TYPE node_memory_Slab gauge
 node_memory_Slab{instance="rds-mysql57",region="us-east-1"} 5.5218176e+07
+# HELP node_memory_SwapCached Memory information field SwapCached.
+# TYPE node_memory_SwapCached gauge
+node_memory_SwapCached{instance="rds-mysql57",region="us-east-1"} 4.767744e+06
+# HELP node_memory_SwapFree Memory information field SwapFree.
+# TYPE node_memory_SwapFree gauge
+node_memory_SwapFree{instance="rds-mysql57",region="us-east-1"} 3.845660672e+09
+# HELP node_memory_SwapTotal Memory information field SwapTotal.
+# TYPE node_memory_SwapTotal gauge
+node_memory_SwapTotal{instance="rds-mysql57",region="us-east-1"} 4.194299904e+09
 # HELP node_memory_Writeback Memory information field Writeback.
 # TYPE node_memory_Writeback gauge
 node_memory_Writeback{instance="rds-mysql57",region="us-east-1"} 0
@@ -705,6 +714,15 @@ node_memory_PageTables{instance="rds-aurora57",region="us-east-1"} 6.51264e+06
 # HELP node_memory_Slab Memory information field Slab.
 # TYPE node_memory_Slab gauge
 node_memory_Slab{instance="rds-aurora57",region="us-east-1"} 3.9079936e+07
+# HELP node_memory_SwapCached Memory information field SwapCached.
+# TYPE node_memory_SwapCached gauge
+node_memory_SwapCached{instance="rds-aurora57",region="us-east-1"} 0
+# HELP node_memory_SwapFree Memory information field SwapFree.
+# TYPE node_memory_SwapFree gauge
+node_memory_SwapFree{instance="rds-aurora57",region="us-east-1"} 0
+# HELP node_memory_SwapTotal Memory information field SwapTotal.
+# TYPE node_memory_SwapTotal gauge
+node_memory_SwapTotal{instance="rds-aurora57",region="us-east-1"} 0
 # HELP node_memory_Writeback Memory information field Writeback.
 # TYPE node_memory_Writeback gauge
 node_memory_Writeback{instance="rds-aurora57",region="us-east-1"} 0
