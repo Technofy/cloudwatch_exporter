@@ -347,6 +347,12 @@ node_disk_bytes_read{device="rdsdev",instance="rds-mysql57",region="us-east-1"} 
 # HELP node_disk_bytes_written The total number of bytes written successfully.
 # TYPE node_disk_bytes_written counter
 node_disk_bytes_written{device="rdsdev",instance="rds-mysql57",region="us-east-1"} 1.02449152e+08
+# HELP node_filesystem_free Filesystem free space in bytes.
+# TYPE node_filesystem_free gauge
+node_filesystem_free{device="rdsfilesys",instance="rds-mysql57",mountpoint="/rdsdbdata",region="us-east-1"} 3.6643528704e+10
+# HELP node_filesystem_size Filesystem size in bytes.
+# TYPE node_filesystem_size gauge
+node_filesystem_size{device="rdsfilesys",instance="rds-mysql57",mountpoint="/rdsdbdata",region="us-east-1"} 6.3257362432e+10
 # HELP node_load1 The number of processes requesting CPU time over the last minute.
 # TYPE node_load1 gauge
 node_load1{instance="rds-mysql57",region="us-east-1"} 1.61
@@ -633,6 +639,12 @@ node_cpu_average{cpu="All",instance="rds-aurora57",mode="system",region="us-east
 node_cpu_average{cpu="All",instance="rds-aurora57",mode="total",region="us-east-1"} 100
 node_cpu_average{cpu="All",instance="rds-aurora57",mode="user",region="us-east-1"} 3.38
 node_cpu_average{cpu="All",instance="rds-aurora57",mode="wait",region="us-east-1"} 0
+# HELP node_filesystem_free Filesystem free space in bytes.
+# TYPE node_filesystem_free gauge
+node_filesystem_free{device="rdsfilesys",instance="rds-aurora57",mountpoint="/rdsdbdata",region="us-east-1"} 2.9684359168e+10
+# HELP node_filesystem_size Filesystem size in bytes.
+# TYPE node_filesystem_size gauge
+node_filesystem_size{device="rdsfilesys",instance="rds-aurora57",mountpoint="/rdsdbdata",region="us-east-1"} 3.3682210816e+10
 # HELP node_load1 The number of processes requesting CPU time over the last minute.
 # TYPE node_load1 gauge
 node_load1{instance="rds-aurora57",region="us-east-1"} 3.73

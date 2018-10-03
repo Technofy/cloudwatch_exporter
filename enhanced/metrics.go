@@ -275,6 +275,19 @@ func makeFileSysMetrics(s *fileSys, constLabels prometheus.Labels, name, mountPo
 			res = append(res, m)
 		}
 	}
+
+	labelKeys = []string{"device", "mountpoint"}
+
+	desc := prometheus.NewDesc("node_filesystem_files", "Filesystem total file nodes.", labelKeys, constLabels)
+	res = append(res, prometheus.MustNewConstMetric(desc, prometheus.GaugeValue, float64(s.MaxFiles*1024), labelValues...))
+	desc = prometheus.NewDesc("node_filesystem_files_free", "Filesystem total free file nodes.", labelKeys, constLabels)
+	res = append(res, prometheus.MustNewConstMetric(desc, prometheus.GaugeValue, float64((s.MaxFiles-s.UsedFiles)*1024), labelValues...))
+
+	desc = prometheus.NewDesc("node_filesystem_size", "Filesystem size in bytes.", labelKeys, constLabels)
+	res = append(res, prometheus.MustNewConstMetric(desc, prometheus.GaugeValue, float64(s.Total*1024), labelValues...))
+	desc = prometheus.NewDesc("node_filesystem_free", "Filesystem free space in bytes.", labelKeys, constLabels)
+	res = append(res, prometheus.MustNewConstMetric(desc, prometheus.GaugeValue, float64((s.Total-s.Used)*1024), labelValues...))
+
 	return res
 }
 
