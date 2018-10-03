@@ -347,6 +347,9 @@ node_disk_bytes_read{device="rdsdev",instance="rds-mysql57",region="us-east-1"} 
 # HELP node_disk_bytes_written The total number of bytes written successfully.
 # TYPE node_disk_bytes_written counter
 node_disk_bytes_written{device="rdsdev",instance="rds-mysql57",region="us-east-1"} 1.02449152e+08
+# HELP node_filesystem_avail Filesystem space available to non-root users in bytes.
+# TYPE node_filesystem_avail gauge
+node_filesystem_avail{device="rdsfilesys",instance="rds-mysql57",mountpoint="/rdsdbdata",region="us-east-1"} 3.6643528704e+10
 # HELP node_filesystem_files Filesystem total file nodes.
 # TYPE node_filesystem_files gauge
 node_filesystem_files{device="rdsfilesys",instance="rds-mysql57",mountpoint="/rdsdbdata",region="us-east-1"} 4.02653184e+09
@@ -654,6 +657,9 @@ node_cpu_average{cpu="All",instance="rds-aurora57",mode="system",region="us-east
 node_cpu_average{cpu="All",instance="rds-aurora57",mode="total",region="us-east-1"} 100
 node_cpu_average{cpu="All",instance="rds-aurora57",mode="user",region="us-east-1"} 3.38
 node_cpu_average{cpu="All",instance="rds-aurora57",mode="wait",region="us-east-1"} 0
+# HELP node_filesystem_avail Filesystem space available to non-root users in bytes.
+# TYPE node_filesystem_avail gauge
+node_filesystem_avail{device="rdsfilesys",instance="rds-aurora57",mountpoint="/rdsdbdata",region="us-east-1"} 2.9684359168e+10
 # HELP node_filesystem_files Filesystem total file nodes.
 # TYPE node_filesystem_files gauge
 node_filesystem_files{device="rdsfilesys",instance="rds-aurora57",mountpoint="/rdsdbdata",region="us-east-1"} 2.147483648e+09

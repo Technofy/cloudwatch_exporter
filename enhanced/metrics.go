@@ -283,9 +283,12 @@ func makeFileSysMetrics(s *fileSys, constLabels prometheus.Labels, name, mountPo
 	desc = prometheus.NewDesc("node_filesystem_files_free", "Filesystem total free file nodes.", labelKeys, constLabels)
 	res = append(res, prometheus.MustNewConstMetric(desc, prometheus.GaugeValue, float64((s.MaxFiles-s.UsedFiles)*1024), labelValues...))
 
+	// report the same value for node_filesystem_free and node_filesystem_avail because we use both metrics in our dashboards
 	desc = prometheus.NewDesc("node_filesystem_size", "Filesystem size in bytes.", labelKeys, constLabels)
 	res = append(res, prometheus.MustNewConstMetric(desc, prometheus.GaugeValue, float64(s.Total*1024), labelValues...))
 	desc = prometheus.NewDesc("node_filesystem_free", "Filesystem free space in bytes.", labelKeys, constLabels)
+	res = append(res, prometheus.MustNewConstMetric(desc, prometheus.GaugeValue, float64((s.Total-s.Used)*1024), labelValues...))
+	desc = prometheus.NewDesc("node_filesystem_avail", "Filesystem space available to non-root users in bytes.", labelKeys, constLabels)
 	res = append(res, prometheus.MustNewConstMetric(desc, prometheus.GaugeValue, float64((s.Total-s.Used)*1024), labelValues...))
 
 	return res
