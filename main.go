@@ -62,7 +62,7 @@ func main() {
 		}))
 	}
 
-	log.Infof("Basic metrics   : http://%s/%s", *listenAddressF, *basicMetricsPathF)
-	log.Infof("Enhanced metrics: http://%s/%s", *listenAddressF, *enhancedMetricsPathF)
+	log.Infof("Basic metrics   : http://%s%s", *listenAddressF, *basicMetricsPathF)
+	log.Infof("Enhanced metrics: http://%s%s", *listenAddressF, *enhancedMetricsPathF)
 	log.Fatal(http.ListenAndServe(*listenAddressF, nil))
 }
