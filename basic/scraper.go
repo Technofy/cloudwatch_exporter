@@ -1,7 +1,6 @@
 package basic
 
 import (
-	"fmt"
 	"sync"
 	"time"
 
@@ -10,7 +9,6 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 
 	"github.com/percona/rds_exporter/config"
-	"github.com/percona/rds_exporter/latency"
 )
 
 var (
@@ -21,19 +19,18 @@ var (
 
 type Scraper struct {
 	// params
-	instance config.Instance
+	instance *config.Instance
 	exporter *Exporter
 	ch       chan<- prometheus.Metric
 
 	// internal
-	svc     *cloudwatch.CloudWatch
-	labels  []string
-	latency *latency.Latency
+	svc    *cloudwatch.CloudWatch
+	labels []string
 }
 
-func NewScraper(instance config.Instance, exporter *Exporter, ch chan<- prometheus.Metric) *Scraper {
+func NewScraper(instance *config.Instance, exporter *Exporter, ch chan<- prometheus.Metric) *Scraper {
 	// Create CloudWatch client
-	sess := exporter.Sessions.Get(instance)
+	sess, _ := exporter.sessions.GetSession(instance.Region, instance.Instance)
 	svc := cloudwatch.New(sess)
 
 	// Create labels for all metrics
@@ -49,9 +46,8 @@ func NewScraper(instance config.Instance, exporter *Exporter, ch chan<- promethe
 		ch:       ch,
 
 		// internal
-		svc:     svc,
-		labels:  labels,
-		latency: &latency.Latency{},
+		svc:    svc,
+		labels: labels,
 	}
 }
 
@@ -70,30 +66,22 @@ func getLatestDatapoint(datapoints []*cloudwatch.Datapoint) *cloudwatch.Datapoin
 // Scrape makes the required calls to AWS CloudWatch by using the parameters in the Exporter.
 // Once converted into Prometheus format, the metrics are pushed on the ch channel.
 func (s *Scraper) Scrape() {
-	s.scrape()
-
-	// Generate latency metric
-	if !s.latency.IsZero() {
-		s.ch <- prometheus.MustNewConstMetric(latency.Desc, prometheus.GaugeValue, float64(s.latency.Duration().Seconds()), s.labels...)
-	}
-}
-
-func (s *Scraper) scrape() {
 	wg := &sync.WaitGroup{}
 	defer wg.Wait()
 
-	wg.Add(len(s.exporter.Metrics))
-	for _, metric := range s.exporter.Metrics {
+	wg.Add(len(s.exporter.metrics))
+	for _, metric := range s.exporter.metrics {
 		go func(metric Metric) {
 			err := s.scrapeMetric(metric)
 			if err != nil {
-				fmt.Println(err)
+				s.exporter.l.With("metric", metric.Name).Error(err)
 			}
 
 			wg.Done()
 		}(metric)
 	}
 }
+
 func (s *Scraper) scrapeMetric(metric Metric) error {
 	now := time.Now()
 	end := now.Add(-Delay)
@@ -117,10 +105,7 @@ func (s *Scraper) scrapeMetric(metric Metric) error {
 
 	// Call CloudWatch to gather the datapoints
 	resp, err := s.svc.GetMetricStatistics(params)
-	s.exporter.TotalRequests.Inc()
-
 	if err != nil {
-		s.exporter.ErroneousRequests.Inc()
 		return err
 	}
 
@@ -131,9 +116,6 @@ func (s *Scraper) scrapeMetric(metric Metric) error {
 
 	// Pick the latest datapoint
 	dp := getLatestDatapoint(resp.Datapoints)
-
-	// Take the oldest timestamp for latency metric
-	s.latency.TakeOldest(aws.TimeValue(dp.Timestamp))
 
 	// Get the metric.
 	v := aws.Float64Value(dp.Average)
