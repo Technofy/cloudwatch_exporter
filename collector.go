@@ -2,6 +2,7 @@ package main
 
 import (
 	"errors"
+	"fmt"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/technofy/cloudwatch_exporter/config"
 	"time"
@@ -53,7 +54,7 @@ func generateTemplates(cfg *config.Settings) {
 				labels[i] = toSnakeCase(metric.Dimensions[i])
 			}
 			labels = append(labels, "task")
-
+			fmt.Println(labels)
 			for s := range metric.Statistics {
 				template.Metrics = append(template.Metrics, cwMetric{
 					Desc: prometheus.NewDesc(
@@ -70,6 +71,7 @@ func generateTemplates(cfg *config.Settings) {
 
 		templates[cfg.Tasks[t].Name] = template
 	}
+
 }
 
 // NewCwCollector creates a new instance of a CwCollector for a specific task

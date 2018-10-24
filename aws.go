@@ -6,9 +6,9 @@ import (
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/cloudwatch"
 	"github.com/prometheus/client_golang/prometheus"
-	"time"
 	"regexp"
 	"strings"
+	"time"
 )
 
 func getLatestDatapoint(datapoints []*cloudwatch.Datapoint) *cloudwatch.Datapoint {
@@ -32,54 +32,52 @@ func scrape(collector *cwCollector, ch chan<- prometheus.Metric) {
 
 	svc := cloudwatch.New(session)
 	for m := range collector.Template.Metrics {
-		metric := &collector.Template.Metrics[m]
+		templMetric := &collector.Template.Metrics[m]
 
 		now := time.Now()
-		end := now.Add(time.Duration(-metric.ConfMetric.DelaySeconds) * time.Second)
+		end := now.Add(time.Duration(-templMetric.ConfMetric.DelaySeconds) * time.Second)
 
 		params := &cloudwatch.GetMetricStatisticsInput{
 			EndTime:   aws.Time(end),
-			StartTime: aws.Time(end.Add(time.Duration(-metric.ConfMetric.RangeSeconds) * time.Second)),
+			StartTime: aws.Time(end.Add(time.Duration(-templMetric.ConfMetric.RangeSeconds) * time.Second)),
 
-			Period:     aws.Int64(int64(metric.ConfMetric.PeriodSeconds)),
-			MetricName: aws.String(metric.ConfMetric.Name),
-			Namespace:  aws.String(metric.ConfMetric.Namespace),
+			Period:     aws.Int64(int64(templMetric.ConfMetric.PeriodSeconds)),
+			MetricName: aws.String(templMetric.ConfMetric.Name),
+			Namespace:  aws.String(templMetric.ConfMetric.Namespace),
 			Dimensions: []*cloudwatch.Dimension{},
 			Statistics: []*string{},
 			Unit:       nil,
 		}
 
-		dimensions:=[]*cloudwatch.Dimension{}
+		var dimensions []*cloudwatch.Dimension
 
 		//This map will hold dimensions name which has been already collected
-		valueCollected :=  map[string]bool{}
+		valueCollected := map[string]bool{}
 
-
-		if len(metric.ConfMetric.DimensionsSelectRegex) == 0 {
-			metric.ConfMetric.DimensionsSelectRegex =  map[string]string{}
+		if len(templMetric.ConfMetric.DimensionsSelectRegex) == 0 {
+			templMetric.ConfMetric.DimensionsSelectRegex = map[string]string{}
 		}
 
 		//Check for dimensions who does not have either select or dimensions select_regex and make them select everything using regex
-		for _,dimension := range metric.ConfMetric.Dimensions {
-			_, found := metric.ConfMetric.DimensionsSelect[dimension]
-			_, found2 := metric.ConfMetric.DimensionsSelectRegex[dimension]
+		for _, dimension := range templMetric.ConfMetric.Dimensions {
+			_, found := templMetric.ConfMetric.DimensionsSelect[dimension]
+			_, found2 := templMetric.ConfMetric.DimensionsSelectRegex[dimension]
+
 			if !found && !found2 {
-				metric.ConfMetric.DimensionsSelectRegex[dimension]=".*"
+				templMetric.ConfMetric.DimensionsSelectRegex[dimension] = ".*"
 			}
 		}
 
-
-
-		for _, stat := range metric.ConfMetric.Statistics {
+		for _, stat := range templMetric.ConfMetric.Statistics {
 			params.Statistics = append(params.Statistics, aws.String(stat))
 		}
 
-		labels := make([]string, 0, len(metric.LabelNames))
+		labels := make([]string, 0, len(templMetric.LabelNames))
 
 		// Loop through the dimensions selects to build the filters and the labels array
-		for dim := range metric.ConfMetric.DimensionsSelect {
-			for val := range metric.ConfMetric.DimensionsSelect[dim] {
-				dimValue := metric.ConfMetric.DimensionsSelect[dim][val]
+		for dim := range templMetric.ConfMetric.DimensionsSelect {
+			for val := range templMetric.ConfMetric.DimensionsSelect[dim] {
+				dimValue := templMetric.ConfMetric.DimensionsSelect[dim][val]
 
 				// Replace $_target token by the actual URL target
 				if dimValue == "$_target" {
@@ -95,94 +93,114 @@ func scrape(collector *cwCollector, ch chan<- prometheus.Metric) {
 			}
 		}
 
-		if (len(dimensions)>0){
+		if len(dimensions) > 0 {
 			labels = append(labels, collector.Template.Task.Name)
-			params.Dimensions=dimensions
-			scrapeSingleDataPoint(collector,ch,params,metric,labels,svc)
+			params.Dimensions = dimensions
+			scrapeSingleDataPoint(collector, ch, params, templMetric, labels, svc)
 		}
 
 		//If no regex is specified, continue
-		if (len(metric.ConfMetric.DimensionsSelectRegex)==0){
+		if len(templMetric.ConfMetric.DimensionsSelectRegex) == 0 {
 			continue
 		}
 
-		
-		// Get all the metric to select the ones who'll match the regex
-		result, err := svc.ListMetrics(&cloudwatch.ListMetricsInput{
-			MetricName: aws.String(metric.ConfMetric.Name),
-			Namespace:  aws.String(metric.ConfMetric.Namespace),
-		})
-		nextToken:=result.NextToken
-		metrics:=result.Metrics
-		totalRequests.Inc()
+		var nextToken *string = nil
+		var cwMetrics []*cloudwatch.Metric
+		var cwDimensionsFilters []*cloudwatch.DimensionFilter
 
-		if err != nil {
-			fmt.Println(err)
-			continue
+		for templDim := range templMetric.ConfMetric.DimensionsSelectRegex {
+			templDimValue := templMetric.ConfMetric.DimensionsSelectRegex[templDim]
+
+			// Replace $_target token by the actual URL target
+			if templDimValue == "$_target" {
+				templDimValue = collector.Target
+			}
+
+			cwDimensionsFilters = append(cwDimensionsFilters, &cloudwatch.DimensionFilter{
+				Name: aws.String(templDim),
+			})
+
+			labels = append(labels, templDimValue)
 		}
 
-		for nextToken!=nil {
+		for {
 			result, err := svc.ListMetrics(&cloudwatch.ListMetricsInput{
-				MetricName: aws.String(metric.ConfMetric.Name),
-				Namespace:  aws.String(metric.ConfMetric.Namespace),
-				NextToken: nextToken,
-			})		
+				MetricName: aws.String(templMetric.ConfMetric.Name),
+				Namespace:  aws.String(templMetric.ConfMetric.Namespace),
+				Dimensions: cwDimensionsFilters,
+				NextToken:  nextToken,
+			})
+			cwMetrics = append(cwMetrics, result.Metrics...)
+			totalRequests.Inc()
+
 			if err != nil {
 				fmt.Println(err)
 				continue
 			}
-			nextToken=result.NextToken
-			metrics=append(metrics,result.Metrics...)
+
+			if result.NextToken == nil {
+				break
+			}
+			nextToken = result.NextToken
 		}
-		
-		//For each metric returned by aws
-		for _,met := range result.Metrics {
-			labels := make([]string, 0, len(metric.LabelNames))
-			dimensions=[]*cloudwatch.Dimension{}
+
+		//For each templMetric returned by aws
+		for _, cwMet := range cwMetrics {
+			labels := make([]string, 0, len(templMetric.LabelNames))
+			dimensions = []*cloudwatch.Dimension{}
+
 
 			//Try to match each dimensions to the regex
-			for _,dim := range met.Dimensions {
-				dimRegex:=metric.ConfMetric.DimensionsSelectRegex[*dim.Name]
-				if(dimRegex==""){
-					dimRegex="\\b"+strings.Join(metric.ConfMetric.DimensionsSelect[*dim.Name],"\\b|\\b")+"\\b"
-				}
+			for _, templDimName := range templMetric.ConfMetric.Dimensions {
+				for _, cwDim := range cwMet.Dimensions {
 
-				match,_:=regexp.MatchString(dimRegex,*dim.Value)
-				if match  {
-					dimensions=append(dimensions, &cloudwatch.Dimension{
-						Name:  aws.String(*dim.Name),
-						Value: aws.String(*dim.Value),
-					})
-					labels = append(labels, *dim.Value)
+					if templDimName != *cwDim.Name {
 
-					
+						continue
+
+					}
+
+					templDimRegex := templMetric.ConfMetric.DimensionsSelectRegex[templDimName]
+					if templDimRegex == "" {
+						templDimRegex = "\\b" + strings.Join(templMetric.ConfMetric.DimensionsSelect[*cwDim.Name], "\\b|\\b") + "\\b"
+					}
+
+					match, _ := regexp.MatchString(templDimRegex, *cwDim.Value)
+					if match {
+
+						dimensions = append(dimensions, &cloudwatch.Dimension{
+							Name:  aws.String(*cwDim.Name),
+							Value: aws.String(*cwDim.Value),
+						})
+						labels = append(labels, *cwDim.Value)
+					}
 				}
 			}
 
 			//Cheking if all dimensions matched
-			if len(labels) ==  len(metric.ConfMetric.Dimensions) {	
+			if len(labels) == len(templMetric.ConfMetric.Dimensions) {
 
 				//Checking if this couple of dimensions has already been scraped
-				if _, ok := valueCollected[strings.Join(labels,";")]; ok {
+				if _, ok := valueCollected[strings.Join(labels, ";")]; ok {
 					continue
 				}
 
 				//If no, then scrape them
-				valueCollected[strings.Join(labels,";")]=true
-			
+				valueCollected[strings.Join(labels, ";")] = true
+
 				params.Dimensions = dimensions
 
-				labels = append(labels, collector.Template.Task.Name)	
-				scrapeSingleDataPoint(collector,ch,params,metric,labels,svc)
-			
+				labels = append(labels, collector.Template.Task.Name)
+				scrapeSingleDataPoint(collector, ch, params, templMetric, labels, svc)
+
 			}
 		}
 	}
 }
 
 //Send a single dataPoint to the Prometheus lib
-func scrapeSingleDataPoint(collector *cwCollector, ch chan<- prometheus.Metric,params *cloudwatch.GetMetricStatisticsInput,metric *cwMetric,labels []string,svc *cloudwatch.CloudWatch) error {
-	
+func scrapeSingleDataPoint(collector *cwCollector, ch chan<- prometheus.Metric, params *cloudwatch.GetMetricStatisticsInput, metric *cwMetric, labels []string, svc *cloudwatch.CloudWatch) error {
+
 	resp, err := svc.GetMetricStatistics(params)
 	totalRequests.Inc()
 
@@ -198,7 +216,6 @@ func scrapeSingleDataPoint(collector *cwCollector, ch chan<- prometheus.Metric,p
 	}
 	// Pick the latest datapoint
 	dp := getLatestDatapoint(resp.Datapoints)
-
 
 	if dp.Sum != nil {
 		ch <- prometheus.MustNewConstMetric(metric.Desc, metric.ValType, float64(*dp.Sum), labels...)

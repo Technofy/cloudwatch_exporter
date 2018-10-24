@@ -109,7 +109,7 @@ func main() {
 		os.Exit(-1)
 	}
 
-	fmt.Println("CloudWatch exporter started...")
+	fmt.Printf("CloudWatch exporter started \n")
 
 	// Expose the exporter's own metrics on /metrics
 	http.Handle(*metricsPath, promhttp.Handler())
@@ -122,4 +122,5 @@ func main() {
 
 	// Start serving for clients
 	log.Fatal(http.ListenAndServe(*listenAddress, nil))
+
 }
