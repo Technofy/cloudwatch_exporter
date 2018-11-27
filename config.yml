@@ -100,3 +100,11 @@ tasks:
       aws_dimensions: [FunctionName]
       aws_metric_name: Duration
       aws_statistics: [Maximum]
+
+ - name: ses_no_dimensions
+   default_region: us-east-1
+   metrics:
+    - aws_namespace: "AWS/SES"
+      aws_metric_name: Reputation.BounceRate
+      aws_statistics: [Maximum]
+      range_seconds: 3600
