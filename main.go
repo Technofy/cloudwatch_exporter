@@ -3,14 +3,14 @@ package main
 import (
 	"flag"
 	"fmt"
-	"log"
 	"net/http"
+    "sync"
 
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/technofy/cloudwatch_exporter/config"
-	"os"
-	"sync"
+
+    log "github.com/sirupsen/logrus"
 )
 
 var (
@@ -72,6 +72,7 @@ func handleTarget(w http.ResponseWriter, req *http.Request) {
 	configMutex.Lock()
 	registry := prometheus.NewRegistry()
 	collector, err := NewCwCollector(target, task, region)
+
 	if err != nil {
 		// Can't create the collector, display error
 		fmt.Fprintf(w, "Error: %s\n", err.Error())
@@ -105,11 +106,10 @@ func main() {
 
 	err := loadConfigFile()
 	if err != nil {
-		fmt.Printf("Can't read configuration file: %s\n", err.Error())
-		os.Exit(-1)
+        log.Fatalf("Can't read configuration file: %s\n", err.Error())
 	}
 
-	fmt.Println("CloudWatch exporter started...")
+    log.Infof("CloudWatch exporter started...")
 
 	// Expose the exporter's own metrics on /metrics
 	http.Handle(*metricsPath, promhttp.Handler())
