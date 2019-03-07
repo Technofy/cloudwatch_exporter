@@ -95,7 +95,7 @@ func scrape(collector *cwCollector, ch chan<- prometheus.Metric) {
 			}
 		}
 
-		if (len(dimensions)>0){
+		if len(dimensions) > 0 || len(metric.ConfMetric.Dimensions) ==0 {
 			labels = append(labels, collector.Template.Task.Name)
 			params.Dimensions=dimensions
 			scrapeSingleDataPoint(collector,ch,params,metric,labels,svc)
