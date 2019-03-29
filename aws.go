@@ -8,6 +8,7 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 	"regexp"
 	"strings"
+	"sync"
 	"time"
 )
 
@@ -31,12 +32,18 @@ func scrape(collector *cwCollector, ch chan<- prometheus.Metric) {
 	}))
 
 	svc := cloudwatch.New(awsSession)
+	wg := sync.WaitGroup{}
 	for m := range collector.Template.Metrics {
-		scrapeMetric(collector, ch, &collector.Template.Metrics[m], svc)
+		wg.Add(1)
+		go func(metric *cwMetric) {
+			scrapeMetric(collector, &wg, ch, metric, svc)
+			wg.Done()
+		}(&collector.Template.Metrics[m])
 	}
+	wg.Wait()
 }
 
-func scrapeMetric(collector *cwCollector, ch chan<- prometheus.Metric, metric *cwMetric, svc *cloudwatch.CloudWatch) {
+func scrapeMetric(collector *cwCollector, wg *sync.WaitGroup, ch chan<- prometheus.Metric, metric *cwMetric, svc *cloudwatch.CloudWatch) {
 	now := time.Now()
 	end := now.Add(time.Duration(-metric.ConfMetric.DelaySeconds) * time.Second)
 
@@ -97,8 +104,13 @@ func scrapeMetric(collector *cwCollector, ch chan<- prometheus.Metric, metric *c
 
 	if len(dimensions) > 0 || len(metric.ConfMetric.Dimensions) == 0 {
 		labels = append(labels, collector.Template.Task.Name)
-		params.Dimensions = dimensions
-		scrapeSingleDataPoint(collector, ch, params, metric, labels, svc)
+		paramsCopy := *params
+		paramsCopy.Dimensions = dimensions
+		wg.Add(1)
+		go func() {
+			scrapeSingleDataPoint(collector, ch, &paramsCopy, metric, labels, svc)
+			wg.Done()
+		}()
 	}
 
 	//If no regex is specified, continue
@@ -168,10 +180,15 @@ func scrapeMetric(collector *cwCollector, ch chan<- prometheus.Metric, metric *c
 			//If no, then scrape them
 			valueCollected[strings.Join(labels, ";")] = true
 
-			params.Dimensions = dimensions
+			paramsCopy := *params
+			paramsCopy.Dimensions = dimensions
 
 			labels = append(labels, collector.Template.Task.Name)
-			scrapeSingleDataPoint(collector, ch, params, metric, labels, svc)
+			wg.Add(1)
+			go func() {
+				scrapeSingleDataPoint(collector, ch, &paramsCopy, metric, labels, svc)
+				wg.Done()
+			}()
 
 		}
 	}
