@@ -16,7 +16,7 @@ type Metric struct {
 	ExtendedStatistics    []string            `yaml:"aws_extended_statistics,omitempty"`
 	Dimensions            []string            `yaml:"aws_dimensions,omitempty"`
 	DimensionsSelect      map[string][]string `yaml:"aws_dimensions_select,omitempty"`
-	DimensionsSelectRegex      map[string]string `yaml:"aws_dimensions_select_regex,omitempty"`
+	DimensionsSelectRegex map[string]string   `yaml:"aws_dimensions_select_regex,omitempty"`
 	DimensionsSelectParam map[string][]string `yaml:"aws_dimensions_select_param,omitempty"`
 
 	RangeSeconds  int `yaml:"range_seconds,omitempty"`

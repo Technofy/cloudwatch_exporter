@@ -6,9 +6,9 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/Technofy/cloudwatch_exporter/config"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
-	"github.com/technofy/cloudwatch_exporter/config"
 	"os"
 	"sync"
 )

@@ -2,8 +2,8 @@ package main
 
 import (
 	"errors"
+	"github.com/Technofy/cloudwatch_exporter/config"
 	"github.com/prometheus/client_golang/prometheus"
-	"github.com/technofy/cloudwatch_exporter/config"
 	"time"
 )
 
