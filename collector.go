@@ -66,6 +66,18 @@ func generateTemplates(cfg *config.Settings) {
 					LabelNames: labels,
 				})
 			}
+			for s := range metric.ExtendedStatistics {
+				template.Metrics = append(template.Metrics, cwMetric{
+					Desc: prometheus.NewDesc(
+						safeName(toSnakeCase(metric.Namespace)+"_"+toSnakeCase(metric.Name)+"_"+toSnakeCase(metric.ExtendedStatistics[s])),
+						metric.Name,
+						labels,
+						nil),
+					ValType:    prometheus.GaugeValue,
+					ConfMetric: metric,
+					LabelNames: labels,
+				})
+			}
 		}
 
 		templates[cfg.Tasks[t].Name] = template

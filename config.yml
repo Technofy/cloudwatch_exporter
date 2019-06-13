@@ -108,3 +108,16 @@ tasks:
       aws_metric_name: Reputation.BounceRate
       aws_statistics: [Maximum]
       range_seconds: 3600
+
+ - name: api_gateway_extended_statistics
+   default_region: us-east-1
+   metrics:
+    - aws_namespace: "AWS/ApiGateway"
+      aws_dimensions: [ApiName]
+      aws_metric_name: Latency
+      aws_extended_statistics: [p95]
+    - aws_namespace: "AWS/ApiGateway"
+      aws_dimensions: [ApiName]
+      aws_metric_name: Latency
+      aws_extended_statistics: [p90]
+
