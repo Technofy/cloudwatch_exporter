@@ -21,7 +21,17 @@ type Instance struct {
 	Region                     string
 	Instance                   string
 	ResourceID                 string
+	Labels                     map[string]string
 	EnhancedMonitoringInterval time.Duration
+}
+
+func (i Instance) String() string {
+	res := i.Region + "/" + i.Instance
+	if i.ResourceID != "" {
+		res += " (" + i.ResourceID + ")"
+	}
+
+	return res
 }
 
 // Sessions is a pool of AWS sessions.
@@ -44,6 +54,7 @@ func New(instances []config.Instance, client *http.Client, trace bool) (*Session
 			res.sessions[s] = append(res.sessions[s], Instance{
 				Region:   instance.Region,
 				Instance: instance.Instance,
+				Labels:   instance.Labels,
 			})
 			continue
 		}
@@ -87,6 +98,7 @@ func New(instances []config.Instance, client *http.Client, trace bool) (*Session
 		res.sessions[s] = append(res.sessions[s], Instance{
 			Region:   instance.Region,
 			Instance: instance.Instance,
+			Labels:   instance.Labels,
 		})
 	}
 
@@ -122,7 +134,7 @@ func New(instances []config.Instance, client *http.Client, trace bool) (*Session
 		newInstances := make([]Instance, 0, len(instances))
 		for _, instance := range instances {
 			if instance.ResourceID == "" {
-				logger.Errorf("Skipping %s - can't determine resourceID.", instance, instance)
+				logger.Errorf("Skipping %s - can't determine resourceID.", instance)
 				continue
 			}
 			newInstances = append(newInstances, instance)
