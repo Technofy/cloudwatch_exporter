@@ -1,64 +1,53 @@
 package enhanced
 
 import (
-	"bytes"
-	"flag"
-	"io/ioutil"
-	"path/filepath"
-	"strings"
+	"sort"
 	"testing"
-	"time"
 
 	"github.com/percona/exporter_shared/helpers"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
-var golden = flag.Bool("golden", false, "update golden files")
-
-func readJSON(t *testing.T, file string) []byte {
-	t.Helper()
-
-	b, err := ioutil.ReadFile(filepath.Join("testdata", file)) //nolint:gosec
-	require.NoError(t, err)
-	return bytes.TrimSpace(b)
-}
-
-func readMetrics(t *testing.T, file string) []string {
-	t.Helper()
-
-	b, err := ioutil.ReadFile(filepath.Join("testdata", file)) //nolint:gosec
-	require.NoError(t, err)
-	return strings.Split(string(bytes.TrimSpace(b)), "\n")
-}
-
 func TestParse(t *testing.T) {
 	for _, data := range []struct {
-		name      string
-		region    string
-		timestamp time.Time
+		region   string
+		instance string
 	}{
-		{"mysql56", "us-east-1", time.Date(2019, 12, 10, 16, 42, 21, 0, time.UTC)},
-		{"mysql57", "us-east-1", time.Date(2018, 9, 25, 8, 7, 3, 0, time.UTC)},
-		{"aurora1", "us-east-1", time.Date(2019, 12, 10, 16, 45, 42, 0, time.UTC)},
+		{"us-east-1", "aurora-mysql-56"},
+		{"us-west-1", "psql-10"},
+		{"us-west-2", "mysql-57"},
+		{"us-west-2", "aurora-psql-11"},
 	} {
 		data := data
-		t.Run(data.name, func(t *testing.T) {
-			m, err := parseOSMetrics(readJSON(t, data.name+".json"))
+		t.Run(data.instance, func(t *testing.T) {
+			// Test that metrics created from fixed testdata JSON produce expected result.
+
+			m, err := parseOSMetrics(readTestDataJSON(t, data.instance), true)
 			require.NoError(t, err)
-			assert.Equal(t, data.timestamp, m.Timestamp)
 
-			expected := readMetrics(t, data.name+".txt")
-			actual := helpers.Format(m.makePrometheusMetrics(data.region, nil))
-			actualS := strings.Join(actual, "\n")
+			actualMetrics := helpers.ReadMetrics(m.makePrometheusMetrics(data.region, nil))
+			sort.Slice(actualMetrics, func(i, j int) bool { return actualMetrics[i].Less(actualMetrics[j]) })
+			actualLines := helpers.Format(helpers.WriteMetrics(actualMetrics))
 
-			if *golden {
-				expected = actual
-				err = ioutil.WriteFile(filepath.Join("testdata", data.name+".txt"), []byte(actualS+"\n"), 0666)
-				require.NoError(t, err)
+			if *goldenTXT {
+				writeTestDataMetrics(t, data.instance, actualLines)
 			}
 
-			assert.Equal(t, expected, actual, "Actual:\n%s", actualS)
+			expectedLines := readTestDataMetrics(t, data.instance)
+			expectedMetrics := helpers.ReadMetrics(helpers.Parse(expectedLines))
+			sort.Slice(expectedMetrics, func(i, j int) bool { return expectedMetrics[i].Less(expectedMetrics[j]) })
+
+			// compare both to try to avoid go-difflib bug
+			assert.Equal(t, expectedLines, actualLines)
+			assert.Equal(t, expectedMetrics, actualMetrics)
 		})
 	}
+}
+
+func TestParseUptime(t *testing.T) {
+	t.Skip("TODO Parse uptime https://jira.percona.com/browse/PMM-2131")
+
+	_ = "01:45:58"
+	_ = "1 day, 07:11:58"
 }
