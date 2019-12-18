@@ -17,6 +17,26 @@ import (
 	"github.com/percona/rds_exporter/sessions"
 )
 
+func filterMetrics(metrics []*helpers.Metric) []*helpers.Metric {
+	res := make([]*helpers.Metric, 0, len(metrics))
+	processList := make(map[string]struct{})
+
+	for _, m := range metrics {
+		m.Value = 0
+
+		// skip processList metrics that contain process IDs in labels that change too often
+		if strings.Contains(m.Name, "_processList_") {
+			if _, ok := processList[m.Name]; ok {
+				continue
+			}
+			processList[m.Name] = struct{}{}
+		}
+
+		res = append(res, m)
+	}
+	return res
+}
+
 func TestScraper(t *testing.T) {
 	cfg, err := config.Load("../config.tests.yml")
 	require.NoError(t, err)
@@ -36,15 +56,14 @@ func TestScraper(t *testing.T) {
 
 			for _, instance := range instances {
 				// Test that actually received JSON matches expected JSON.
-				// We can't do that directly, so we do it by comparing produced metrics (minus values).
+				// We can't do that directly, so we do it by comparing produced metrics
+				// (minus values and processList metrics).
 
 				instanceName := strings.TrimPrefix(instance.Instance, "autotest-")
 
 				actualMetrics := helpers.ReadMetrics(metrics[instance.ResourceID])
 				sort.Slice(actualMetrics, func(i, j int) bool { return actualMetrics[i].Less(actualMetrics[j]) })
-				for _, m := range actualMetrics {
-					m.Value = 0
-				}
+				actualMetrics = filterMetrics(actualMetrics)
 				actualLines := helpers.Format(helpers.WriteMetrics(actualMetrics))
 
 				if *golden {
@@ -55,9 +74,7 @@ func TestScraper(t *testing.T) {
 				require.NoError(t, err)
 				expectedMetrics := helpers.ReadMetrics(osMetrics.makePrometheusMetrics(instance.Region, nil))
 				sort.Slice(expectedMetrics, func(i, j int) bool { return expectedMetrics[i].Less(expectedMetrics[j]) })
-				for _, m := range expectedMetrics {
-					m.Value = 0
-				}
+				expectedMetrics = filterMetrics(expectedMetrics)
 				expectedLines := helpers.Format(helpers.WriteMetrics(expectedMetrics))
 
 				// compare both to try to avoid go-difflib bug
