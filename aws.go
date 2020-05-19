@@ -45,7 +45,6 @@ func scrape(collector *cwCollector, ch chan<- prometheus.Metric) {
 			MetricName: aws.String(metric.ConfMetric.Name),
 			Namespace:  aws.String(metric.ConfMetric.Namespace),
 			Dimensions: []*cloudwatch.Dimension{},
-			Statistics: []*string{},
 			Unit:       nil,
 		}
 
@@ -68,10 +67,12 @@ func scrape(collector *cwCollector, ch chan<- prometheus.Metric) {
 			}
 		}
 
+		if metric.ConfMetric.Statistics != nil {
+			params.SetStatistics(aws.StringSlice(metric.ConfMetric.Statistics))
+		}
 
-
-		for _, stat := range metric.ConfMetric.Statistics {
-			params.Statistics = append(params.Statistics, aws.String(stat))
+		if metric.ConfMetric.ExtendedStatistics != nil {
+			params.SetExtendedStatistics(aws.StringSlice(metric.ConfMetric.ExtendedStatistics))
 		}
 
 		labels := make([]string, 0, len(metric.LabelNames))
@@ -172,9 +173,9 @@ func scrape(collector *cwCollector, ch chan<- prometheus.Metric) {
 			
 				params.Dimensions = dimensions
 
-				labels = append(labels, collector.Template.Task.Name)	
+				labels = append(labels, collector.Template.Task.Name)
 				scrapeSingleDataPoint(collector,ch,params,metric,labels,svc)
-			
+
 			}
 		}
 	}
@@ -182,7 +183,6 @@ func scrape(collector *cwCollector, ch chan<- prometheus.Metric) {
 
 //Send a single dataPoint to the Prometheus lib
 func scrapeSingleDataPoint(collector *cwCollector, ch chan<- prometheus.Metric,params *cloudwatch.GetMetricStatisticsInput,metric *cwMetric,labels []string,svc *cloudwatch.CloudWatch) error {
-	
 	resp, err := svc.GetMetricStatistics(params)
 	totalRequests.Inc()
 
@@ -198,7 +198,6 @@ func scrapeSingleDataPoint(collector *cwCollector, ch chan<- prometheus.Metric,p
 	}
 	// Pick the latest datapoint
 	dp := getLatestDatapoint(resp.Datapoints)
-
 
 	if dp.Sum != nil {
 		ch <- prometheus.MustNewConstMetric(metric.Desc, metric.ValType, float64(*dp.Sum), labels...)
@@ -219,5 +218,10 @@ func scrapeSingleDataPoint(collector *cwCollector, ch chan<- prometheus.Metric,p
 	if dp.SampleCount != nil {
 		ch <- prometheus.MustNewConstMetric(metric.Desc, metric.ValType, float64(*dp.SampleCount), labels...)
 	}
+
+	for e := range dp.ExtendedStatistics {
+		ch <- prometheus.MustNewConstMetric(metric.Desc, metric.ValType, float64(*dp.ExtendedStatistics[e]), labels...)
+	}
+	
 	return nil
 }

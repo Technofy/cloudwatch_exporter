@@ -2,8 +2,8 @@ package main
 
 import (
 	"errors"
+	"github.com/Technofy/cloudwatch_exporter/config"
 	"github.com/prometheus/client_golang/prometheus"
-	"github.com/technofy/cloudwatch_exporter/config"
 	"time"
 )
 
@@ -58,6 +58,18 @@ func generateTemplates(cfg *config.Settings) {
 				template.Metrics = append(template.Metrics, cwMetric{
 					Desc: prometheus.NewDesc(
 						safeName(toSnakeCase(metric.Namespace)+"_"+toSnakeCase(metric.Name)+"_"+toSnakeCase(metric.Statistics[s])),
+						metric.Name,
+						labels,
+						nil),
+					ValType:    prometheus.GaugeValue,
+					ConfMetric: metric,
+					LabelNames: labels,
+				})
+			}
+			for s := range metric.ExtendedStatistics {
+				template.Metrics = append(template.Metrics, cwMetric{
+					Desc: prometheus.NewDesc(
+						safeName(toSnakeCase(metric.Namespace)+"_"+toSnakeCase(metric.Name)+"_"+toSnakeCase(metric.ExtendedStatistics[s])),
 						metric.Name,
 						labels,
 						nil),
