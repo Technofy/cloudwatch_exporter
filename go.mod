@@ -3,7 +3,7 @@ module github.com/Technofy/cloudwatch_exporter
 go 1.13
 
 require (
-	github.com/aws/aws-sdk-go v1.19.49
+	github.com/aws/aws-sdk-go v1.35.28
 	github.com/beorn7/perks v1.0.0
 	github.com/golang/protobuf v1.3.1
 	github.com/jmespath/go-jmespath v0.0.0-20180206201540-c2b33e8439af
