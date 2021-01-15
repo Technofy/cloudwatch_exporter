@@ -137,7 +137,7 @@ func scrape(collector *cwCollector, ch chan<- prometheus.Metric) {
 		}
 		
 		//For each metric returned by aws
-		for _,met := range result.Metrics {
+		for _,met := range metrics {
 			labels := make([]string, 0, len(metric.LabelNames))
 			dimensions=[]*cloudwatch.Dimension{}
 
